@@ -86,7 +86,7 @@ public class SousaParser {
 
 	private static SousaPoint getPointFromID(List<SousaPoint> points, UUID id) {
 		for (SousaPoint sousaPoint : points) {
-			if (id == sousaPoint.getId())
+			if (id.compareTo(sousaPoint.getId())==0)
 				return sousaPoint;
 		}
 		return null;
@@ -142,9 +142,9 @@ public class SousaParser {
 	}
 
 	public static void main(String[] args) {
-		System.out.println("Ashwini");
 		try {
 			List<SousaSketch> sketchList = SousaParser.parse("C:\\Users\\Owner\\Dropbox\\Courses\\Skech Recognition\\Project\\sousa-108-[2014-11-04-21-22-43.956834]-decision-graphic-sub-study\\108\\1839\\17902.xml");
+			System.out.println("dadd");
 		} catch (ParserConfigurationException | IOException | SAXException e) {
 			System.out.println("Exception:  " + e.getMessage());
 			e.printStackTrace();
