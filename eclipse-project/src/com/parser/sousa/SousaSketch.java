@@ -1,4 +1,5 @@
 package com.parser.sousa;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.UUID;
@@ -64,5 +65,17 @@ public class SousaSketch {
 
 	public void reset() {
 		sousaStrokesIterator = sousaStrokes.iterator();
+	}
+
+	public String getPremitivetype() {
+		boolean isLineSketch= true;
+		for (SousaStroke stroke : this.sousaStrokes) {
+			if (!stroke.isLine())
+				isLineSketch=false;
+
+		}
+		if(isLineSketch)
+			return "Line";
+		return "Not Line";
 	}
 }

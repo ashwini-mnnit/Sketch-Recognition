@@ -111,8 +111,8 @@ public class SousaParser {
 
 	private static SousaPoint getPoint(Element point) {
 		SousaPoint rvPoint = new SousaPoint(UUID.fromString(point.getAttribute("id")));
-		rvPoint.setxCoordinate(Integer.parseInt(point.getAttribute("x")));
-		rvPoint.setyCoordinate(Integer.parseInt(point.getAttribute("y")));
+		rvPoint.setxCoordinate(Double.parseDouble(point.getAttribute("x")));
+		rvPoint.setyCoordinate(Double.parseDouble(point.getAttribute("y")));
 		rvPoint.setTime(point.getAttribute("time"));
 		return rvPoint;
 	}
@@ -143,8 +143,10 @@ public class SousaParser {
 
 	public static void main(String[] args) {
 		try {
-			List<SousaSketch> sketchList = SousaParser.parse("C:\\Users\\Owner\\Dropbox\\Courses\\Skech Recognition\\Project\\sousa-108-[2014-11-04-21-22-43.956834]-decision-graphic-sub-study\\108\\1839\\17902.xml");
-			System.out.println("dadd");
+			List<SousaSketch> sketchList = SousaParser.parse("C:\\Users\\Owner\\Dropbox\\Courses\\Skech Recognition\\Project\\sousa-108-[2014-11-04-21-22-43.956834]-decision-graphic-sub-study\\108\\1839");
+			for (SousaSketch sousaSketch : sketchList) {
+				System.out.println(sousaSketch.getPremitivetype());
+			}
 		} catch (ParserConfigurationException | IOException | SAXException e) {
 			System.out.println("Exception:  " + e.getMessage());
 			e.printStackTrace();

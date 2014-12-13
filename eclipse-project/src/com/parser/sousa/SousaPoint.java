@@ -3,8 +3,8 @@ import java.util.UUID;
 
 public class SousaPoint {
 	private UUID id;
-	private Integer xCoordinate;
-	private Integer yCoordinate;
+	private Double xCoordinate;
+	private Double yCoordinate;
 	private String time;
 
 	public String getTime() {
@@ -18,11 +18,11 @@ public class SousaPoint {
 	public SousaPoint(UUID id) {
 		super();
 		this.id = id;
-		this.xCoordinate = 0;
-		this.yCoordinate = 0;
+		this.xCoordinate = 0.0;
+		this.yCoordinate = 0.0;
 	}
 
-	public SousaPoint(UUID id, Integer xCoordinate, Integer yCoordinate) {
+	public SousaPoint(UUID id, Double xCoordinate, Double yCoordinate) {
 		super();
 		this.id = id;
 		this.xCoordinate = xCoordinate;
@@ -37,19 +37,19 @@ public class SousaPoint {
 		this.id = id;
 	}
 
-	public Integer getxCoordinate() {
+	public Double getxCoordinate() {
 		return xCoordinate;
 	}
 
-	public void setxCoordinate(Integer xCoordinate) {
+	public void setxCoordinate(Double xCoordinate) {
 		this.xCoordinate = xCoordinate;
 	}
 
-	public Integer getyCoordinate() {
+	public Double getyCoordinate() {
 		return yCoordinate;
 	}
 
-	public void setyCoordinate(Integer yCoordinate) {
+	public void setyCoordinate(Double yCoordinate) {
 		this.yCoordinate = yCoordinate;
 	}
 
