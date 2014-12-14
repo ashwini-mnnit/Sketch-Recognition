@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import com.parser.mechanix.MechanixShape;
 import com.sketchshape.SrlShapeExtended;
 
 import edu.tamu.srl.sketch.core.tobenamedlater.SrlShapeConfig;
@@ -27,13 +28,38 @@ public class ClusterDataSet {
 	    	values[0] = srlShapeExtended.getAverageSpeed();
 	    	values[1] = srlShapeExtended.getAveragePressure();
 	        Instance currentInstance = new DenseInstance(values);
-	        currentInstance.setClassValue(values[values.length -1]);
+	        //currentInstance.setClassValue(values[values.length -1]);
 	        idMap.put(currentInstance.getID(), srlShapeExtended.getRecognizerId());
 	        data.add(currentInstance);
 	    }
 	    Dataset[] clusterInstances = getClusteredData(data);
 	    Map<UUID, Integer> clusterIds = setCLusterIds(clusterInstances, idMap);
 	    populateSrlShapeWithUserType(srlShapeExtendedList, clusterIds);
+	}
+
+	public void setClusterIdMechanixShape(List<MechanixShape> mechanixShapeList) {
+		Dataset data = new DefaultDataset();
+		Map<Integer, UUID> idMap = new HashMap<Integer, UUID>();
+	    for (MechanixShape mechanixShape : mechanixShapeList) {
+	    	double[] values = new double[ClusterDataSet.NUMBER_OF_FEATURES];
+	    	values[0] = mechanixShape.getAverageSpeed();
+	    	values[1] = mechanixShape.getAveragePressure();
+	        Instance currentInstance = new DenseInstance(values);
+	        //currentInstance.setClassValue(values[values.length -1]);
+	        idMap.put(currentInstance.getID(), mechanixShape.getId());
+	        data.add(currentInstance);
+	    }
+	    Dataset[] clusterInstances = getClusteredData(data);
+	    Map<UUID, Integer> clusterIds = setCLusterIds(clusterInstances, idMap);
+	    populateMechanixShapeWithUserType(mechanixShapeList, clusterIds);
+	}	
+	
+	private void populateMechanixShapeWithUserType(
+			List<MechanixShape> mechanixShapeList, Map<UUID, Integer> clusterIds) {
+		for(MechanixShape mechanixShape : mechanixShapeList) {
+			double clusterId = clusterIds.get(mechanixShape.getId());
+			mechanixShape.setClusterId(clusterId);
+		}
 	}
 
 	private Map<UUID, Integer> setCLusterIds(Dataset[] clusterInstances,
@@ -49,8 +75,7 @@ public class ClusterDataSet {
 	}
 
 	private static void populateSrlShapeWithUserType(
-			List<SrlShapeExtended> srlShapeExtendedList,
-			Map<UUID, Integer> clusterIds) {
+			List<SrlShapeExtended> srlShapeExtendedList, Map<UUID, Integer> clusterIds) {
 		for(SrlShapeExtended srlShapeExtended : srlShapeExtendedList) {
 			double clusterId = clusterIds.get(srlShapeExtended.getRecognizerId());
 			srlShapeExtended.setClusterId(clusterId);

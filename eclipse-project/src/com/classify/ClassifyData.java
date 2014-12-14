@@ -12,6 +12,7 @@ import net.sf.javaml.core.DenseInstance;
 import net.sf.javaml.core.Instance;
 
 import com.cluster.ClusterDataSet;
+import com.parser.mechanix.MechanixShape;
 import com.sketchshape.SrlShapeExtended;
 
 import edu.tamu.srl.sketch.core.tobenamedlater.SrlShapeConfig;
@@ -40,7 +41,31 @@ public class ClassifyData {
 			System.out.printf("Error in learning the classifier", e.getMessage());
 		}
 	}
-		
+	
+	public void learnClassifierMechanixShape(List<MechanixShape> mechanixShapeList) {
+		ClusterDataSet clusterDataSet = new ClusterDataSet();
+		clusterDataSet.setClusterIdMechanixShape(mechanixShapeList);
+		Dataset data = new DefaultDataset();
+		try {
+			for (MechanixShape mechanixShape : mechanixShapeList) {
+				Instance currentInstance = getInstance(mechanixShape);
+				currentInstance.setClassValue(mechanixShape.getClusterId());
+				data.add(currentInstance);
+			}
+			myClassifier.buildClassifier(data);
+		} catch(Exception e) {
+			System.out.printf("Error in learning the classifier", e.getMessage());
+		}
+	}	
+	
+	private Instance getInstance(MechanixShape mechanixShape) {
+		double[] values = new double[ClusterDataSet.NUMBER_OF_FEATURES];
+	    values[0] = mechanixShape.getAverageSpeed();
+	    values[1] = mechanixShape.getAveragePressure();
+	    Instance currentInstance = new DenseInstance(values);
+		return currentInstance;
+	}
+
 	public Double getClusterId(SrlShapeExtended srlShapeExtended) {
 		Double clusterId = -1.0;
 		try {
@@ -52,6 +77,19 @@ public class ClassifyData {
 			}
 		return clusterId;
 		}
+	
+	public Double getClusterId(MechanixShape mechanixShape) {
+		Double clusterId = -1.0;
+		try {
+			Instance currentInstance;
+			currentInstance = getInstance(mechanixShape);
+			clusterId = (Double) myClassifier.classify(currentInstance);
+		} catch (Exception e) {
+			System.out.printf("Error in classifying the given Shape object", e.getMessage());
+			}
+		return clusterId;
+		}
+
 		
 	private Instance getInstance(SrlShapeExtended srlShapeExtended) throws Exception{
 		double[] values = new double[ClusterDataSet.NUMBER_OF_FEATURES];
