@@ -13,13 +13,32 @@ import edu.tamu.srl.sketch.core.virtual.SrlPoint;
 
 public class SketchExtended {
 	private List<SrlShapeExtended> srlshapes;	
+    private String id;
+    
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
 
 	public SketchExtended() {		
 		super();
 		srlshapes= new ArrayList<SrlShapeExtended>();
 		
 	}
-	void parseSouseSketch(List<SousaSketch> souseSketchs)
+	
+	public List<SrlShapeExtended> getSrlshapes() {
+		return srlshapes;
+	}
+
+	public void setSrlshapes(List<SrlShapeExtended> srlshapes) {
+		this.srlshapes = srlshapes;
+	}
+
+
+	public void parseSouseSketch(List<SousaSketch> souseSketchs)
 	{
 		for (SousaSketch sousaSketch : souseSketchs) {
 			SrlShapeExtended srlshape= new SrlShapeExtended(0,sousaSketch.getId(),null,sousaSketch.getType());
@@ -37,4 +56,6 @@ public class SketchExtended {
 			srlshapes.add(srlshape);
 		}
 	}
+	
+	
 }

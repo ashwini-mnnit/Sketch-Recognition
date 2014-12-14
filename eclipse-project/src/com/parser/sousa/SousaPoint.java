@@ -15,6 +15,10 @@ public class SousaPoint {
 		this.time = time;
 	}
 
+	public SousaPoint() {
+		
+	}
+
 	public SousaPoint(UUID id) {
 		super();
 		this.id = id;
