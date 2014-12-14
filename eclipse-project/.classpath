@@ -8,5 +8,10 @@
 	<classpathentry exported="true" kind="lib" path="C:/Users/chunkygupta/Dropbox/Sketch Recognition/Project/SketchShapes-1.0-SNAPSHOT-r2014-12-12_17-31-30.9e39a-javadoc.jar"/>
 	<classpathentry exported="true" kind="lib" path="C:/Users/chunkygupta/Dropbox/Sketch Recognition/Project/SketchShapes-1.0-SNAPSHOT-r2014-12-12_17-31-30.9e39a-sources.jar"/>
 	<classpathentry exported="true" kind="lib" path="C:/Users/chunkygupta/Dropbox/Sketch Recognition/Project/javaml-0.1.7/javaml-0.1.7/javaml-0.1.7.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Users/chunkygupta/Dropbox/Sketch Recognition/Project/mongojars/gson-2.3.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Users/chunkygupta/Dropbox/Sketch Recognition/Project/mongojars/gson-2.3.1-javadoc.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Users/chunkygupta/Dropbox/Sketch Recognition/Project/mongojars/gson-2.3.1-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Users/chunkygupta/Dropbox/Sketch Recognition/Project/mongojars/mongo-java-driver-2.13.0-rc0.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Users/chunkygupta/Dropbox/Sketch Recognition/Project/mongojars/mongo-java-driver-2.13.0-rc0-javadoc.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

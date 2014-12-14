@@ -25,7 +25,7 @@ public class ClassifyData {
 		myClassifier = new KNearestNeighbors(numberOfNeighbours);
 	}
 	
-	void learnClassifier(List<SrlShapeExtended> srlShapeExtendedList) {
+	public void learnClassifier(List<SrlShapeExtended> srlShapeExtendedList) {
 		ClusterDataSet clusterDataSet = new ClusterDataSet();
 		clusterDataSet.setClusterId(srlShapeExtendedList);
 		Dataset data = new DefaultDataset();
@@ -41,7 +41,7 @@ public class ClassifyData {
 		}
 	}
 		
-	Double getClusterId(SrlShapeExtended srlShapeExtended) {
+	public Double getClusterId(SrlShapeExtended srlShapeExtended) {
 		Double clusterId = -1.0;
 		try {
 			Instance currentInstance;
