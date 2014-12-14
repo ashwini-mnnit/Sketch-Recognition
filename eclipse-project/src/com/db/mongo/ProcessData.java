@@ -8,7 +8,7 @@ import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 import com.mongodb.util.JSON;
 import com.sketchshape.SrlShapeExtended;
-//shirsing
+
 public class ProcessData {
 	private MongoConnect mongoConnect;
 	

@@ -3,7 +3,7 @@ package com.db.mongo;
 import com.google.gson.InstanceCreator;
 import com.parser.sousa.SousaPoint;
 
-//shirsing
+
 class SousaPointInstanceCreator implements InstanceCreator<SousaPoint> {
 		@Override
 		public SousaPoint createInstance(java.lang.reflect.Type paramType) {

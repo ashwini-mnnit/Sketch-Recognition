@@ -18,9 +18,6 @@ import com.sketchMl.Point;
 import com.sketchMl.Shape;
 import com.sketchMl.Sketch;
 
-
-//shirsing
-
 public class RetrieveData {
 	private MongoConnect mongoConnect;
 	

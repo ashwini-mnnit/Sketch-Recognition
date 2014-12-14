@@ -11,7 +11,6 @@ import edu.tamu.srl.sketch.core.object.SrlShape;
 import edu.tamu.srl.sketch.core.object.SrlStroke;
 import edu.tamu.srl.sketch.core.virtual.SrlPoint;
 
-//new
 public class SketchExtended {
 	private List<SrlShapeExtended> srlshapes;	
     private String id;
