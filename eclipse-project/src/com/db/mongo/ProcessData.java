@@ -8,7 +8,7 @@ import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 import com.mongodb.util.JSON;
 import com.sketchshape.SrlShapeExtended;
-
+//shirsing
 public class ProcessData {
 	private MongoConnect mongoConnect;
 	
@@ -38,7 +38,6 @@ public class ProcessData {
 	    		System.out.println(cursor.next());
 	    	}	    	
     	}
-    	
     	
     	public void removeSouseData(String collectionName, String id) {
     		DBCollection collection = mongoConnect.getCollection(collectionName);

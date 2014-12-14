@@ -18,6 +18,9 @@ import com.sketchMl.Point;
 import com.sketchMl.Shape;
 import com.sketchMl.Sketch;
 
+
+//shirsing
+
 public class RetrieveData {
 	private MongoConnect mongoConnect;
 	
@@ -87,10 +90,4 @@ public class RetrieveData {
 		return sketchML;
 	}
 	
-	
-	
-	public static void main(String[] args) throws JSONException {
-		RetrieveData dataObject = new RetrieveData("localhost", 27017, "SketchRec");
-		dataObject.getSketchMlforSouseData("Souse", "0b8c1460-6919-45bf-b6e3-b3776b69a40b");
-	}
 }
