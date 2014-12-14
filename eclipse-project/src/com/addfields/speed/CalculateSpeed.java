@@ -1,10 +1,12 @@
 package com.addfields.speed;
 
 import java.lang.ArithmeticException;
-
 import java.util.ArrayList;
 import java.util.List;
 
+import com.parser.mechanix.MechanixPoint;
+import com.parser.mechanix.MechanixShape;
+import com.parser.mechanix.MechanixStroke;
 import com.sketchshape.SrlShapeExtended;
 
 import edu.tamu.srl.sketch.core.abstracted.SrlObject;
@@ -50,6 +52,46 @@ public class CalculateSpeed {
 		}
 	}
 
+	void populateSpeed(MechanixShape mechanixShape) 
+	{
+		try {
+		List<MechanixShape> subShapes = new ArrayList<MechanixShape>();
+		subShapes = mechanixShape.getShapes();
+		List<MechanixStroke> strokeList = new ArrayList<MechanixStroke>();
+		strokeList.add(mechanixShape.getStroke());
+		if(subShapes != null)  {
+			for(MechanixShape singleShape : subShapes) {
+				strokeList.add(singleShape.getStroke());
+			}
+		}
+		double shapeSpeed = 0;
+		double totalPoints = 0;
+		for(MechanixStroke mechanixStroke : strokeList)
+		{
+			List<MechanixPoint> pointList = mechanixStroke.getPoints();
+			totalPoints+=(pointList.size() - 1);
+			for(int i = 0; i < pointList.size() -1; i++)
+			{
+				double x1 = pointList.get(i).getX();
+				double y1 = pointList.get(i).getY();
+				double x2 = pointList.get(i+1).getX();
+				double y2 = pointList.get(i+1).getY();
+				
+				double currentDistance = getDistanceBetweenTwoPoints(x1, y1, x2, y2);
+				double currentTime = Double.parseDouble(pointList.get(i+1).getTime()) - Double.parseDouble(pointList.get(i).getTime());
+				if(currentTime != 0)
+					shapeSpeed+=(currentDistance/currentTime);
+			}
+		}
+		shapeSpeed = shapeSpeed / totalPoints;
+		mechanixShape.setAverageSpeed(shapeSpeed);
+		}
+		catch(ArithmeticException e) {
+			System.out.printf("There are no points in given Shape", e.getMessage());
+			throw new ArithmeticException();
+		}
+	}
+	
 	public static void main(String[] args) {
 		
 		CalculateSpeed calculateSpeed = new CalculateSpeed();
@@ -72,5 +114,23 @@ public class CalculateSpeed {
 		srlShapeExtended.addAll(srlStrokes);
 		calculateSpeed.populateSpeed(srlShapeExtended);
 		System.out.println(srlShapeExtended.getAverageSpeed());
+		
+		MechanixShape mechanixShape = new MechanixShape();
+		ArrayList<MechanixPoint> pointList3 = new ArrayList<MechanixPoint>();
+		MechanixPoint mechanixPoint1 = new MechanixPoint(0, 0, "0");
+		MechanixPoint mechanixPoint2 = new MechanixPoint(0, 1, "1");
+		MechanixPoint mechanixPoint3 = new MechanixPoint(0, 3, "2");
+		MechanixPoint mechanixPoint4 = new MechanixPoint(0, 6, "3");
+		MechanixPoint mechanixPoint5 = new MechanixPoint(0, 10, "4");
+		pointList3.add(mechanixPoint1);
+		pointList3.add(mechanixPoint2);
+		pointList3.add(mechanixPoint3);
+		pointList3.add(mechanixPoint4);
+		pointList3.add(mechanixPoint5);
+		MechanixStroke mechanixStroke = new MechanixStroke();
+		mechanixStroke.setPoints(pointList3);
+		mechanixShape.setStroke(mechanixStroke);
+		calculateSpeed.populateSpeed(mechanixShape);
+		System.out.println(mechanixShape.getAverageSpeed());
 	}
 }

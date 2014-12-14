@@ -6,6 +6,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonParseException;
 import com.parser.sousa.SousaPoint;
 
+
 public class SousaPointDeserializer implements JsonDeserializer<SousaPoint> {
 	
 

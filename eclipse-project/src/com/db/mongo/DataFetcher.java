@@ -10,6 +10,8 @@ import org.xml.sax.SAXException;
 
 import com.parser.sousa.SousaParser;
 import com.parser.sousa.SousaSketch;
+import com.sketchshape.SketchExtended;
+import com.sketchshape.SrlShapeExtended;
 
 public class DataFetcher {
 	private String path;
@@ -18,7 +20,7 @@ public class DataFetcher {
 		this.path = path;
 	}
 
-	public List<SousaSketch> GetSouseData() {
+	public List<SrlShapeExtended> GetSouseData() {
 		List<SousaSketch> sketchList = new ArrayList<SousaSketch>();
 		try {
 			sketchList = SousaParser.parse(path);
@@ -26,6 +28,8 @@ public class DataFetcher {
 			System.out.println("Exception:  " + e.getMessage());
 			e.printStackTrace();
 		}
-		return sketchList;
+		SketchExtended sketchExtended = new SketchExtended();
+		sketchExtended.parseSouseSketch(sketchList);
+		return sketchExtended.getSrlshapes();
 	}
 }
