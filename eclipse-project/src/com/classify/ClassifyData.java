@@ -12,7 +12,7 @@ import net.sf.javaml.core.DenseInstance;
 import net.sf.javaml.core.Instance;
 
 import com.cluster.ClusterDataSet;
-import com.srlshapeextended.SrlShapeExtended;
+import com.sketchshape.SrlShapeExtended;
 
 import edu.tamu.srl.sketch.core.tobenamedlater.SrlShapeConfig;
 
@@ -31,7 +31,6 @@ public class ClassifyData {
 	    	values[1] = srlShapeExtended.getAveragePressure();
 	        Instance currentInstance = new DenseInstance(values);
 	        currentInstance.setClassValue(srlShapeExtended.getClusterId());
-	        //System.out.print(currentInstance.classValue());
 	        data.add(currentInstance);
 	    }
 		
@@ -109,5 +108,4 @@ public class ClassifyData {
 	        predictedClassValue = (Double) myClassifier.classify(currentInstance);
 	        System.out.print(predictedClassValue);
 		}
-		
 }

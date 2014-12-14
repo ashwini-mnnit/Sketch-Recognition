@@ -6,10 +6,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-import com.srlshapeextended.SrlShapeExtended;
+import com.sketchshape.SrlShapeExtended;
 
-import edu.tamu.srl.sketch.core.abstracted.SrlObject;
-import edu.tamu.srl.sketch.core.object.SrlShape;
 import edu.tamu.srl.sketch.core.tobenamedlater.SrlShapeConfig;
 import net.sf.javaml.clustering.Clusterer;
 import net.sf.javaml.clustering.KMeans;
@@ -34,13 +32,8 @@ public class ClusterDataSet {
 	    	values[1] = srlShapeExtended.getAveragePressure();
 	        Instance currentInstance = new DenseInstance(values);
 	        currentInstance.setClassValue(values[values.length -1]);
-	        //System.out.print(currentInstance.classValue());
-	        idMap.put(currentInstance.getID(), srlShapeExtended.getSrlShape().getRecognizerId());
+	        idMap.put(currentInstance.getID(), srlShapeExtended.getRecognizerId());
 	        data.add(currentInstance);
-	    }
-	    Dataset dataForClassification = data;
-	    for (Instance inst : dataForClassification) {
-	    	System.out.printf(inst.classValue() + "\n");
 	    }
 	    Dataset[] clusterInstances = getClusteredData(data);
 	    Map<UUID, Integer> clusterIds = setCLusterIds(clusterInstances, idMap);
@@ -63,7 +56,7 @@ public class ClusterDataSet {
 			List<SrlShapeExtended> srlShapeExtendedList,
 			Map<UUID, Integer> clusterIds) {
 		for(SrlShapeExtended srlShapeExtended : srlShapeExtendedList) {
-			double clusterId = clusterIds.get(srlShapeExtended.getSrlShape().getRecognizerId());
+			double clusterId = clusterIds.get(srlShapeExtended.getRecognizerId());
 			srlShapeExtended.setClusterId(clusterId);
 		}
 	}

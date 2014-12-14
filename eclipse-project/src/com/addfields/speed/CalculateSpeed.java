@@ -3,7 +3,7 @@ package com.addfields.speed;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.srlshapeextended.SrlShapeExtended;
+import com.sketchshape.SrlShapeExtended;
 
 import edu.tamu.srl.sketch.core.abstracted.SrlObject;
 import edu.tamu.srl.sketch.core.object.SrlStroke;
@@ -18,7 +18,7 @@ public class CalculateSpeed {
 	void populateSpeed(SrlShapeExtended srlShapeExtended)
 	{
 		List<SrlStroke> subShapes;
-		subShapes = (srlShapeExtended).getSrlShape().getRecursiveStrokeList();
+		subShapes = (srlShapeExtended).getRecursiveStrokeList();
 		double shapeSpeed = 0;
 		double totalPoints = 0;
 		for(SrlStroke stroke : subShapes)
@@ -60,7 +60,7 @@ public class CalculateSpeed {
 		srlStroke.addPoints(pointList);
 		List<SrlObject> srlStrokes = new ArrayList<SrlObject>();
 		srlStrokes.add(srlStroke);
-		srlShapeExtended.getSrlShape().addAll(srlStrokes);
+		srlShapeExtended.addAll(srlStrokes);
 		calculateSpeed.populateSpeed(srlShapeExtended);
 		System.out.println(srlShapeExtended.getAverageSpeed());
 	}
