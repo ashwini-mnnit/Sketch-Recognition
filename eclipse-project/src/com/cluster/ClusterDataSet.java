@@ -19,15 +19,11 @@ import net.sf.javaml.core.Instance;
 public class ClusterDataSet {
 	public final static int NUMBER_OF_FEATURES = 2;
 
-	public int getNumberOfFeatures() {
-		return NUMBER_OF_FEATURES;
-	}
-
 	public void setClusterId(List<SrlShapeExtended> srlShapeExtendedList) {
 		Dataset data = new DefaultDataset();
 		Map<Integer, UUID> idMap = new HashMap<Integer, UUID>();
 	    for (SrlShapeExtended srlShapeExtended : srlShapeExtendedList) {
-	    	double[] values = new double[NUMBER_OF_FEATURES];
+	    	double[] values = new double[ClusterDataSet.NUMBER_OF_FEATURES];
 	    	values[0] = srlShapeExtended.getAverageSpeed();
 	    	values[1] = srlShapeExtended.getAveragePressure();
 	        Instance currentInstance = new DenseInstance(values);
