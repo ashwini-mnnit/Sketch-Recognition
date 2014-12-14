@@ -1,5 +1,7 @@
 package com.addfields.speed;
 
+import java.lang.ArithmeticException;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,12 +13,13 @@ import edu.tamu.srl.sketch.core.virtual.SrlPoint;
 
 public class CalculateSpeed {
 
-	double getDistanceBetweenTwoPoints(double x1, double y1, double x2, double y2) {
+	private double getDistanceBetweenTwoPoints(double x1, double y1, double x2, double y2) {
 		return Math.sqrt((Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2)));
 	}	
 	
-	void populateSpeed(SrlShapeExtended srlShapeExtended)
+	void populateSpeed(SrlShapeExtended srlShapeExtended) 
 	{
+		try {
 		List<SrlStroke> subShapes;
 		subShapes = (srlShapeExtended).getRecursiveStrokeList();
 		double shapeSpeed = 0;
@@ -34,11 +37,17 @@ public class CalculateSpeed {
 				
 				double currentDistance = getDistanceBetweenTwoPoints(x1, y1, x2, y2);
 				double currentTime = pointList.get(i+1).getTime() - pointList.get(i).getTime();
-				shapeSpeed+=(currentDistance/currentTime);
+				if(currentTime != 0)
+					shapeSpeed+=(currentDistance/currentTime);
 			}
 		}
 		shapeSpeed = shapeSpeed / totalPoints;
 		srlShapeExtended.setAverageSpeed(shapeSpeed);
+		}
+		catch(ArithmeticException e) {
+			System.out.printf("There are no points in given Shape", e.getMessage());
+			throw new ArithmeticException();
+		}
 	}
 
 	public static void main(String[] args) {

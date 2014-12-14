@@ -29,22 +29,31 @@ public class ClassifyData {
 		ClusterDataSet clusterDataSet = new ClusterDataSet();
 		clusterDataSet.setClusterId(srlShapeExtendedList);
 		Dataset data = new DefaultDataset();
-		for (SrlShapeExtended srlShapeExtended : srlShapeExtendedList) {
-	    	Instance currentInstance = getInstance(srlShapeExtended);
-	        currentInstance.setClassValue(srlShapeExtended.getClusterId());
-	        data.add(currentInstance);
-	    }
-		myClassifier.buildClassifier(data);
+		try {
+			for (SrlShapeExtended srlShapeExtended : srlShapeExtendedList) {
+				Instance currentInstance = getInstance(srlShapeExtended);
+				currentInstance.setClassValue(srlShapeExtended.getClusterId());
+				data.add(currentInstance);
+			}
+			myClassifier.buildClassifier(data);
+		} catch(Exception e) {
+			System.out.printf("Error in learning the classifier", e.getMessage());
+		}
 	}
 		
 	Double getClusterId(SrlShapeExtended srlShapeExtended) {
-		Instance currentInstance = getInstance(srlShapeExtended);
-		Double clusterId = (Double) myClassifier.classify(currentInstance);
+		Double clusterId = -1.0;
+		try {
+			Instance currentInstance;
+			currentInstance = getInstance(srlShapeExtended);
+			clusterId = (Double) myClassifier.classify(currentInstance);
+		} catch (Exception e) {
+			System.out.printf("Error in classifying the given Shape object", e.getMessage());
+			}
 		return clusterId;
-			
 		}
 		
-	private Instance getInstance(SrlShapeExtended srlShapeExtended) {
+	private Instance getInstance(SrlShapeExtended srlShapeExtended) throws Exception{
 		double[] values = new double[ClusterDataSet.NUMBER_OF_FEATURES];
 	    values[0] = srlShapeExtended.getAverageSpeed();
 	    values[1] = srlShapeExtended.getAveragePressure();
