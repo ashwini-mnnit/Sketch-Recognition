@@ -7,12 +7,19 @@ package com.sketchMl;
 import java.util.ArrayList;
 import java.util.UUID;
 
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
+
 /**
  *
  * @author shirsing
  */
+@XmlRootElement
 public class Sketch {
- private UUID sketchId;
+ private UUID id;
  private String units;
  private ArrayList<Sketcher> sketcher;
  private Study study;
@@ -21,13 +28,13 @@ public class Sketch {
  private ArrayList<Shape> shape;
  private ArrayList<Edit> edit;
  private ArrayList<Speech> speech;
- private ArrayList<MediaInfo> mediainfo;
+ private ArrayList<MediaInfo> mediaInfo;
  
  
 public Sketch(UUID sketchId, String units, ArrayList<Sketcher> sketcher, Study study,
 		Domain domain, ArrayList<Point> point, ArrayList<Shape> shape, ArrayList<Edit> edit, ArrayList<Speech> speech,
 		ArrayList<MediaInfo> mediainfo) {
-	this.sketchId = sketchId;
+	this.id = sketchId;
 	this.units = units;
 	this.sketcher = sketcher;
 	this.study = study;
@@ -36,38 +43,42 @@ public Sketch(UUID sketchId, String units, ArrayList<Sketcher> sketcher, Study s
 	this.shape = shape;
 	this.edit = edit;
 	this.speech = speech;
-	this.mediainfo = mediainfo;
+	this.mediaInfo = mediainfo;
 }
 
 public Sketch() {
+	this.id = UUID.randomUUID();
+	this.units = "himetric";
+	this.study = new Study();
+	this.domain = new Domain();
 	this.sketcher = new ArrayList<Sketcher>();
 	this.point = new ArrayList<Point>();
 	this.shape = new ArrayList<Shape>();
 	this.edit = new ArrayList<Edit>();
 	this.speech = new ArrayList<Speech>();
-	this.mediainfo = new ArrayList<MediaInfo>();
+	this.mediaInfo = new ArrayList<MediaInfo>();
 }
 
-public UUID getSketchId() {
-	return sketchId;
+public UUID getId() {
+	return id;
 }
-public void setSketchId(UUID sketchId) {
-	this.sketchId = sketchId;
+@XmlAttribute
+public void setId(UUID id) {
+	this.id = id;
 }
+
 public String getUnits() {
 	return units;
 }
+@XmlAttribute
 public void setUnits(String units) {
 	this.units = units;
 }
+
 public ArrayList<Sketcher> getSketcher() {
 	return sketcher;
 }
-public void setSketcher(UUID id, float XAxis, float YAxis, String nickName) {
-	Sketcher s = new Sketcher(id, XAxis, YAxis, nickName);
-	this.sketcher.add(s);
-}
-
+@XmlElement
 public void setSketcher(ArrayList<Sketcher> sketcher) {
 	this.sketcher = sketcher;
 }
@@ -75,74 +86,59 @@ public void setSketcher(ArrayList<Sketcher> sketcher) {
 public Study getStudy() {
 	return study;
 }
+@XmlElement
 public void setStudy(Study study) {
 	this.study = study;
-}
-
-public void setStudy(String studyName) {
-	this.study = new Study(studyName);
 }
 
 public Domain getDomain() {
 	return domain;
 }
+@XmlElement
 public void setDomain(Domain domain) {
 	this.domain = domain;
 }
 
-public void setDomain(String domain) {
-	this.domain = new Domain(domain);
-}
 public ArrayList<Point> getPoint() {
 	return point;
 }
+@XmlElement
 public void setPoint(ArrayList<Point> point) {
 	this.point = point;
-}
-
-public void setPoint(float xCordinate, float yCordinate, float pressure, 
-        String pointName, UUID pointID, long time) {
-		Point point = new Point(xCordinate,yCordinate,pressure,pointName,pointID,time);
-		this.point.add(point);
 }
 
 public ArrayList<Shape> getShape() {
 	return shape;
 }
+@XmlElement
 public void setShape(ArrayList<Shape> shape) {
 	this.shape = shape;
 }
+
 public ArrayList<Edit> getEdit() {
 	return edit;
 }
+@XmlElement
 public void setEdit(ArrayList<Edit> edit) {
 	this.edit = edit;
-}
-
-public void setEdit(Trigger trigger, ArrayList<Arg> arg, UUID editId, long time, 
-		String editType) {
-		Edit edit = new Edit(trigger, arg,editId,time,editType);
-		this.edit.add(edit);
 }
 
 public ArrayList<Speech> getSpeech() {
 	return speech;
 }
-
+@XmlElement
 public void setSpeech(ArrayList<Speech> speech) {
 	this.speech = speech;
 }
 
-public ArrayList<MediaInfo> getMediainfo() {
-	return mediainfo;
+public ArrayList<MediaInfo> getMediaInfo() {
+	return mediaInfo;
 }
-public void setMediainfo(ArrayList<MediaInfo> mediainfo) {
-	this.mediainfo = mediainfo;
+@XmlElement
+public void setMediaInfo(ArrayList<MediaInfo> mediaInfo) {
+	this.mediaInfo = mediaInfo;
 }
 
-public void setMediainfo(Id mediaInfoId, Arg arg, long startTime, String mediaType) {
-	MediaInfo mediainfo = new MediaInfo(mediaInfoId,arg,startTime,mediaType); 
-	this.mediainfo.add(mediainfo);
-}
+
  
 }

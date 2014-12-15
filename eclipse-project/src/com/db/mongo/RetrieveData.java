@@ -44,7 +44,7 @@ public class RetrieveData {
     		Sketch sketch = new Sketch();
     		DBObject dbobj = cursor.next();
     		String uid = (String) dbobj.get( "mId");
-    		sketch.setSketchId(UUID.fromString(uid));
+    		sketch.setId(UUID.fromString(uid));
     		sketchML.add(sketch);
     	}	    	
 		return sketchML;
@@ -71,12 +71,12 @@ public class RetrieveData {
 			
 			for (SousaPoint it1 : pointList) {
 				Point p = new Point();
-				p.setPointID(it1.getId());
+				p.setId(it1.getId());
 				p.setTime(Long.parseLong(it1.getTime()));
 				Double d = it1.getxCoordinate();
-				p.setXCordinate(d.floatValue());
+				p.setX(d.floatValue());
 				d = it1.getyCoordinate();
-				p.setYCordinate(d.floatValue());
+				p.setY(d.floatValue());
 				point.add(p);
 			}
 		}
@@ -86,12 +86,12 @@ public class RetrieveData {
 			Shape s = new Shape();
 			PremitiveStrokeType ptype = it.getPrimitiveType();
 			if (ptype != null) {
-				s.setShapeType(ptype.getName());
+				s.setType(ptype.getName());
 			}
 			ArrayList<Arg> arg = new ArrayList<Arg>();
 			addArg(arg, it.getArgList());
 			s.setArg(arg);
-			s.setShapeId(it.getId());
+			s.setId(it.getId());
 			shape.add(s);
 		}
 	}
@@ -107,7 +107,7 @@ public class RetrieveData {
     		Gson gson = new Gson();
     		String json = dbobj.toString();
     		SousaSketch sSketch = gson.fromJson(json, SousaSketch.class);
-    		sketch.setSketchId(sSketch.getId());
+    		sketch.setId(sSketch.getId());
     		
     		ArrayList<Sketcher> sketcher= new ArrayList<Sketcher> ();
     		addSketcher(sketcher,sSketch);
@@ -127,13 +127,13 @@ public class RetrieveData {
 	
 	public Sketch getSketchMlObject(MechanixSketch mSketch) {
 		Sketch sk = new Sketch();
-		sk.setSketchId(mSketch.getId());
+		sk.setId(mSketch.getId());
 		ArrayList<Shape> skShape= new ArrayList<Shape>();
 		ArrayList<Point> skPoint= new ArrayList<Point>();
 		ArrayList<MechanixShape> mShape = mSketch.getShapes();
 		for (MechanixShape it : mShape) {
 			Shape shape = new Shape();
-			shape.setShapeId(it.getId());
+			shape.setId(it.getId());
 			if (it.getTime() != null) {
 				double t = Double.parseDouble(it.getTime()); 
 				shape.setTime((long)(t));
@@ -146,7 +146,7 @@ public class RetrieveData {
 			if (mStroke != null) {
 				PremitiveStrokeType ptype = mStroke.getPrimitiveType();
 				if (ptype != null) {
-					shape.setShapeType(ptype.getName());
+					shape.setType(ptype.getName());
 				}
 			}
 			skShape.add(shape);
@@ -155,12 +155,12 @@ public class RetrieveData {
 				if (mPoint != null) {
 					for (MechanixPoint it1 : mPoint) {
 						Point p = new Point();
-						p.setPointID(it1.getId());
+						p.setId(it1.getId());
 						if (it1.getTime() != null) {
 							p.setTime(Long.parseLong(it1.getTime()));
 						}
-						p.setXCordinate((float)(it1.getX()));
-						p.setYCordinate((float)(it1.getY()));
+						p.setX((float)(it1.getX()));
+						p.setY((float)(it1.getY()));
 						skPoint.add(p);
 					}
 				}

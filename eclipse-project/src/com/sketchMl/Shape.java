@@ -7,28 +7,57 @@ package com.sketchMl;
 import java.util.ArrayList;
 import java.util.UUID;
 
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
+
 /**
  *
  * @author shirsing
  */
+@XmlRootElement
 public class Shape {
     private ArrayList<Arg> arg;
     private ArrayList<Alias> alias;
-    private UUID shapeId;
-    private String shpeName;
-    private String shapeType;
+    private UUID id;
+    private String name;
+    private String type;
     private long time;
-    private UUID authorId;
+    private UUID author;
     private float color;
     private float height;
     private float area;
-    private boolean render;
+    private boolean laysInk;
     private float orientation;
     private String penTip;
     private String raster;
     private UUID parentId;
+    private String p1;
+    private String p2;
+    private float x;
+    private float y;
+    private String text;
+    private float leftx;
+    private float topy;
+    private String control1;
+    private String control2;
+    private String start;
+    private String end;
+    private String source;
     
     public Shape() {
+    	id = UUID.randomUUID();
+    	name = "";
+    	author = UUID.randomUUID();
+    	type = "";
+    	time = 0;
+    	color = 0;
+    	area = 0;
+    	laysInk = false;
+    	height = 0;
+    	raster = "";
+    	penTip = "Ball";
     	arg = new ArrayList<Arg>();
     	alias = new ArrayList<Alias>();
     }
@@ -42,15 +71,15 @@ public class Shape {
 			String source) {
 		this.arg = arg;
 		this.alias = alias;
-		this.shapeId = shapeId;
-		this.shpeName = shpeName;
-		this.shapeType = shapeType;
+		this.id = shapeId;
+		this.name = shpeName;
+		this.type = shapeType;
 		this.time = time;
-		this.authorId = authorId;
+		this.author = authorId;
 		this.color = color;
 		this.height = height;
 		this.area = area;
-		this.render = render;
+		this.laysInk = render;
 		this.orientation = orientation;
 		this.penTip = penTip;
 		this.raster = raster;
@@ -68,192 +97,118 @@ public class Shape {
 		this.end = end;
 		this.source = source;
 	}
-    
+
 	public ArrayList<Arg> getArg() {
 		return arg;
 	}
-	public void setArg(String argType, UUID argId) {
-		
-		Arg a= new Arg(argType, argId);
-		this.arg.add(a);
-	}
-	
+	 @XmlElement
 	public void setArg(ArrayList<Arg> arg) {
 		this.arg = arg;
 	}
-	
+
 	public ArrayList<Alias> getAlias() {
 		return alias;
 	}
-	
+	 @XmlElement
 	public void setAlias(ArrayList<Alias> alias) {
-		this.alias = alias;;
+		this.alias = alias;
 	}
-	
-	public void setAlias(String aliasType, String aliasName, UUID aliasId) {
-		Alias a = new Alias(aliasType,aliasName,aliasId);
-		this.alias.add(a);
+
+	public UUID getId() {
+		return id;
 	}
-	public float getArea() {
-		return area;
+	@XmlAttribute
+	public void setId(UUID id) {
+		this.id = id;
 	}
-	public void setArea(float area) {
-		this.area = area;
+
+	public String getName() {
+		return name;
 	}
-	public UUID getShapeId() {
-		return shapeId;
+	@XmlAttribute
+	public void setName(String name) {
+		this.name = name;
 	}
-	public void setShapeId(UUID shapeId) {
-		this.shapeId = shapeId;
+
+	public String getType() {
+		return type;
 	}
-	public String getShpeName() {
-		return shpeName;
+	@XmlAttribute
+	public void setType(String type) {
+		this.type = type;
 	}
-	public void setShpeName(String shpeName) {
-		this.shpeName = shpeName;
-	}
-	public String getShapeType() {
-		return shapeType;
-	}
-	public void setShapeType(String shapeType) {
-		this.shapeType = shapeType;
-	}
+
 	public long getTime() {
 		return time;
 	}
+	@XmlAttribute
 	public void setTime(long time) {
 		this.time = time;
 	}
-	public UUID getAuthorId() {
-		return authorId;
+
+	public UUID getAuthor() {
+		return author;
 	}
-	public void setAuthorId(UUID authorId) {
-		this.authorId = authorId;
+	@XmlAttribute
+	public void setAuthor(UUID author) {
+		this.author = author;
 	}
+
 	public float getColor() {
 		return color;
 	}
+	@XmlAttribute
 	public void setColor(float color) {
 		this.color = color;
 	}
+
 	public float getHeight() {
 		return height;
 	}
+	@XmlAttribute
 	public void setHeight(float height) {
 		this.height = height;
 	}
-	public boolean isRender() {
-		return render;
+
+	public float getArea() {
+		return area;
 	}
-	public void setRender(boolean render) {
-		this.render = render;
+	@XmlAttribute
+	public void setArea(float area) {
+		this.area = area;
 	}
+
+	public boolean isLaysInk() {
+		return laysInk;
+	}
+	@XmlAttribute
+	public void setLaysInk(boolean laysInk) {
+		this.laysInk = laysInk;
+	}
+
 	public float getOrientation() {
 		return orientation;
 	}
+	@XmlAttribute
 	public void setOrientation(float orientation) {
 		this.orientation = orientation;
 	}
+	
 	public String getPenTip() {
 		return penTip;
 	}
+	@XmlAttribute
 	public void setPenTip(String penTip) {
 		this.penTip = penTip;
 	}
+
 	public String getRaster() {
 		return raster;
 	}
+	@XmlAttribute
 	public void setRaster(String raster) {
 		this.raster = raster;
 	}
-	public UUID getParentId() {
-		return parentId;
-	}
-	public void setParentId(UUID parentId) {
-		this.parentId = parentId;
-	}
-	public String getP1() {
-		return p1;
-	}
-	public void setP1(String p1) {
-		this.p1 = p1;
-	}
-	public String getP2() {
-		return p2;
-	}
-	public void setP2(String p2) {
-		this.p2 = p2;
-	}
-	public float getX() {
-		return x;
-	}
-	public void setX(float x) {
-		this.x = x;
-	}
-	public float getY() {
-		return y;
-	}
-	public void setY(float y) {
-		this.y = y;
-	}
-	public String getText() {
-		return text;
-	}
-	public void setText(String text) {
-		this.text = text;
-	}
-	public float getLeftx() {
-		return leftx;
-	}
-	public void setLeftx(float leftx) {
-		this.leftx = leftx;
-	}
-	public float getTopy() {
-		return topy;
-	}
-	public void setTopy(float topy) {
-		this.topy = topy;
-	}
-	public String getControl1() {
-		return control1;
-	}
-	public void setControl1(String control1) {
-		this.control1 = control1;
-	}
-	public String getControl2() {
-		return control2;
-	}
-	public void setControl2(String control2) {
-		this.control2 = control2;
-	}
-	public String getStart() {
-		return start;
-	}
-	public void setStart(String start) {
-		this.start = start;
-	}
-	public String getEnd() {
-		return end;
-	}
-	public void setEnd(String end) {
-		this.end = end;
-	}
-	public String getSource() {
-		return source;
-	}
-	public void setSource(String source) {
-		this.source = source;
-	}
-	private String p1;
-    private String p2;
-    private float x;
-    private float y;
-    private String text;
-    private float leftx;
-    private float topy;
-    private String control1;
-    private String control2;
-    private String start;
-    private String end;
-    private String source;
+
+    
 }

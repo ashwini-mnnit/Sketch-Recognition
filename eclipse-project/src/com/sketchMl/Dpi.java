@@ -4,43 +4,42 @@
  */
 package com.sketchMl;
 
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlRootElement;
+
 /**
  *
  * @author shirsing
  */
+@XmlRootElement
 public class Dpi {
-    private float dpiXAxis;
-    private float dpiYAxis;
+    private float x;
+    private float y;
     
     public Dpi (float dpiXAxis, float dpiYAxis) {
-        this.dpiXAxis = dpiXAxis;
-        this.dpiYAxis = dpiYAxis;
+        this.x = dpiXAxis;
+        this.y = dpiYAxis;
     }
     /*
      * Default constructor
      */
     public Dpi() {
-    
+    	x = 0;
+    	y = 0;
     }
+	public float getX() {
+		return x;
+	}
+    @XmlAttribute
+	public void setX(float x) {
+		this.x = x;
+	}
+	public float getY() {
+		return y;
+	}
+	@XmlAttribute
+	public void setY(float y) {
+		this.y = y;
+	}
     
-    public void setDpiXAxis(float dpiXAxis) {
-        this.dpiXAxis = dpiXAxis;
-    }
-    
-    public void setDpi(float dpiXAxis, float dpiYAxis) {
-        this.dpiXAxis = dpiXAxis;
-        this.dpiYAxis = dpiYAxis;
-    }
-    public void setdpiYAxis(float dpiYAxis) {
-        this.dpiYAxis = dpiYAxis;
-    }
-    
-    
-    public float getDpiXAxis() {
-        return this.dpiXAxis;
-    }
-    
-    public float getDpiYAxis() {
-        return this.dpiYAxis;
-    }
 }

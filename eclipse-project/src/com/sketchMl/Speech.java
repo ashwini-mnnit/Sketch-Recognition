@@ -7,125 +7,136 @@ package com.sketchMl;
 import java.util.ArrayList;
 import java.util.UUID;
 
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
 /**
  *
  * @author shirsing
  */
+@XmlRootElement
 public class Speech {
     private ArrayList<Arg> arg;
-    private UUID authorId;
-    private UUID speechId;
+    private UUID author;
+    private UUID id;
     private long startTime;
     private long endTime;
-    private String speechType;
-    private UUID sourceId;
+    private String type;
+    private UUID source;
     private long score;
     private String word;
     private int wordForm;
 
     public Speech() {
     	arg = new ArrayList<Arg>();
+    	author = UUID.randomUUID();
+    	id = UUID.randomUUID();
+    	source = UUID.randomUUID();
+    	startTime = 0;
+    	endTime = 0;
+    	score = 0;
+    	word = "around";
+    	type = "word";
+    	wordForm = 0;
     }
     
     public Speech(ArrayList<Arg> arg, UUID authorId, UUID speechId, long startTime,
 			long endTime, String speechType, UUID sourceId, long score,
 			String word, int wordForm) {
 		this.arg = arg;
-		this.authorId = authorId;
-		this.speechId = speechId;
+		this.author = authorId;
+		this.id = speechId;
 		this.startTime = startTime;
 		this.endTime = endTime;
-		this.speechType = speechType;
-		this.sourceId = sourceId;
+		this.type = speechType;
+		this.source = sourceId;
 		this.score = score;
 		this.word = word;
 		this.wordForm = wordForm;
 	}
 
 	public ArrayList<Arg> getArg() {
-        return arg;
-    }
-
-    public UUID getAuthorId() {
-        return authorId;
-    }
-
-    public long getEndTime() {
-        return endTime;
-    }
-
-    public long getScore() {
-        return score;
-    }
-
-    public UUID getSourceId() {
-        return sourceId;
-    }
-
-    public UUID getSpeechId() {
-        return speechId;
-    }
-
-    public String getSpeechType() {
-        return speechType;
-    }
-
-    public long getStartTime() {
-        return startTime;
-    }
-
-    public String getWord() {
-        return word;
-    }
-
-    public int getWordForm() {
-        return wordForm;
-    }
-
-    public void setArg(ArrayList<Arg> arg) {
-        this.arg = arg;
-    }
-    
-    public void setArg(String argType, UUID argId) {
-		
-		Arg a= new Arg(argType, argId);
-		this.arg.add(a);
+		return arg;
+	}
+@XmlElement
+	public void setArg(ArrayList<Arg> arg) {
+		this.arg = arg;
 	}
 
-    public void setAuthorId(UUID authorId) {
-        this.authorId = authorId;
-    }
+	public UUID getAuthor() {
+		return author;
+	}
 
-    public void setEndTime(long endTime) {
-        this.endTime = endTime;
-    }
+@XmlAttribute
+	public void setAuthor(UUID author) {
+		this.author = author;
+	}
 
-    public void setScore(long score) {
-        this.score = score;
-    }
+	public UUID getId() {
+		return id;
+	}
+	@XmlAttribute
+	public void setId(UUID id) {
+		this.id = id;
+	}
 
-    public void setSourceId(UUID sourceId) {
-        this.sourceId = sourceId;
-    }
+	public long getStartTime() {
+		return startTime;
+	}
+	@XmlAttribute
+	public void setStartTime(long startTime) {
+		this.startTime = startTime;
+	}
 
-    public void setSpeechId(UUID speechId) {
-        this.speechId = speechId;
-    }
+	public long getEndTime() {
+		return endTime;
+	}
+	@XmlAttribute
+	public void setEndTime(long endTime) {
+		this.endTime = endTime;
+	}
 
-    public void setSpeechType(String speechType) {
-        this.speechType = speechType;
-    }
+	public String getType() {
+		return type;
+	}
+	@XmlAttribute
+	public void setType(String type) {
+		this.type = type;
+	}
 
-    public void setStartTime(long startTime) {
-        this.startTime = startTime;
-    }
+	public UUID getSource() {
+		return source;
+	}
+	@XmlAttribute
+	public void setSource(UUID source) {
+		this.source = source;
+	}
 
-    public void setWord(String word) {
-        this.word = word;
-    }
+	public long getScore() {
+		return score;
+	}
+	@XmlAttribute
+	public void setScore(long score) {
+		this.score = score;
+	}
 
-    public void setWordForm(int wordForm) {
-        this.wordForm = wordForm;
-    }
+	public String getWord() {
+		return word;
+	}
+	@XmlAttribute
+	public void setWord(String word) {
+		this.word = word;
+	}
+
+	public int getWordForm() {
+		return wordForm;
+	}
+	@XmlAttribute
+	public void setWordForm(int wordForm) {
+		this.wordForm = wordForm;
+	}
+
+	
 
 }

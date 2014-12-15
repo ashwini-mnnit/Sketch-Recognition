@@ -40,9 +40,11 @@ public class HandleData {
 			
 			ArrayList<Sketch> s =r.getSketchMlforSouseData("Souse", "0b8c1460-6919-45bf-b6e3-b3776b69a40b");
 			
-			 r.getSketchMlforMechanixData("Mechanix", "b589d96f-ec00-4156-9bc8-b6f26bf28cc5");
+		    r.getSketchMlforMechanixData("Mechanix", "b589d96f-ec00-4156-9bc8-b6f26bf28cc5");
 			
 			for (Sketch it :s) {
+				System.out.println(it.getId());
+				SketchMltoXmlConverter.sketchMltoXml(it);
 				Gson gson = new Gson();
 				System.out.println(gson.toJson(it));
 			}

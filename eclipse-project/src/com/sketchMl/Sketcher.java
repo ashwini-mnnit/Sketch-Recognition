@@ -6,24 +6,29 @@ package com.sketchMl;
 
 import java.util.UUID;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
 /*
  *
  * @author shirsing
  */
-
+@XmlRootElement
 public class Sketcher {
-    private Id sketcherId;
+    private Id id;
     private Dpi dpi;
-    private NickName nickName;
+    private NickName nickname;
 
     public Sketcher() {
-    	
+    	id = new Id();
+    	dpi = new Dpi();
+    	nickname = new NickName();
     }
     
     public Sketcher(UUID id, float XAxis, float YAxis, String nickName) {
-        this.sketcherId = new Id(id);
+        this.id = new Id(id);
         this.dpi = new Dpi(XAxis, YAxis);
-        this.nickName = new NickName(nickName);
+        this.nickname = new NickName(nickName);
     }
 
     public Dpi getDpi() {
@@ -31,23 +36,23 @@ public class Sketcher {
     }
 
     public Id getId() {
-        return this.sketcherId;
+        return this.id;
     }
 
     public NickName getNickName() {
-        return this.nickName;
+        return this.nickname;
     }
-
+@XmlElement
     public void setDpi(Dpi dpi) {
         this.dpi = dpi;
     }
-
+@XmlElement
     public void setId(Id id) {
-        this.sketcherId = id;
+        this.id = id;
     }
-
+@XmlElement
     public void setNickName(NickName nickName) {
-        this.nickName = nickName;
+        this.nickname = nickName;
     }
     
 }
