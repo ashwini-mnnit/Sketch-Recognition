@@ -10,6 +10,7 @@ import java.util.UUID;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 
 /**
@@ -51,13 +52,13 @@ public class Shape {
     	name = "";
     	author = UUID.randomUUID();
     	type = "";
-    	time = 0;
     	color = 0;
     	area = 0;
     	laysInk = false;
     	height = 0;
     	raster = "";
     	penTip = "Ball";
+    	time = 1000000;
     	arg = new ArrayList<Arg>();
     	alias = new ArrayList<Alias>();
     }
@@ -189,7 +190,7 @@ public class Shape {
 	public float getOrientation() {
 		return orientation;
 	}
-	@XmlAttribute
+	@XmlTransient
 	public void setOrientation(float orientation) {
 		this.orientation = orientation;
 	}
@@ -205,7 +206,7 @@ public class Shape {
 	public String getRaster() {
 		return raster;
 	}
-	@XmlAttribute
+	@XmlTransient
 	public void setRaster(String raster) {
 		this.raster = raster;
 	}

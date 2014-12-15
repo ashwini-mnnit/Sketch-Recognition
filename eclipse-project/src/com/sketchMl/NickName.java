@@ -4,10 +4,13 @@
  */
 package com.sketchMl;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
 /**
  *
  * @author shirsing
  */
+@XmlRootElement
 public class NickName {
     private String nickname;
     
@@ -16,7 +19,7 @@ public class NickName {
     }
     
     public NickName() {
-    
+    	nickname = "None";
     }
     
     public void setNickname (String nickname) {

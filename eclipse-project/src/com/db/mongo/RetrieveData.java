@@ -54,7 +54,7 @@ public class RetrieveData {
 			Sketcher s = new Sketcher();
 			NickName name = new NickName();
 			name.setNickname(sSketch.getAuthor());
-			s.setNickName(name);
+			s.setNickname(sSketch.getAuthor());
 			sketcher.add(s);
 	}
 	
