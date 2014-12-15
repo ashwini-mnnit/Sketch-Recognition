@@ -9,6 +9,7 @@ import com.addfields.speed.CalculateSpeed;
 import com.classify.ClassifyData;
 import com.db.mongo.DataFetcher;
 import com.db.mongo.RetrieveData;
+import com.db.mongo.SketchMltoXmlConverter;
 import com.parser.mechanix.MechanixShape;
 import com.parser.mechanix.MechanixSketch;
 import com.sketchMl.Sketch;
@@ -19,7 +20,7 @@ public class Runquery {
 	CalculateSpeed calculateSpeed;
 	
 	Runquery(String serverAddr, int port, String dbName, List<MechanixSketch> mechanixSketchList) {
-		retrieveData = new RetrieveData("serverAddr", port, "dbName");
+		retrieveData = new RetrieveData(serverAddr, port, dbName);
 		calculateSpeed = new CalculateSpeed();
 		for(MechanixSketch mechanixSketch : mechanixSketchList)
 			calculateSpeed.populateSpeed(mechanixSketch);
@@ -32,13 +33,12 @@ public class Runquery {
 		CalculateSpeed calculateSpeed = new CalculateSpeed();
 		calculateSpeed.populateSpeed(mechanixShape);
 		Double clusterId = classifyData.getClusterId(mechanixShape);
-		System.out.print(clusterId);
 		ArrayList<Sketch> sketchList = retrieveData.getSimilarSketchMlforMechanixData("Mechanix", clusterId);
 		return sketchList;
 	}
 
 	public static void main(String[] args) {
-		DataFetcher df = new DataFetcher("C:\\Users\\chunkygupta\\Downloads\\SketchData.xml");
+		DataFetcher df = new DataFetcher("/home/shirsing/Downloads/SketchData.xml");
 		List<MechanixSketch> sketchList = df.GetMechanixData();
 		List<MechanixShape> mechanixShapeList = new ArrayList<MechanixShape>();
 		for(MechanixSketch mechanixSketch : sketchList) {
@@ -55,6 +55,9 @@ public class Runquery {
 	Runquery runQuery = new Runquery("localhost", 27017, "SketchRec", sketchList);
 	try {
 		ArrayList<Sketch> clusterIdToQuery = runQuery.executeQuery(mechanixShape);
+		for (Sketch it :  clusterIdToQuery) {
+			SketchMltoXmlConverter.sketchMltoXml(it, it.getId().toString(),"ClusteredXML");
+	}
 	} catch (JSONException e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();

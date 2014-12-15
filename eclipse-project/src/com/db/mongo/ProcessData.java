@@ -99,5 +99,17 @@ public void processSouseDataSrl(String path, String collectionName) {
 	    	collection.remove(searchQuery);
 	    		    	
     	}
+    	
+    	public void removeAllSouseData(String collectionName) {
+    		DBCollection collection = mongoConnect.getCollection(collectionName);
+	    	collection.drop();
+	    		    	
+    	}
+    	
+    	public void removeAllMechanixData(String collectionName) {
+    		DBCollection collection = mongoConnect.getCollection(collectionName);
+	    	collection.drop();
+	    		    	
+    	}
 
 }

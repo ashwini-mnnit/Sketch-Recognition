@@ -8,18 +8,21 @@ import com.sketchMl.Sketch;
 
 public class SketchMltoXmlConverter {
 	 	
-	 		public static void sketchMltoXml(Sketch sketch) {
+	 		public static void sketchMltoXml(Sketch sketch , String file, String dir) {
 		  
 			  try {
-	 
-				  File file = new File("/home/shirsing/shirsing.xml");
+				  String path = "/home/shirsing/" + dir +"/";
+				  path += file;
+				  path += ".xml";
+				  System.out.println(path);
+				  File fp = new File(path);
 				  JAXBContext jaxbContext = JAXBContext.newInstance(Sketch.class);
 				  Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
 	 
 			// output pretty printed
 				  jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
 	 
-				  jaxbMarshaller.marshal(sketch, file);
+				  jaxbMarshaller.marshal(sketch, fp);
 				  //jaxbMarshaller.marshal(sketch, System.out);
 	 
 			  	} catch (JAXBException e) {
