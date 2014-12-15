@@ -30,10 +30,11 @@ public class ProcessData {
 	public void processMechanixData(String path, String collectionName) {
 		
 		DBCollection collection = mongoConnect.getCollection(collectionName);
-		
+		ClusterDataSet clusterDataSet = new ClusterDataSet();
 		DataFetcher df = new DataFetcher(path);
-		
 		List<MechanixSketch> sketchList = df.GetMechanixData();
+		for (MechanixSketch mechanixSketch : sketchList)
+			clusterDataSet.setClusterIdMechanixShape(mechanixSketch);
     	for (MechanixSketch sousaSketch : sketchList) {
     		Gson gson = new Gson();
     		String jsonString = gson.toJson(sousaSketch);
