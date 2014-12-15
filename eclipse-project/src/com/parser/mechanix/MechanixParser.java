@@ -1,7 +1,7 @@
-package com.parser.mechanix;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -12,16 +12,18 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-import com.doller.OneDollerResult;
-import com.parser.sousa.SousaParser;
-import com.parser.sousa.SousaSketch;
-import com.parser.sousa.SousaStroke;
+import com.google.gson.Gson;
+
+import edu.tamu.srl.sketch.core.object.SrlShape;
 
 
 public class MechanixParser {
@@ -126,6 +128,7 @@ public class MechanixParser {
 	}
 	private static MechanixShape getShape(Element shape) {
 		MechanixShape mechanixShape = new MechanixShape();
+		ArrayList<MechanixShape> subShapeList = new ArrayList<MechanixShape>();
 		if(shape.getAttribute("id") != null && !shape.getAttribute("id").equals("")){
 			mechanixShape.setId(UUID.fromString(shape.getAttribute("id")));
 		}
@@ -161,11 +164,15 @@ public class MechanixParser {
 				case "interpretations":
 					MechanixInterpretations interpretations = getInterpretations(eElement);
 					mechanixShape.setInterpretations(interpretations);
+				case "shape":
+					MechanixShape subShape = getShape(eElement);
+					subShapeList.add(subShape);
 				}
 
 			}
 
 		}
+		mechanixShape.setShapes(subShapeList);
 		return mechanixShape;
 	}
 
@@ -253,8 +260,8 @@ public class MechanixParser {
 		if((element.getAttribute("x")) != null && !element.getAttribute("x").equals("")){
 			point.setX(Double.parseDouble(element.getAttribute("x")));
 		}
-		if((element.getAttribute("y")) != null && !element.getAttribute("x").equals("")){
-			point.setX(Double.parseDouble(element.getAttribute("y")));
+		if((element.getAttribute("y")) != null && !element.getAttribute("y").equals("")){
+			point.setY(Double.parseDouble(element.getAttribute("y")));
 		}
 		if((element.getAttribute("simpl:id")) != null && !element.getAttribute("simpl:id").equals("")){
 			point.setSimpl_id((String)element.getAttribute("simpl:id"));
@@ -297,19 +304,21 @@ public class MechanixParser {
 
 		return rvList;
 	}
-	public static void main(String[] args) {
-		List<MechanixSketch> sketchList = new ArrayList<MechanixSketch>();
+	
+	public static void main(String[] args) throws ParseException {
+		System.out.println("Ankit");
+		MechanixParser MechanixSketch = new MechanixParser(); 
+		ArrayList<MechanixSketch> SketchList = new ArrayList<MechanixSketch>();
+		ArrayList<MechanixSketch> SketchList1 = new ArrayList<MechanixSketch>();
 		try {
-			MechanixParser MechanixSketch = new MechanixParser();
-			MechanixSketch.parse("C:\\Users\\Owner\\Dropbox\\Courses\\Skech Recognition\\Project\\SketchData.xml");
-			sketchList = MechanixSketch.getMechanixSketchList(); 
-			for (MechanixSketch mechanixSketch : sketchList) {
-				mechanixSketch.updatePrimitiveTypes();
-			}
-			System.out.println("");
+			MechanixSketch.parse("C:\\Users\\Ankit\\Desktop\\Fall 2014\\Sketch Recognition\\project\\Data\\SketchData.xml");
+			SketchList = MechanixSketch.getMechanixSketchList();
+			
 		} catch (ParserConfigurationException | IOException | SAXException e) {
 			System.out.println("Exception:  " + e.getMessage());
 			e.printStackTrace();
-		}	
+		}
+
 	}
+	
 }
