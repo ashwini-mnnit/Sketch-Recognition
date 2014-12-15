@@ -1,6 +1,7 @@
 package com.db.mongo;
 import java.util.List;
 
+import com.addfields.speed.CalculateSpeed;
 import com.cluster.ClusterDataSet;
 import com.google.gson.Gson;
 import com.mongodb.BasicDBObject;

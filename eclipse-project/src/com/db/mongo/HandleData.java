@@ -18,11 +18,6 @@ public class HandleData {
 			dataObject = new ProcessData("localhost", 27017, "SketchRec");
 		}
 
-		void printSimilarShapeObjects(SrlShapeExtended srlShapeExtended) {
-			Double clusterId = classifyData.getClusterId(srlShapeExtended);
-			dataObject.displaySouseData("Souse", Double.toString(clusterId));		
-		}
-
 		public static void main(String[] args) throws JSONException {
 			ProcessData dataObject = new ProcessData("localhost", 27017, "SketchRec");
 			dataObject.removeSouseData("Souse", "0b8c1460-6919-45bf-b6e3-b3776b69a40b");
