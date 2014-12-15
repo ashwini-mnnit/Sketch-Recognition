@@ -114,8 +114,8 @@ public class ClassifyData {
 	private static MechanixShape newMechanixShape(double averageSpeed, double averagePresure) {
 		MechanixShape mechanixShape = new MechanixShape();
 		mechanixShape.setId(UUID.randomUUID());
-		mechanixShape.setAverageSpeed(1);
-		mechanixShape.setAveragePressure(10);
+		mechanixShape.setAverageSpeed(averageSpeed);
+		mechanixShape.setAveragePressure(averagePresure);
 		return mechanixShape;
 	}
 	
@@ -165,7 +165,7 @@ public class ClassifyData {
         System.out.print(predictedClassValue4);
 	        
         Double predictedClassValue5 = classifyData.getClusterId(srlShapeExtended55);
-        System.out.print(predictedClassValue5);
+        System.out.printf("%.1f\n", predictedClassValue5);
         
         MechanixShape mechanixShape1 = newMechanixShape(1, 10);
         MechanixShape mechanixShape2 = newMechanixShape(2, 11);
@@ -199,7 +199,7 @@ public class ClassifyData {
         System.out.print(predictedClassValue9);
 
         Double predictedClassValue10 = classifyData2.getClusterId(mechanixShape5);
-        System.out.print(predictedClassValue10);
+        System.out.printf("%.1f\n", predictedClassValue10);
         
 	}
 }
