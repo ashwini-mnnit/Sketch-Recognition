@@ -24,7 +24,6 @@ public class SousaSketch {
 		this.sousaStrokes = sousaStrokes;
 	}
 
-
 	public SousaSketch() {
 		super();
 		sousaStrokes = new ArrayList<SousaStroke>();
@@ -59,14 +58,20 @@ public class SousaSketch {
 	}
 
 	public String getPremitivetype() {
-		boolean isLineSketch= true;
+		boolean isLineSketch = true;
 		for (SousaStroke stroke : this.sousaStrokes) {
 			if (!stroke.isLine())
-				isLineSketch=false;
+				isLineSketch = false;
 
 		}
-		if(isLineSketch)
+		if (isLineSketch)
 			return "Line";
 		return "Not Line";
+	}
+
+	public void updatePrimitiveTypes() {
+		for (SousaStroke stroke : this.sousaStrokes) {
+			stroke.updatePrimitiveTypes();
+		}
 	}
 }

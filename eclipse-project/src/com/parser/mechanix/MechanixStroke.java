@@ -2,7 +2,14 @@ package com.parser.mechanix;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.UUID;
+
+import com.doller.OneDollerPoint;
+import com.doller.OneDollerRecognizer;
+import com.doller.OneDollerResult;
+import com.parser.sousa.SousaPoint;
+import com.sketchshape.PremitiveStrokeType;
 
 public class MechanixStroke {
 	
@@ -12,6 +19,16 @@ public class MechanixStroke {
 	private MechanixElementStroke elem_stroke;
 	private ArrayList<MechanixPoint> points;
 	private MechanixStroke parent;
+	
+	public PremitiveStrokeType getPrimitiveType() {
+		return primitiveType;
+	}
+
+	public void setPrimitiveType(PremitiveStrokeType primitiveType) {
+		this.primitiveType = primitiveType;
+	}
+
+	private PremitiveStrokeType primitiveType;
 	
 	public UUID getId() {
 		return id;
@@ -87,7 +104,22 @@ public class MechanixStroke {
 		this.parent = parent;
 	}
 
-	
+	public void updatePrimitiveTypes() {
+		if (this.points==null)
+			return;
+		OneDollerRecognizer r = new OneDollerRecognizer();
+		List<OneDollerPoint> dollerPoint = new ArrayList<OneDollerPoint>();
+		for (MechanixPoint mexPoint : this.points) {
+			OneDollerPoint p = new OneDollerPoint((float)mexPoint.getX(),(float) mexPoint.getY());
+			dollerPoint.add(p);
+		}
+		OneDollerPoint[] rvPoint = new OneDollerPoint[dollerPoint.size()];
+		for (int j = 0; j < dollerPoint.size(); j++) {
+			rvPoint[j] = dollerPoint.get(j);
+		}
+		OneDollerResult result = r.Recognize(rvPoint);
+		this.primitiveType = new PremitiveStrokeType(result.getName(), result.getScore(), result.getRatio());
+	}
 	
 	
 }

@@ -8,11 +8,21 @@ import java.util.UUID;
 import com.doller.OneDollerPoint;
 import com.doller.OneDollerRecognizer;
 import com.doller.OneDollerResult;
+import com.sketchshape.PremitiveStrokeType;
 
 public class SousaStroke {
 	private UUID id;
 	private List<SousaArg> argList;
 	private ArrayList<SousaPoint> pointList;
+	private PremitiveStrokeType primitiveType;
+
+	public PremitiveStrokeType getPrimitiveType() {
+		return primitiveType;
+	}
+
+	public void setPrimitiveType(PremitiveStrokeType primitiveType) {
+		this.primitiveType = primitiveType;
+	}
 
 	public SousaStroke(UUID id, ArrayList<SousaPoint> pointList) {
 		super();
@@ -109,5 +119,20 @@ public class SousaStroke {
 		OneDollerResult result = r.Recognize(rvPoint);
 
 		return result;
+	}
+
+	public void updatePrimitiveTypes() {
+		OneDollerRecognizer r = new OneDollerRecognizer();
+		List<OneDollerPoint> dollerPoint = new ArrayList<OneDollerPoint>();
+		for (SousaPoint sousePoint : this.pointList) {
+			OneDollerPoint p = new OneDollerPoint(sousePoint.getxCoordinate().floatValue(), sousePoint.getyCoordinate().floatValue());
+			dollerPoint.add(p);
+		}
+		OneDollerPoint[] rvPoint = new OneDollerPoint[dollerPoint.size()];
+		for (int j = 0; j < dollerPoint.size(); j++) {
+			rvPoint[j] = dollerPoint.get(j);
+		}
+		OneDollerResult result = r.Recognize(rvPoint);
+		this.primitiveType = new PremitiveStrokeType(result.getName(), result.getScore(), result.getRatio());
 	}
 }

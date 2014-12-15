@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -16,6 +17,11 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
+
+import com.doller.OneDollerResult;
+import com.parser.sousa.SousaParser;
+import com.parser.sousa.SousaSketch;
+import com.parser.sousa.SousaStroke;
 
 
 public class MechanixParser {
@@ -231,7 +237,7 @@ public class MechanixParser {
 		}
 		
 		
-		
+		stroke.setPoints(points);
 		return stroke;
 	}
 
@@ -291,5 +297,19 @@ public class MechanixParser {
 
 		return rvList;
 	}
-	
+	public static void main(String[] args) {
+		List<MechanixSketch> sketchList = new ArrayList<MechanixSketch>();
+		try {
+			MechanixParser MechanixSketch = new MechanixParser();
+			MechanixSketch.parse("C:\\Users\\Owner\\Dropbox\\Courses\\Skech Recognition\\Project\\SketchData.xml");
+			sketchList = MechanixSketch.getMechanixSketchList(); 
+			for (MechanixSketch mechanixSketch : sketchList) {
+				mechanixSketch.updatePrimitiveTypes();
+			}
+			System.out.println("");
+		} catch (ParserConfigurationException | IOException | SAXException e) {
+			System.out.println("Exception:  " + e.getMessage());
+			e.printStackTrace();
+		}	
+	}
 }
