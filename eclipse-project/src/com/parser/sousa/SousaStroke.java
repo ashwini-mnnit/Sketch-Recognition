@@ -5,6 +5,10 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
 
+import com.doller.OneDollerPoint;
+import com.doller.OneDollerRecognizer;
+import com.doller.OneDollerResult;
+
 public class SousaStroke {
 	private UUID id;
 	private List<SousaArg> argList;
@@ -88,5 +92,22 @@ public class SousaStroke {
 		}
 		return Double.MAX_VALUE;// Tan 90
 
+	}
+
+	public OneDollerResult getDollarRecognizerType() {
+
+		OneDollerRecognizer r = new OneDollerRecognizer();
+		List<OneDollerPoint> dollerPoint = new ArrayList<OneDollerPoint>();
+		for (SousaPoint sousePoint : this.pointList) {
+			OneDollerPoint p = new OneDollerPoint(sousePoint.getxCoordinate().floatValue(), sousePoint.getyCoordinate().floatValue());
+			dollerPoint.add(p);
+		}
+		OneDollerPoint[] rvPoint = new OneDollerPoint[dollerPoint.size()];
+		for (int j = 0; j < dollerPoint.size(); j++) {
+			rvPoint[j] = dollerPoint.get(j);
+		}
+		OneDollerResult result = r.Recognize(rvPoint);
+
+		return result;
 	}
 }

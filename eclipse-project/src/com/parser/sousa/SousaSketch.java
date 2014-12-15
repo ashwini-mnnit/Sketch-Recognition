@@ -2,7 +2,12 @@ package com.parser.sousa;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.UUID;
+
+import com.doller.OneDollerPoint;
+import com.doller.OneDollerRecognizer;
+import com.doller.OneDollerResult;
 
 public class SousaSketch {
 	private UUID id;
