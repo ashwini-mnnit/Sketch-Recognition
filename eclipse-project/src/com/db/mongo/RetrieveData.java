@@ -106,31 +106,37 @@ public class RetrieveData {
 			shape.add(s);
 		}
 	}
+	
+	public Sketch getSketchMlObjectFromSouse(SousaSketch sSketch) {
+		Sketch sketch = new Sketch();
+		sketch.setId(sSketch.getId());
+		
+		ArrayList<Sketcher> sketcher= new ArrayList<Sketcher> ();
+		addSketcher(sketcher,sSketch);
+		sketch.setSketcher(sketcher);
+		
+		ArrayList<Shape> shape= new ArrayList<Shape>();
+		addShape(shape,sSketch.getSousaStrokes());
+		sketch.setShape(shape);
+		
+		ArrayList<Point> point = new ArrayList<Point>();
+		addPoint(point, sSketch.getSousaStrokes());
+		sketch.setPoint(point);
+		return sketch;
+	}
+	
 	public ArrayList<Sketch> getSketchMlforSouseData(String collectionName, String id) throws JSONException {
+		ArrayList<Sketch> sketchML = new ArrayList<Sketch>();
 		DBCollection collection = mongoConnect.getCollection(collectionName);
     	BasicDBObject searchQuery = new BasicDBObject();
     	searchQuery.containsField(id);
     	DBCursor cursor = collection.find(searchQuery);
-    	ArrayList<Sketch> sketchML = new ArrayList<Sketch>();
     	while (cursor.hasNext()) {
-    		Sketch sketch = new Sketch();
     		DBObject dbobj = cursor.next();
     		Gson gson = new Gson();
     		String json = dbobj.toString();
     		SousaSketch sSketch = gson.fromJson(json, SousaSketch.class);
-    		sketch.setId(sSketch.getId());
-    		
-    		ArrayList<Sketcher> sketcher= new ArrayList<Sketcher> ();
-    		addSketcher(sketcher,sSketch);
-    		sketch.setSketcher(sketcher);
-    		
-    		ArrayList<Shape> shape= new ArrayList<Shape>();
-    		addShape(shape,sSketch.getSousaStrokes());
-    		sketch.setShape(shape);
-    		
-    		ArrayList<Point> point = new ArrayList<Point>();
-    		addPoint(point, sSketch.getSousaStrokes());
-    		sketch.setPoint(point);
+    		Sketch sketch = getSketchMlObjectFromSouse(sSketch);
     		sketchML.add(sketch);
     	}	    	
 		return sketchML;
@@ -192,7 +198,6 @@ public class RetrieveData {
     		DBObject dbobj = cursor.next();
     		Gson gson = new Gson();
     		String json = dbobj.toString();
-    		System.out.println("Shireesh");
     		//System.out.println(json);
     		MechanixSketch mSketch = gson.fromJson(json, MechanixSketch.class);
     		Sketch sketch = getSketchMlObject(mSketch);
@@ -204,7 +209,7 @@ public class RetrieveData {
 	public ArrayList<Sketch> getSimilarSketchMlforMechanixData(String collectionName, MechanixShape mechanixShape) throws JSONException {
 		CalculateSpeed calculateSpeed = new CalculateSpeed();
 		calculateSpeed.populateSpeed(mechanixShape);
-		double clusterId = classifyData.getClusterId(mechanixShape);
+		Double clusterId = classifyData.getClusterId(mechanixShape);
 		
 		DBCollection collection = mongoConnect.getCollection(collectionName);
     	BasicDBObject searchQuery = new BasicDBObject();
@@ -220,5 +225,23 @@ public class RetrieveData {
     		sketchML.add(sketch);
     	}	    	
 		return sketchML;
+	}
+	
+	
+	public ArrayList<Sketch> queryOnPrimitiveTypes(String collectionName, String id,String primitiveType) {
+		ArrayList<Sketch> sketchML = new ArrayList<Sketch>();
+		DBCollection collection = mongoConnect.getCollection(collectionName);
+    	BasicDBObject searchQuery = new BasicDBObject();
+    	searchQuery.put("sousaStrokes.primitiveType.Name", primitiveType);
+    	DBCursor cursor = collection.find(searchQuery);
+    	while (cursor.hasNext()) {
+    		DBObject dbobj = cursor.next();
+    		Gson gson = new Gson();
+    		String json = dbobj.toString();
+    		SousaSketch sSketch = gson.fromJson(json, SousaSketch.class);
+    		Sketch sketch = getSketchMlObjectFromSouse(sSketch);
+    		sketchML.add(sketch);
+    	}	
+    	return sketchML;
 	}
 }

@@ -20,7 +20,7 @@ public class SketchMltoXmlConverter {
 				  jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
 	 
 				  jaxbMarshaller.marshal(sketch, file);
-				  jaxbMarshaller.marshal(sketch, System.out);
+				  //jaxbMarshaller.marshal(sketch, System.out);
 	 
 			  	} catch (JAXBException e) {
 			  		e.printStackTrace();

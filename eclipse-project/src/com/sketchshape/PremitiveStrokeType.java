@@ -2,6 +2,8 @@ package com.sketchshape;
 
 public class PremitiveStrokeType {
 	private String Name;
+	private float srore;
+	private float Ratio;
 
 	public PremitiveStrokeType(String name, float srore, float ratio) {
 		super();
@@ -34,6 +36,4 @@ public class PremitiveStrokeType {
 		Ratio = ratio;
 	}
 
-	private float srore;
-	private float Ratio;
 }

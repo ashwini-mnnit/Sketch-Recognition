@@ -1,4 +1,5 @@
 package com.db.mongo;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.addfields.speed.CalculateSpeed;
@@ -11,6 +12,7 @@ import com.mongodb.DBObject;
 import com.mongodb.util.JSON;
 import com.parser.mechanix.MechanixSketch;
 import com.parser.sousa.SousaSketch;
+import com.parser.sousa.SousaStroke;
 import com.sketchshape.SrlShapeExtended;
 
 public class ProcessData {
@@ -58,7 +60,9 @@ public class ProcessData {
     	for (SousaSketch sousaSketch : sketchList) {
     		sousaSketch.updatePrimitiveTypes();
     		Gson gson = new Gson();
+    		
     		String jsonString = gson.toJson(sousaSketch);
+    		//System.out.println(jsonString);
             DBObject dbObject = (DBObject)JSON.parse(jsonString);
             collection.insert(dbObject);
     	}
@@ -87,6 +91,7 @@ public void processSouseDataSrl(String path, String collectionName) {
 	    		System.out.println(cursor.next());
 	    	}	    	
     	}
+    	
     	
     	public void removeSouseData(String collectionName, String id) {
     		DBCollection collection = mongoConnect.getCollection(collectionName);
