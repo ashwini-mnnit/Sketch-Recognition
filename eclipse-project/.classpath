@@ -1,17 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/sketc"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/sketchML"/>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry exported="true" kind="lib" path="C:/Users/chunkygupta/Dropbox/Sketch Recognition/Project/SketchShapes-1.0-SNAPSHOT-r2014-12-12_17-31-30.9e39a.jar"/>
-	<classpathentry exported="true" kind="lib" path="C:/Users/chunkygupta/Dropbox/Sketch Recognition/Project/SketchShapes-1.0-SNAPSHOT-r2014-12-12_17-31-30.9e39a-javadoc.jar"/>
-	<classpathentry exported="true" kind="lib" path="C:/Users/chunkygupta/Dropbox/Sketch Recognition/Project/SketchShapes-1.0-SNAPSHOT-r2014-12-12_17-31-30.9e39a-sources.jar"/>
-	<classpathentry exported="true" kind="lib" path="C:/Users/chunkygupta/Dropbox/Sketch Recognition/Project/javaml-0.1.7/javaml-0.1.7/javaml-0.1.7.jar"/>
-	<classpathentry exported="true" kind="lib" path="C:/Users/chunkygupta/Dropbox/Sketch Recognition/Project/mongojars/gson-2.3.1.jar"/>
-	<classpathentry exported="true" kind="lib" path="C:/Users/chunkygupta/Dropbox/Sketch Recognition/Project/mongojars/gson-2.3.1-javadoc.jar"/>
-	<classpathentry exported="true" kind="lib" path="C:/Users/chunkygupta/Dropbox/Sketch Recognition/Project/mongojars/gson-2.3.1-sources.jar"/>
-	<classpathentry exported="true" kind="lib" path="C:/Users/chunkygupta/Dropbox/Sketch Recognition/Project/mongojars/mongo-java-driver-2.13.0-rc0.jar"/>
-	<classpathentry exported="true" kind="lib" path="C:/Users/chunkygupta/Dropbox/Sketch Recognition/Project/mongojars/mongo-java-driver-2.13.0-rc0-javadoc.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/sketchc"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/skecthML"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

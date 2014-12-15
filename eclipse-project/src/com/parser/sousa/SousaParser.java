@@ -112,7 +112,8 @@ public class SousaParser {
 	}
 
 	private static SousaPoint getPoint(Element point) {
-		SousaPoint rvPoint = new SousaPoint(UUID.fromString(point.getAttribute("id")));
+		SousaPoint rvPoint = new SousaPoint();
+		rvPoint.setId(UUID.fromString(point.getAttribute("id")));
 		rvPoint.setxCoordinate(Double.parseDouble(point.getAttribute("x")));
 		rvPoint.setyCoordinate(Double.parseDouble(point.getAttribute("y")));
 		rvPoint.setTime(point.getAttribute("time"));
