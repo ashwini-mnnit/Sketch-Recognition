@@ -118,60 +118,25 @@ public class ClassifyData {
 		mechanixShape.setAveragePressure(10);
 		return mechanixShape;
 	}
-		
-	public static void main(String[] args) {
-		List<SrlShapeExtended> srlShapeExtendedList = new ArrayList<SrlShapeExtended>();
+	
+	private static SrlShapeExtended newSrlShapeExtended(double averageSpeed, double averagePresure) {
 		boolean temp = false;
 		UUID uuid1 = UUID.randomUUID();
 		SrlShapeConfig srlShapeConfig1 = new SrlShapeConfig(null, uuid1, "", 0.0, 0.0, temp, temp);
-		SrlShapeExtended srlShapeExtended1 = new SrlShapeExtended(1234, uuid1, srlShapeConfig1, "srl Shape Extended 1");
-		srlShapeExtended1.setAverageSpeed(1);
-		srlShapeExtended1.setAveragePressure(10);
-			
-		UUID uuid2 = UUID.randomUUID();
-		SrlShapeConfig srlShapeConfig2 = new SrlShapeConfig(null, uuid2, "", 0.0, 0.0, temp, temp);
-		SrlShapeExtended srlShapeExtended2 = new SrlShapeExtended(1234, uuid2, srlShapeConfig2, "srl Shape Extended 2");
-		srlShapeExtended2.setAverageSpeed(2);
-		srlShapeExtended2.setAveragePressure(11);
-
-		UUID uuid3 = UUID.randomUUID();
-		SrlShapeConfig srlShapeConfig3 = new SrlShapeConfig(null, uuid3, "", 0.0, 0.0, temp, temp);
-		SrlShapeExtended srlShapeExtended3 = new SrlShapeExtended(1234, uuid3, srlShapeConfig3, "srl Shape Extended 3");
-		srlShapeExtended3.setAverageSpeed(3);
-		srlShapeExtended3.setAveragePressure(14);
-
-		UUID uuid4 = UUID.randomUUID();
-		SrlShapeConfig srlShapeConfig4 = new SrlShapeConfig(null, uuid4, "", 0.0, 0.0, temp, temp);
-		SrlShapeExtended srlShapeExtended4 = new SrlShapeExtended(1234, uuid4, srlShapeConfig4, "srl Shape Extended 4");
-		srlShapeExtended4.setAverageSpeed(9);
-		srlShapeExtended4.setAveragePressure(25);
-
-		UUID uuid5 = UUID.randomUUID();
-		SrlShapeConfig srlShapeConfig5 = new SrlShapeConfig(null, uuid5, "", 0.0, 0.0, temp, temp);
-		SrlShapeExtended srlShapeExtended5 = new SrlShapeExtended(1234, uuid5, srlShapeConfig5, "srl Shape Extended 5");
-		srlShapeExtended5.setAverageSpeed(10);
-		srlShapeExtended5.setAveragePressure(26);
+		SrlShapeExtended srlShapeExtended = new SrlShapeExtended(1234, uuid1, srlShapeConfig1, "srl Shape Extended 1");
+		srlShapeExtended.setAverageSpeed(averageSpeed);
+		srlShapeExtended.setAveragePressure(averagePresure);
+		return srlShapeExtended;
+	}	
 		
-		SrlShapeExtended srlShapeExtended11 = new SrlShapeExtended(1234, UUID.randomUUID(), srlShapeConfig2, "srl Shape Extended 11");
-		srlShapeExtended11.setAverageSpeed(1);
-		srlShapeExtended11.setAveragePressure(10);
+	public static void main(String[] args) {
+		List<SrlShapeExtended> srlShapeExtendedList = new ArrayList<SrlShapeExtended>();
+		SrlShapeExtended srlShapeExtended1 = newSrlShapeExtended(1, 10);
+		SrlShapeExtended srlShapeExtended2 = newSrlShapeExtended(2, 11);
+		SrlShapeExtended srlShapeExtended3 = newSrlShapeExtended(3, 14);
+		SrlShapeExtended srlShapeExtended4 = newSrlShapeExtended(9, 25);
+		SrlShapeExtended srlShapeExtended5 = newSrlShapeExtended(10, 26);
 		
-		SrlShapeExtended srlShapeExtended22 = new SrlShapeExtended(1234, UUID.randomUUID(), srlShapeConfig2, "srl Shape Extended 11");
-		srlShapeExtended22.setAverageSpeed(2);
-		srlShapeExtended22.setAveragePressure(11);
-		
-		SrlShapeExtended srlShapeExtended33 = new SrlShapeExtended(1234, UUID.randomUUID(), srlShapeConfig2, "srl Shape Extended 11");
-		srlShapeExtended33.setAverageSpeed(3);
-		srlShapeExtended33.setAveragePressure(14);
-		
-		SrlShapeExtended srlShapeExtended44 = new SrlShapeExtended(1234, UUID.randomUUID(), srlShapeConfig2, "srl Shape Extended 11");
-		srlShapeExtended44.setAverageSpeed(9);
-		srlShapeExtended44.setAveragePressure(25);
-		
-		SrlShapeExtended srlShapeExtended55 = new SrlShapeExtended(1234, UUID.randomUUID(), srlShapeConfig2, "srl Shape Extended 11");
-		srlShapeExtended55.setAverageSpeed(10);
-		srlShapeExtended55.setAveragePressure(26);
-
 		srlShapeExtendedList. add(srlShapeExtended1);
 		srlShapeExtendedList. add(srlShapeExtended2);
 		srlShapeExtendedList. add(srlShapeExtended3);
@@ -181,6 +146,12 @@ public class ClassifyData {
 		ClassifyData classifyData = new ClassifyData(5);
 		classifyData.learnClassifier(srlShapeExtendedList);
 		
+		SrlShapeExtended srlShapeExtended11 = newSrlShapeExtended(1, 10);
+		SrlShapeExtended srlShapeExtended22 = newSrlShapeExtended(2, 11);
+		SrlShapeExtended srlShapeExtended33 = newSrlShapeExtended(3, 14);
+		SrlShapeExtended srlShapeExtended44 = newSrlShapeExtended(9, 25);
+		SrlShapeExtended srlShapeExtended55 = newSrlShapeExtended(10, 26);
+
         Double predictedClassValue = classifyData.getClusterId(srlShapeExtended11);
         System.out.print(predictedClassValue);
 	        
@@ -229,9 +200,7 @@ public class ClassifyData {
 
         Double predictedClassValue10 = classifyData2.getClusterId(mechanixShape5);
         System.out.print(predictedClassValue10);
-                
-                
-                
+        
 	}
 }
 

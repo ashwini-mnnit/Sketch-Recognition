@@ -95,38 +95,31 @@ public class ClusterDataSet {
 	    return clusters;
     }
 	
-	public static void main(String[] args) {
-		List<SrlShapeExtended> srlShapeExtendedList = new ArrayList<SrlShapeExtended>();
+	private static MechanixShape newMechanixShape(double averageSpeed, double averagePresure) {
+		MechanixShape mechanixShape = new MechanixShape();
+		mechanixShape.setId(UUID.randomUUID());
+		mechanixShape.setAverageSpeed(averageSpeed);
+		mechanixShape.setAveragePressure(averagePresure);
+		return mechanixShape;
+	}
+	
+	private static SrlShapeExtended newSrlShapeExtended(double averageSpeed, double averagePresure) {
 		boolean temp = false;
 		UUID uuid1 = UUID.randomUUID();
 		SrlShapeConfig srlShapeConfig1 = new SrlShapeConfig(null, uuid1, "", 0.0, 0.0, temp, temp);
-		SrlShapeExtended srlShapeExtended1 = new SrlShapeExtended(1234, uuid1, srlShapeConfig1, "srl Shape Extended 1");
-		srlShapeExtended1.setAverageSpeed(1);
-		srlShapeExtended1.setAveragePressure(10);
-		
-		UUID uuid2 = UUID.randomUUID();
-		SrlShapeConfig srlShapeConfig2 = new SrlShapeConfig(null, uuid2, "", 0.0, 0.0, temp, temp);
-		SrlShapeExtended srlShapeExtended2 = new SrlShapeExtended(1234, uuid1, srlShapeConfig2, "srl Shape Extended 2");
-		srlShapeExtended2.setAverageSpeed(2);
-		srlShapeExtended2.setAveragePressure(11);
-
-		UUID uuid3 = UUID.randomUUID();
-		SrlShapeConfig srlShapeConfig3 = new SrlShapeConfig(null, uuid3, "", 0.0, 0.0, temp, temp);
-		SrlShapeExtended srlShapeExtended3 = new SrlShapeExtended(1234, uuid3, srlShapeConfig3, "srl Shape Extended 3");
-		srlShapeExtended3.setAverageSpeed(3);
-		srlShapeExtended3.setAveragePressure(14);
-
-		UUID uuid4 = UUID.randomUUID();
-		SrlShapeConfig srlShapeConfig4 = new SrlShapeConfig(null, uuid4, "", 0.0, 0.0, temp, temp);
-		SrlShapeExtended srlShapeExtended4 = new SrlShapeExtended(1234, uuid4, srlShapeConfig4, "srl Shape Extended 4");
-		srlShapeExtended4.setAverageSpeed(9);
-		srlShapeExtended4.setAveragePressure(25);
-
-		UUID uuid5 = UUID.randomUUID();
-		SrlShapeConfig srlShapeConfig5 = new SrlShapeConfig(null, uuid5, "", 0.0, 0.0, temp, temp);
-		SrlShapeExtended srlShapeExtended5 = new SrlShapeExtended(1234, uuid5, srlShapeConfig5, "srl Shape Extended 5");
-		srlShapeExtended5.setAverageSpeed(10);
-		srlShapeExtended5.setAveragePressure(26);
+		SrlShapeExtended srlShapeExtended = new SrlShapeExtended(1234, uuid1, srlShapeConfig1, "srl Shape Extended 1");
+		srlShapeExtended.setAverageSpeed(averageSpeed);
+		srlShapeExtended.setAveragePressure(averagePresure);
+		return srlShapeExtended;
+	}
+	
+	public static void main(String[] args) {
+		List<SrlShapeExtended> srlShapeExtendedList = new ArrayList<SrlShapeExtended>();
+		SrlShapeExtended srlShapeExtended1 = newSrlShapeExtended(1, 10);
+		SrlShapeExtended srlShapeExtended2 = newSrlShapeExtended(2, 11);
+		SrlShapeExtended srlShapeExtended3 = newSrlShapeExtended(3, 14);
+		SrlShapeExtended srlShapeExtended4 = newSrlShapeExtended(9, 25);
+		SrlShapeExtended srlShapeExtended5 = newSrlShapeExtended(10, 26);
 		
 		srlShapeExtendedList. add(srlShapeExtended1);
 		srlShapeExtendedList. add(srlShapeExtended2);
@@ -137,33 +130,15 @@ public class ClusterDataSet {
 		ClusterDataSet clusterDataSet = new ClusterDataSet();
 		
 		clusterDataSet.setClusterId(srlShapeExtendedList);
+		for(SrlShapeExtended srlShapeExtended : srlShapeExtendedList) 
+			System.out.printf("clusterId is %f\n", srlShapeExtended.getClusterId());
 	
-		
-		MechanixShape mechanixShape1 = new MechanixShape();
-		mechanixShape1.setId(UUID.randomUUID());
-		mechanixShape1.setAverageSpeed(1);
-		mechanixShape1.setAveragePressure(10);
-		
-		MechanixShape mechanixShape2 = new MechanixShape();
-		mechanixShape2.setId(UUID.randomUUID());
-		mechanixShape2.setAverageSpeed(2);
-		mechanixShape2.setAveragePressure(11);
-		
-		MechanixShape mechanixShape3 = new MechanixShape();
-		mechanixShape3.setId(UUID.randomUUID());
-		mechanixShape3.setAverageSpeed(3);
-		mechanixShape3.setAveragePressure(14);
-		
-		MechanixShape mechanixShape4 = new MechanixShape();
-		mechanixShape4.setId(UUID.randomUUID());
-		mechanixShape4.setAverageSpeed(9);
-		mechanixShape4.setAveragePressure(25);
-		
-		MechanixShape mechanixShape5 = new MechanixShape();
-		mechanixShape5.setId(UUID.randomUUID());
-		mechanixShape5.setAverageSpeed(10);
-		mechanixShape5.setAveragePressure(26);
-	
+		MechanixShape mechanixShape1 = newMechanixShape(1, 10);
+        MechanixShape mechanixShape2 = newMechanixShape(2, 11);
+        MechanixShape mechanixShape3 = newMechanixShape(3, 14);
+        MechanixShape mechanixShape4 = newMechanixShape(9, 25);
+        MechanixShape mechanixShape5 = newMechanixShape(10, 26);
+			
 		ArrayList<MechanixShape> mechanixShapeList = new ArrayList<MechanixShape>();
 		mechanixShapeList.add(mechanixShape1);
 		mechanixShapeList.add(mechanixShape2);
