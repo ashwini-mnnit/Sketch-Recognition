@@ -80,7 +80,9 @@ public class CalculateSpeed {
 						double y2 = pointList.get(i+1).getY();
 						
 						double currentDistance = getDistanceBetweenTwoPoints(x1, y1, x2, y2);
-						double currentTime = Double.parseDouble(pointList.get(i+1).getTime()) - Double.parseDouble(pointList.get(i).getTime());
+						double currentTime = 0;
+						if (pointList.get(i+1).getTime() != null && pointList.get(i).getTime() != null)
+							currentTime = Double.parseDouble(pointList.get(i+1).getTime()) - Double.parseDouble(pointList.get(i).getTime());
 						if(currentTime != 0)
 							shapeSpeed+=(currentDistance/currentTime);
 					}
