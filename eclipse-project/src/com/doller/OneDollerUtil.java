@@ -39,7 +39,7 @@ public class OneDollerUtil {
 
 	public static float PathDistance(OneDollerPoint[] pts1, OneDollerPoint[] pts2) {
 		if (pts1.length != pts2.length) {
-			System.out.println("Lengths differ. " + pts1.length + " != " + pts2.length);
+			//System.out.println("Lengths differ. " + pts1.length + " != " + pts2.length);
 			return Float.MAX_VALUE;
 		}
 		float d = (float) 0.0;
