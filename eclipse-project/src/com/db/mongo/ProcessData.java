@@ -29,12 +29,15 @@ public class ProcessData {
 	
 	public void processMechanixData(String path, String collectionName) {
 		DBCollection collection = mongoConnect.getCollection(collectionName);
+		CalculateSpeed calculateSpeed = new CalculateSpeed(); 
 		ClusterDataSet clusterDataSet = new ClusterDataSet();
 		
 		DataFetcher df = new DataFetcher(path);
 		List<MechanixSketch> sketchList = df.GetMechanixData();
-		//for (MechanixSketch mechanixSketch : sketchList)
-			//clusterDataSet.setClusterIdMechanixShape(mechanixSketch);
+		
+		for (MechanixSketch mechanixSketch : sketchList)
+			calculateSpeed.populateSpeed(mechanixSketch);
+		clusterDataSet.setClusterIdMechanixShapeList(sketchList);
     	for (MechanixSketch mSketch : sketchList) {
     		mSketch.updatePrimitiveTypes();
     		Gson gson = new Gson();
@@ -66,8 +69,6 @@ public void processSouseDataSrl(String path, String collectionName) {
 		
 		DataFetcher df = new DataFetcher(path);
 		List<SrlShapeExtended> sketchList = df.GetSouseData();
-		ClusterDataSet clusterDataSet = new ClusterDataSet();
-		clusterDataSet.setClusterId(sketchList);
     	for (SrlShapeExtended sousaSketch : sketchList) {
     		Gson gson = new Gson();
     		String jsonString = gson.toJson(sousaSketch);

@@ -38,9 +38,16 @@ public class ClusterDataSet {
 	    populateSrlShapeWithUserType(srlShapeExtendedList, clusterIds);
 	}
 
+	public void setClusterIdMechanixShapeList(List<MechanixSketch> mechanixSketchList) {
+		List<MechanixShape> mechanixShapeList = new ArrayList<MechanixShape>();
+		for(MechanixSketch mechanixSketch : mechanixSketchList)
+			mechanixShapeList.addAll(mechanixSketch.getAllShapes());
+		setClusterIdMechanixShape(mechanixShapeList);	
+	}
+
 	public void setClusterIdMechanixShape(MechanixSketch mechanixSketch) {
 		List<MechanixShape> mechanixShapeList = new ArrayList<MechanixShape>();
-		mechanixShapeList.addAll(mechanixSketch.getShapes());
+		mechanixShapeList.addAll(mechanixSketch.getAllShapes());
 		setClusterIdMechanixShape(mechanixShapeList);	
 	}
 		
@@ -49,8 +56,8 @@ public class ClusterDataSet {
 		Map<Integer, UUID> idMap = new HashMap<Integer, UUID>();
 	    for (MechanixShape mechanixShape : mechanixShapeList) {
 	    	double[] values = new double[ClusterDataSet.NUMBER_OF_FEATURES];
-	    	values[0] = mechanixShape.getAverageSpeed();
-	    	values[1] = mechanixShape.getAveragePressure();
+	    	values[0] = mechanixShape.getAverageSpeed()*100;
+	    	values[1] = (double)(int)(mechanixShape.getAveragePressure()*10);
 	        Instance currentInstance = new DenseInstance(values);
 	        //currentInstance.setClassValue(values[values.length -1]);
 	        idMap.put(currentInstance.getID(), mechanixShape.getId());
@@ -90,7 +97,7 @@ public class ClusterDataSet {
 	}
 
 	private static Dataset[] getClusteredData(Dataset data) {
-    	Clusterer km = new KMeans(2);
+    	Clusterer km = new KMeans();
 	    Dataset[] clusters = km.cluster(data);
 	    return clusters;
     }

@@ -71,7 +71,7 @@ public class ClassifyData {
 		}
 	}	
 	
-	private Instance getInstance(MechanixShape mechanixShape) {
+	public Instance getInstance(MechanixShape mechanixShape) {
 		double[] values = new double[ClusterDataSet.NUMBER_OF_FEATURES];
 	    values[0] = mechanixShape.getAverageSpeed();
 	    values[1] = mechanixShape.getAveragePressure();

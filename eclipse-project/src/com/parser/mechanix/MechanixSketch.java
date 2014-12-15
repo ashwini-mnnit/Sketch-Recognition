@@ -1,6 +1,7 @@
 package com.parser.mechanix;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import com.parser.sousa.SousaStroke;
@@ -61,6 +62,21 @@ public class MechanixSketch {
 		for (MechanixShape shape : this.shapes) {
 			shape.updatePrimitiveTypes();
 		}
+	}
+	
+	public List<MechanixShape> getAllShapes()
+	{
+		List<MechanixShape> rvStrokes = new ArrayList<MechanixShape>();
+		
+		if (shapes==null)
+		{
+			return rvStrokes;
+		}
+		for (MechanixShape mexShape : shapes) {
+			rvStrokes.add(mexShape);
+			rvStrokes.addAll(mexShape.getAllShapes());
+		}
+		return rvStrokes;
 	}
 
 }
