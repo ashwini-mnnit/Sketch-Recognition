@@ -32,27 +32,12 @@ import com.sketchshape.SrlShapeExtended;
 
 public class RetrieveData {
 	private MongoConnect mongoConnect;
-	ClassifyData classifyData;
+	
 	
 	public RetrieveData(String serverAddr, int port, String dbName) {
-		 classifyData = new ClassifyData(5);
 		 mongoConnect = new MongoConnect(serverAddr, port, dbName);
     }
-
-	public RetrieveData(String serverAddr, int port, String dbName, List<MechanixShape> mechanixShapeList) {
-		classifyData = new ClassifyData(5);
-		classifyData.learnClassifierMechanixShape(mechanixShapeList);
-		mongoConnect = new MongoConnect(serverAddr, port, dbName);
-   }
 	
-	public ClassifyData getClassifyData() {
-		return classifyData;
-	}
-
-	public void setClassifyData(ClassifyData classifyData) {
-		this.classifyData = classifyData;
-	}
-
 	public ArrayList<Sketch> getSketchMlforSouseDataSrl(String collectionName, String id) throws JSONException {
 		DBCollection collection = mongoConnect.getCollection(collectionName);
     	BasicDBObject searchQuery = new BasicDBObject();

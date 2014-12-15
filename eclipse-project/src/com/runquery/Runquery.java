@@ -6,6 +6,7 @@ import java.util.List;
 import org.json.JSONException;
 
 import com.addfields.speed.CalculateSpeed;
+import com.classify.ClassifyData;
 import com.db.mongo.DataFetcher;
 import com.db.mongo.RetrieveData;
 import com.parser.mechanix.MechanixShape;
@@ -14,15 +15,23 @@ import com.sketchMl.Sketch;
 
 public class Runquery {
 	RetrieveData retrieveData;
+	ClassifyData classifyData;
+	CalculateSpeed calculateSpeed;
 	
-	Runquery(String serverAddr, int port, String dbName, List<MechanixShape> mechanixShapeList) {
-		retrieveData = new RetrieveData("serverAddr", port, "dbName", mechanixShapeList);
+	Runquery(String serverAddr, int port, String dbName, List<MechanixSketch> mechanixSketchList) {
+		retrieveData = new RetrieveData("serverAddr", port, "dbName");
+		calculateSpeed = new CalculateSpeed();
+		for(MechanixSketch mechanixSketch : mechanixSketchList)
+			calculateSpeed.populateSpeed(mechanixSketch);
+		classifyData = new ClassifyData(5);
+		classifyData.learnClassifierMechanixSketch(mechanixSketchList);
+		
 	}
 
 	public ArrayList<Sketch> executeQuery(MechanixShape mechanixShape) throws JSONException {
 		CalculateSpeed calculateSpeed = new CalculateSpeed();
 		calculateSpeed.populateSpeed(mechanixShape);
-		Double clusterId = retrieveData.getClassifyData().getClusterId(mechanixShape);
+		Double clusterId = classifyData.getClusterId(mechanixShape);
 		System.out.print(clusterId);
 		ArrayList<Sketch> sketchList = retrieveData.getSimilarSketchMlforMechanixData("Mechanix", clusterId);
 		return sketchList;
@@ -43,7 +52,7 @@ public class Runquery {
 			}
 		}
 		
-	Runquery runQuery = new Runquery("localhost", 27017, "SketchRec", mechanixShapeList);
+	Runquery runQuery = new Runquery("localhost", 27017, "SketchRec", sketchList);
 	try {
 		ArrayList<Sketch> clusterIdToQuery = runQuery.executeQuery(mechanixShape);
 	} catch (JSONException e) {

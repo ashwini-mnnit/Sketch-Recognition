@@ -89,7 +89,6 @@ public class CalculateSpeed {
 					shapeSpeed = 0;
 				else
 					shapeSpeed = shapeSpeed / totalPoints;
-				shapeSpeed = (double)(int)(shapeSpeed*100);
 				singleShape.setAverageSpeed(shapeSpeed);
 			}
 		}

@@ -47,6 +47,14 @@ public class ClassifyData {
 		}
 	}
 	
+	public void learnClassifierMechanixSketch(List<MechanixSketch> mechanixSketchList) {
+		List<MechanixShape> mechanixShapeList = new ArrayList<MechanixShape>();
+		for(MechanixSketch mechanixSketch : mechanixSketchList) {
+			mechanixShapeList.addAll(mechanixSketch.getAllShapes());
+		}
+		learnClassifierMechanixShape(mechanixShapeList);
+	}
+	
 	public void learnClassifierMechanixShape(MechanixSketch mechanixSketch) {
 		List<MechanixShape> mechanixShapeList = new ArrayList<MechanixShape>();
 		mechanixShapeList.addAll(mechanixSketch.getShapes());

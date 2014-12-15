@@ -56,8 +56,8 @@ public class ClusterDataSet {
 		Map<Integer, UUID> idMap = new HashMap<Integer, UUID>();
 	    for (MechanixShape mechanixShape : mechanixShapeList) {
 	    	double[] values = new double[ClusterDataSet.NUMBER_OF_FEATURES];
-	    	values[0] = mechanixShape.getAverageSpeed()*100;
-	    	values[1] = (double)(int)(mechanixShape.getAveragePressure()*10);
+	    	values[0] = (double)(int)(mechanixShape.getAverageSpeed()*100);
+	    	values[1] = (double)(int)(mechanixShape.getAveragePressure()*100);
 	        Instance currentInstance = new DenseInstance(values);
 	        //currentInstance.setClassValue(values[values.length -1]);
 	        idMap.put(currentInstance.getID(), mechanixShape.getId());
