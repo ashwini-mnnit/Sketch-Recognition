@@ -1,7 +1,6 @@
-
+package com.parser.mechanix;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -12,18 +11,11 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
-
-import com.google.gson.Gson;
-
-import edu.tamu.srl.sketch.core.object.SrlShape;
 
 
 public class MechanixParser {
@@ -305,20 +297,20 @@ public class MechanixParser {
 		return rvList;
 	}
 	
-	public static void main(String[] args) throws ParseException {
-		System.out.println("Ankit");
-		MechanixParser MechanixSketch = new MechanixParser(); 
-		ArrayList<MechanixSketch> SketchList = new ArrayList<MechanixSketch>();
-		ArrayList<MechanixSketch> SketchList1 = new ArrayList<MechanixSketch>();
+	public static void main(String[] args) {
+		List<MechanixSketch> sketchList = new ArrayList<MechanixSketch>();
 		try {
-			MechanixSketch.parse("C:\\Users\\Ankit\\Desktop\\Fall 2014\\Sketch Recognition\\project\\Data\\SketchData.xml");
-			SketchList = MechanixSketch.getMechanixSketchList();
-			
+			MechanixParser MechanixSketch = new MechanixParser();
+			MechanixSketch.parse("C:\\Users\\Owner\\Dropbox\\Courses\\Skech Recognition\\Project\\SketchData.xml");
+			sketchList = MechanixSketch.getMechanixSketchList(); 
+			for (MechanixSketch mechanixSketch : sketchList) {
+				mechanixSketch.updatePrimitiveTypes();
+			}
+			System.out.println("");
 		} catch (ParserConfigurationException | IOException | SAXException e) {
 			System.out.println("Exception:  " + e.getMessage());
 			e.printStackTrace();
-		}
-
+		}	
 	}
 	
 }

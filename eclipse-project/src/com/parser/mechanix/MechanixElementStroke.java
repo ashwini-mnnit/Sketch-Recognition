@@ -1,6 +1,5 @@
 package com.parser.mechanix;
 
-import java.util.UUID;
 
 public class MechanixElementStroke {
 	

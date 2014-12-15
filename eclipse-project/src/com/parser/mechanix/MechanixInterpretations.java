@@ -1,8 +1,6 @@
 package com.parser.mechanix;
 
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.UUID;
 
 public class MechanixInterpretations {
 	

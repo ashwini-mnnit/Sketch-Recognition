@@ -118,6 +118,7 @@ public class MechanixStroke {
 			rvPoint[j] = dollerPoint.get(j);
 		}
 		OneDollerResult result = r.Recognize(rvPoint);
+		//System.out.println(result.toString());
 		this.primitiveType = new PremitiveStrokeType(result.getName(), result.getScore(), result.getRatio());
 	}
 	

@@ -1,14 +1,7 @@
 package com.parser.mechanix;
 
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 import java.util.UUID;
-
-import com.doller.OneDollerPoint;
-import com.doller.OneDollerRecognizer;
-import com.doller.OneDollerResult;
-import com.sketchshape.PremitiveStrokeType;
 
 public class MechanixShape {
 	private UUID id;
