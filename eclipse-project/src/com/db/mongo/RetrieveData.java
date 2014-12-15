@@ -6,6 +6,8 @@ import java.util.UUID;
 
 import org.json.JSONException;
 
+import com.addfields.speed.CalculateSpeed;
+import com.classify.ClassifyData;
 import com.google.gson.Gson;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBCollection;
