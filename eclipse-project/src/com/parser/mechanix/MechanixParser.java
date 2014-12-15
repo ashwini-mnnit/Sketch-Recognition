@@ -5,7 +5,6 @@ import java.io.FileNotFoundException;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -291,20 +290,6 @@ public class MechanixParser {
 		}
 
 		return rvList;
-	}
-	
-	public static void main(String[] args) {
-		System.out.println("Ankit");
-		MechanixParser MechanixSketch = new MechanixParser(); 
-		ArrayList<MechanixSketch> SketchList = new ArrayList<MechanixSketch>();
-		try {
-			MechanixSketch.parse("C:\\Users\\Ankit\\Desktop\\Fall 2014\\Sketch Recognition\\project\\Data\\SketchData.xml");
-			SketchList = MechanixSketch.getMechanixSketchList();
-		} catch (ParserConfigurationException | IOException | SAXException e) {
-			System.out.println("Exception:  " + e.getMessage());
-			e.printStackTrace();
-		}
-
 	}
 	
 }

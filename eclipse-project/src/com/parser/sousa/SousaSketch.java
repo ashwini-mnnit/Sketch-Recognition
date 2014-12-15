@@ -19,12 +19,10 @@ public class SousaSketch {
 		this.sousaStrokes = sousaStrokes;
 	}
 
-	private Iterator<SousaStroke> sousaStrokesIterator;
 
 	public SousaSketch() {
 		super();
 		sousaStrokes = new ArrayList<SousaStroke>();
-		sousaStrokesIterator = sousaStrokes.iterator();
 	}
 
 	public UUID getId() {
@@ -37,14 +35,6 @@ public class SousaSketch {
 
 	public Boolean isEmpty() {
 		return (sousaStrokes.size() == 0);
-	}
-
-	public Boolean hasNextStroke() {
-		return sousaStrokesIterator.hasNext();
-	}
-
-	public SousaStroke nextSousaStroke() {
-		return sousaStrokesIterator.next();
 	}
 
 	public String getType() {
@@ -61,10 +51,6 @@ public class SousaSketch {
 
 	public void setAuthor(String author) {
 		this.author = author;
-	}
-
-	public void reset() {
-		sousaStrokesIterator = sousaStrokes.iterator();
 	}
 
 	public String getPremitivetype() {

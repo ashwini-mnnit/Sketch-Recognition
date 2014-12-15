@@ -7,6 +7,7 @@ import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 import com.mongodb.util.JSON;
+import com.parser.sousa.SousaSketch;
 import com.sketchshape.SrlShapeExtended;
 
 public class ProcessData {
@@ -19,6 +20,22 @@ public class ProcessData {
 	public void processSouseData(String path, String collectionName) {
 		
 		DBCollection collection = mongoConnect.getCollection(collectionName);
+		
+		DataFetcher df = new DataFetcher(path);
+		
+		List<SousaSketch> sketchList = df.GetSouseDatas();
+    	for (SousaSketch sousaSketch : sketchList) {
+    		Gson gson = new Gson();
+    		String jsonString = gson.toJson(sousaSketch);
+            DBObject dbObject = (DBObject)JSON.parse(jsonString);
+            collection.insert(dbObject);
+    	}
+	}
+	
+public void processSouseDataSrl(String path, String collectionName) {
+		
+		DBCollection collection = mongoConnect.getCollection(collectionName);
+		
 		DataFetcher df = new DataFetcher(path);
 		List<SrlShapeExtended> sketchList = df.GetSouseData();
     	for (SrlShapeExtended sousaSketch : sketchList) {

@@ -9,13 +9,11 @@ public class SousaStroke {
 	private UUID id;
 	private List<SousaArg> argList;
 	private ArrayList<SousaPoint> pointList;
-	private Iterator<SousaPoint> pointListIterator;
 
 	public SousaStroke(UUID id, ArrayList<SousaPoint> pointList) {
 		super();
 		this.id = id;
 		this.pointList = pointList;
-		this.pointListIterator = pointList.iterator();
 		this.argList = new ArrayList<SousaArg>();
 	}
 
@@ -23,20 +21,11 @@ public class SousaStroke {
 		super();
 		this.id = id;
 		this.pointList = new ArrayList<SousaPoint>();
-		this.pointListIterator = pointList.iterator();
 		this.argList = new ArrayList<SousaArg>();
 	}
 
 	public Boolean isEmpty() {
 		return (pointList.size() == 0);
-	}
-
-	public Boolean hasNextStroke() {
-		return pointListIterator.hasNext();
-	}
-
-	public SousaPoint nextSousaStroke() {
-		return pointListIterator.next();
 	}
 
 	public void setId(UUID id) {

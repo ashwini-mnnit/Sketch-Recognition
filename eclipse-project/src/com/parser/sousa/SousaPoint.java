@@ -19,20 +19,6 @@ public class SousaPoint {
 		
 	}
 
-	public SousaPoint(UUID id) {
-		super();
-		this.id = id;
-		this.xCoordinate = 0.0;
-		this.yCoordinate = 0.0;
-	}
-
-	public SousaPoint(UUID id, Double xCoordinate, Double yCoordinate) {
-		super();
-		this.id = id;
-		this.xCoordinate = xCoordinate;
-		this.yCoordinate = yCoordinate;
-	}
-
 	public UUID getId() {
 		return id;
 	}
