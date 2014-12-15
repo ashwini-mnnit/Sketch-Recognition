@@ -62,7 +62,6 @@ public class ProcessData {
     		Gson gson = new Gson();
     		
     		String jsonString = gson.toJson(sousaSketch);
-    		//System.out.println(jsonString);
             DBObject dbObject = (DBObject)JSON.parse(jsonString);
             collection.insert(dbObject);
     	}

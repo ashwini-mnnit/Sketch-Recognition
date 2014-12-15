@@ -198,7 +198,6 @@ public class RetrieveData {
     		DBObject dbobj = cursor.next();
     		Gson gson = new Gson();
     		String json = dbobj.toString();
-    		//System.out.println(json);
     		MechanixSketch mSketch = gson.fromJson(json, MechanixSketch.class);
     		Sketch sketch = getSketchMlObject(mSketch);
     		sketchML.add(sketch);
@@ -206,20 +205,17 @@ public class RetrieveData {
 		return sketchML;
 	}
 	
-	public ArrayList<Sketch> getSimilarSketchMlforMechanixData(String collectionName, MechanixShape mechanixShape) throws JSONException {
-		CalculateSpeed calculateSpeed = new CalculateSpeed();
-		calculateSpeed.populateSpeed(mechanixShape);
-		Double clusterId = classifyData.getClusterId(mechanixShape);
-		
+	public ArrayList<Sketch> getSimilarSketchMlforMechanixData(String collectionName, double clusterId) throws JSONException {
+		ArrayList<Sketch> sketchML = new ArrayList<Sketch>();
 		DBCollection collection = mongoConnect.getCollection(collectionName);
     	BasicDBObject searchQuery = new BasicDBObject();
-    	searchQuery.put("clusterId", clusterId);
+    	searchQuery.put("shapes.Shapes.clusterId", clusterId);
     	DBCursor cursor = collection.find(searchQuery);
-    	ArrayList<Sketch> sketchML = new ArrayList<Sketch>();
     	while (cursor.hasNext()) {
     		DBObject dbobj = cursor.next();
     		Gson gson = new Gson();
     		String json = dbobj.toString();
+    		System.out.println(json);
     		MechanixSketch mSketch = gson.fromJson(json, MechanixSketch.class);
     		Sketch sketch = getSketchMlObject(mSketch);
     		sketchML.add(sketch);
