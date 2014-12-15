@@ -45,6 +45,14 @@ public class RetrieveData {
 		mongoConnect = new MongoConnect(serverAddr, port, dbName);
    }
 	
+	public ClassifyData getClassifyData() {
+		return classifyData;
+	}
+
+	public void setClassifyData(ClassifyData classifyData) {
+		this.classifyData = classifyData;
+	}
+
 	public ArrayList<Sketch> getSketchMlforSouseDataSrl(String collectionName, String id) throws JSONException {
 		DBCollection collection = mongoConnect.getCollection(collectionName);
     	BasicDBObject searchQuery = new BasicDBObject();

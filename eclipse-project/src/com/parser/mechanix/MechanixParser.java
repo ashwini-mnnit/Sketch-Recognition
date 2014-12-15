@@ -156,6 +156,7 @@ public class MechanixParser {
 				case "interpretations":
 					MechanixInterpretations interpretations = getInterpretations(eElement);
 					mechanixShape.setInterpretations(interpretations);
+					break;
 				case "shape":
 					MechanixShape subShape = getShape(eElement);
 					subShapeList.add(subShape);
