@@ -1,7 +1,14 @@
 package com.parser.mechanix;
 
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import java.util.UUID;
+
+import com.doller.OneDollerPoint;
+import com.doller.OneDollerRecognizer;
+import com.doller.OneDollerResult;
+import com.sketchshape.PremitiveStrokeType;
 
 public class MechanixShape {
 	private UUID id;
@@ -140,4 +147,35 @@ public class MechanixShape {
 			mexShape.updatePrimitiveTypes();
 		}
 	}
+	
+	public List<MechanixStroke> getAllStroke()
+	{
+		List<MechanixStroke> rvStrokes = new ArrayList<MechanixStroke>();
+		if (this.stroke != null) {
+			rvStrokes.add(this.stroke);
+		}
+		if (Shapes==null)
+		{
+			return rvStrokes;
+		}
+		for (MechanixShape mexShape : Shapes) {
+			rvStrokes.addAll(mexShape.getAllStroke());
+		}
+		return rvStrokes;
+	}
+
+	public List<MechanixShape> getAllShapes() {
+		List<MechanixShape> rvStrokes = new ArrayList<MechanixShape>();
+		
+		if (Shapes==null)
+		{
+			return rvStrokes;
+		}
+		for (MechanixShape mexShape : Shapes) {
+			rvStrokes.add(mexShape);
+			rvStrokes.addAll(mexShape.getAllShapes());
+		}
+		return rvStrokes;
+	}
+
 }
