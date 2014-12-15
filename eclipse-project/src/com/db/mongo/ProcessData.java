@@ -34,6 +34,7 @@ public class ProcessData {
 		DataFetcher df = new DataFetcher(path);
 		
 		List<MechanixSketch> sketchList = df.GetMechanixData();
+		
     	for (MechanixSketch sousaSketch : sketchList) {
     		Gson gson = new Gson();
     		String jsonString = gson.toJson(sousaSketch);
