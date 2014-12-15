@@ -17,6 +17,8 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+import com.doller.OneDollerResult;
+
 public class SousaParser {
 
 	public static List<SousaSketch> parse(String filename) throws ParserConfigurationException, IOException, SAXException {
@@ -110,8 +112,7 @@ public class SousaParser {
 	}
 
 	private static SousaPoint getPoint(Element point) {
-		SousaPoint rvPoint = new SousaPoint();
-		rvPoint.setId(UUID.fromString(point.getAttribute("id")));
+		SousaPoint rvPoint = new SousaPoint(UUID.fromString(point.getAttribute("id")));
 		rvPoint.setxCoordinate(Double.parseDouble(point.getAttribute("x")));
 		rvPoint.setyCoordinate(Double.parseDouble(point.getAttribute("y")));
 		rvPoint.setTime(point.getAttribute("time"));
@@ -141,4 +142,21 @@ public class SousaParser {
 
 		return rvList;
 	}
+
+	public static void main(String[] args) {
+		try {
+			List<SousaSketch> sketchList = SousaParser.parse("C:\\Users\\Owner\\Dropbox\\Courses\\Skech Recognition\\Project\\sousa-108-[2014-11-04-21-22-43.956834]-decision-graphic-sub-study\\108\\1839");
+			for (SousaSketch sousaSketch : sketchList) {
+				for (SousaStroke sousaStroke : sousaSketch.getSousaStrokes() ) {
+					OneDollerResult r= sousaStroke.getDollarRecognizerType();
+					System.out.println(r.toString());
+				}
+			}
+		} catch (ParserConfigurationException | IOException | SAXException e) {
+			System.out.println("Exception:  " + e.getMessage());
+			e.printStackTrace();
+		}
+
+	}
+
 }
