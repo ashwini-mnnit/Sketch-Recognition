@@ -25,6 +25,7 @@ import com.sketchMl.Point;
 import com.sketchMl.Shape;
 import com.sketchMl.Sketch;
 import com.sketchMl.Sketcher;
+import com.sketchshape.PremitiveStrokeType;
 
 public class RetrieveData {
 	private MongoConnect mongoConnect;
@@ -83,6 +84,10 @@ public class RetrieveData {
 	public void addShape(ArrayList<Shape> shape, ArrayList<SousaStroke> sousaStrokes){
 		for (SousaStroke it : sousaStrokes) {
 			Shape s = new Shape();
+			PremitiveStrokeType ptype = it.getPrimitiveType();
+			if (ptype != null) {
+				s.setShapeType(ptype.getName());
+			}
 			ArrayList<Arg> arg = new ArrayList<Arg>();
 			addArg(arg, it.getArgList());
 			s.setArg(arg);
@@ -120,7 +125,6 @@ public class RetrieveData {
 		return sketchML;
 	} 
 	
-	
 	public Sketch getSketchMlObject(MechanixSketch mSketch) {
 		Sketch sk = new Sketch();
 		sk.setSketchId(mSketch.getId());
@@ -139,6 +143,12 @@ public class RetrieveData {
 				float c = Float.parseFloat(mStroke.getDraw_color());
 				shape.setColor(c);
 			}*/
+			if (mStroke != null) {
+				PremitiveStrokeType ptype = mStroke.getPrimitiveType();
+				if (ptype != null) {
+					shape.setShapeType(ptype.getName());
+				}
+			}
 			skShape.add(shape);
 			if (mStroke != null) {
 				ArrayList<MechanixPoint> mPoint = mStroke.getPoints();

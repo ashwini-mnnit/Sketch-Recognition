@@ -26,7 +26,6 @@ public class DataFetcher {
 		return path;
 	}
 
-
 	public void setPath(String path) {
 		this.path = path;
 	}

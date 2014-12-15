@@ -28,16 +28,17 @@ public class ProcessData {
 	}
 	
 	public void processMechanixData(String path, String collectionName) {
-		
 		DBCollection collection = mongoConnect.getCollection(collectionName);
 		ClusterDataSet clusterDataSet = new ClusterDataSet();
+		
 		DataFetcher df = new DataFetcher(path);
 		List<MechanixSketch> sketchList = df.GetMechanixData();
-		for (MechanixSketch mechanixSketch : sketchList)
-			clusterDataSet.setClusterIdMechanixShape(mechanixSketch);
-    	for (MechanixSketch sousaSketch : sketchList) {
+		//for (MechanixSketch mechanixSketch : sketchList)
+			//clusterDataSet.setClusterIdMechanixShape(mechanixSketch);
+    	for (MechanixSketch mSketch : sketchList) {
+    		mSketch.updatePrimitiveTypes();
     		Gson gson = new Gson();
-    		String jsonString = gson.toJson(sousaSketch);
+    		String jsonString = gson.toJson(mSketch);
             DBObject dbObject = (DBObject)JSON.parse(jsonString);
             collection.insert(dbObject);
     	}
@@ -45,13 +46,13 @@ public class ProcessData {
 	
 	
 	public void processSouseData(String path, String collectionName) {
-		
 		DBCollection collection = mongoConnect.getCollection(collectionName);
 		
 		DataFetcher df = new DataFetcher(path);
 		
 		List<SousaSketch> sketchList = df.GetSouseDatas();
     	for (SousaSketch sousaSketch : sketchList) {
+    		sousaSketch.updatePrimitiveTypes();
     		Gson gson = new Gson();
     		String jsonString = gson.toJson(sousaSketch);
             DBObject dbObject = (DBObject)JSON.parse(jsonString);
