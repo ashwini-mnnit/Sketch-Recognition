@@ -1,4 +1,4 @@
-
+package com.parser.mechanix;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
