@@ -18,7 +18,7 @@ public class SketchExtended {
 		srlshapes = new ArrayList<SrlShapeExtended>();
 	}
 
-	void parseSouseSketch(List<SousaSketch> souseSketchs) {
+	public void parseSouseSketch(List<SousaSketch> souseSketchs) {
 		for (SousaSketch sousaSketch : souseSketchs) {
 			SrlShapeExtended srlshape = new SrlShapeExtended(0, sousaSketch.getId(), null, sousaSketch.getType());
 			for (SousaStroke sousaStroke : sousaSketch.getSousaStrokes()) {
