@@ -16,7 +16,14 @@ public class MechanixPoint {
 		// TODO Auto-generated constructor stub
 	}
 
-
+	public MechanixPoint(double x, double y, String time) {
+		this.x = x;
+		this.y = y;
+		this.time = time;
+		// TODO Auto-generated constructor stub
+	}
+	
+	
 	public UUID getId() {
 		return id;
 	}

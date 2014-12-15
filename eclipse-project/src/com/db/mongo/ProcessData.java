@@ -1,6 +1,7 @@
 package com.db.mongo;
 import java.util.List;
 
+import com.cluster.ClusterDataSet;
 import com.google.gson.Gson;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBCollection;
@@ -38,6 +39,8 @@ public void processSouseDataSrl(String path, String collectionName) {
 		
 		DataFetcher df = new DataFetcher(path);
 		List<SrlShapeExtended> sketchList = df.GetSouseData();
+		ClusterDataSet clusterDataSet = new ClusterDataSet();
+		clusterDataSet.setClusterId(sketchList);
     	for (SrlShapeExtended sousaSketch : sketchList) {
     		Gson gson = new Gson();
     		String jsonString = gson.toJson(sousaSketch);

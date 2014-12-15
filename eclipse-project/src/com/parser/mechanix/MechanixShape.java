@@ -16,8 +16,72 @@ public class MechanixShape {
 	private ArrayList<MechanixShape> Shapes;
 	private MechanixStroke stroke;
 	
+	private double averageSpeed;
+	private double averagePressure;
+	private double averageTiltX;
+	private double averageTiltY;
+	private double clusterId;
 	
-	
+	public double getAverageSpeed() {
+		return averageSpeed;
+	}
+
+
+
+	public void setAverageSpeed(double averageSpeed) {
+		this.averageSpeed = averageSpeed;
+	}
+
+
+
+	public double getAveragePressure() {
+		return averagePressure;
+	}
+
+
+
+	public void setAveragePressure(double averagePressure) {
+		this.averagePressure = averagePressure;
+	}
+
+
+
+	public double getAverageTiltX() {
+		return averageTiltX;
+	}
+
+
+
+	public void setAverageTiltX(double averageTiltX) {
+		this.averageTiltX = averageTiltX;
+	}
+
+
+
+	public double getAverageTiltY() {
+		return averageTiltY;
+	}
+
+
+
+	public void setAverageTiltY(double averageTiltY) {
+		this.averageTiltY = averageTiltY;
+	}
+
+
+
+	public double getClusterId() {
+		return clusterId;
+	}
+
+
+
+	public void setClusterId(double clusterId) {
+		this.clusterId = clusterId;
+	}
+
+
+
 	public MechanixShape() {
 		super();
 	}
