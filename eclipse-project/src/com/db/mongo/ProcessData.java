@@ -8,6 +8,7 @@ import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 import com.mongodb.util.JSON;
+import com.parser.mechanix.MechanixSketch;
 import com.parser.sousa.SousaSketch;
 import com.sketchshape.SrlShapeExtended;
 
@@ -17,6 +18,30 @@ public class ProcessData {
 	public ProcessData(String serverAddr, int port, String dbName) {
 		 mongoConnect = new MongoConnect(serverAddr, port, dbName);
     }
+	
+	public void insertSouseData(String path, String collectionName) {
+		processSouseData(path, collectionName);
+	}
+	
+	public void insertMechanixData(String path, String collectionName) {
+		processMechanixData(path, collectionName);
+	}
+	
+	public void processMechanixData(String path, String collectionName) {
+		
+		DBCollection collection = mongoConnect.getCollection(collectionName);
+		
+		DataFetcher df = new DataFetcher(path);
+		
+		List<MechanixSketch> sketchList = df.GetMechanixData();
+    	for (MechanixSketch sousaSketch : sketchList) {
+    		Gson gson = new Gson();
+    		String jsonString = gson.toJson(sousaSketch);
+            DBObject dbObject = (DBObject)JSON.parse(jsonString);
+            collection.insert(dbObject);
+    	}
+	}
+	
 	
 	public void processSouseData(String path, String collectionName) {
 		

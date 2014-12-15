@@ -130,19 +130,30 @@ public class RetrieveData {
 		for (MechanixShape it : mShape) {
 			Shape shape = new Shape();
 			shape.setShapeId(it.getId());
-			shape.setTime(Long.parseLong(it.getTime()));
+			if (it.getTime() != null) {
+				double t = Double.parseDouble(it.getTime()); 
+				shape.setTime((long)(t));
+			}
 			MechanixStroke mStroke = it.getStroke();
-			shape.setColor(Float.parseFloat(mStroke.getDraw_color()));
+			/*if(mStroke.getDraw_color() != null) {
+				float c = Float.parseFloat(mStroke.getDraw_color());
+				shape.setColor(c);
+			}*/
 			skShape.add(shape);
-			ArrayList<MechanixPoint> mPoint = mStroke.getPoints();
-			
-			for (MechanixPoint it1 : mPoint) {
-				Point p = new Point();
-				p.setPointID(it1.getId());
-				p.setTime(Long.parseLong(it1.getTime()));
-				p.setXCordinate((float)(it1.getX()));
-				p.setYCordinate((float)(it1.getY()));
-				skPoint.add(p);
+			if (mStroke != null) {
+				ArrayList<MechanixPoint> mPoint = mStroke.getPoints();
+				if (mPoint != null) {
+					for (MechanixPoint it1 : mPoint) {
+						Point p = new Point();
+						p.setPointID(it1.getId());
+						if (it1.getTime() != null) {
+							p.setTime(Long.parseLong(it1.getTime()));
+						}
+						p.setXCordinate((float)(it1.getX()));
+						p.setYCordinate((float)(it1.getY()));
+						skPoint.add(p);
+					}
+				}
 			}
 		}
 		sk.setShape(skShape);
