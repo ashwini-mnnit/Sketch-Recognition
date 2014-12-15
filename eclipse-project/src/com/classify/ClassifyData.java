@@ -13,6 +13,7 @@ import net.sf.javaml.core.Instance;
 
 import com.cluster.ClusterDataSet;
 import com.parser.mechanix.MechanixShape;
+import com.parser.mechanix.MechanixSketch;
 import com.sketchshape.SrlShapeExtended;
 
 import edu.tamu.srl.sketch.core.tobenamedlater.SrlShapeConfig;
@@ -20,10 +21,12 @@ import edu.tamu.srl.sketch.core.tobenamedlater.SrlShapeConfig;
 public class ClassifyData {
 	
 	private Classifier myClassifier;
+	private Classifier myClassifierMechanix;
 	
 	public ClassifyData(int numberOfNeighbours) {
 		super();
 		myClassifier = new KNearestNeighbors(numberOfNeighbours);
+		myClassifierMechanix = new KNearestNeighbors(numberOfNeighbours);
 	}
 	
 	public void learnClassifier(List<SrlShapeExtended> srlShapeExtendedList) {
@@ -32,8 +35,10 @@ public class ClassifyData {
 		Dataset data = new DefaultDataset();
 		try {
 			for (SrlShapeExtended srlShapeExtended : srlShapeExtendedList) {
+				Double clusterId = srlShapeExtended.getClusterId();
+				srlShapeExtended.setClusterId(0.0);
 				Instance currentInstance = getInstance(srlShapeExtended);
-				currentInstance.setClassValue(srlShapeExtended.getClusterId());
+				currentInstance.setClassValue(clusterId);
 				data.add(currentInstance);
 			}
 			myClassifier.buildClassifier(data);
@@ -42,17 +47,25 @@ public class ClassifyData {
 		}
 	}
 	
+	public void learnClassifierMechanixShape(MechanixSketch mechanixSketch) {
+		List<MechanixShape> mechanixShapeList = new ArrayList<MechanixShape>();
+		mechanixShapeList.addAll(mechanixSketch.getShapes());
+		learnClassifierMechanixShape(mechanixShapeList);
+	}
+	
 	public void learnClassifierMechanixShape(List<MechanixShape> mechanixShapeList) {
 		ClusterDataSet clusterDataSet = new ClusterDataSet();
 		clusterDataSet.setClusterIdMechanixShape(mechanixShapeList);
 		Dataset data = new DefaultDataset();
 		try {
 			for (MechanixShape mechanixShape : mechanixShapeList) {
+				Double clusterId = mechanixShape.getClusterId();
+				mechanixShape.setClusterId(0.0);
 				Instance currentInstance = getInstance(mechanixShape);
-				currentInstance.setClassValue(mechanixShape.getClusterId());
+				currentInstance.setClassValue(clusterId);
 				data.add(currentInstance);
 			}
-			myClassifier.buildClassifier(data);
+			myClassifierMechanix.buildClassifier(data);
 		} catch(Exception e) {
 			System.out.printf("Error in learning the classifier", e.getMessage());
 		}
@@ -83,14 +96,13 @@ public class ClassifyData {
 		try {
 			Instance currentInstance;
 			currentInstance = getInstance(mechanixShape);
-			clusterId = (Double) myClassifier.classify(currentInstance);
+			clusterId = (Double) myClassifierMechanix.classify(currentInstance);
 		} catch (Exception e) {
 			System.out.printf("Error in classifying the given Shape object", e.getMessage());
 			}
 		return clusterId;
 		}
 
-		
 	private Instance getInstance(SrlShapeExtended srlShapeExtended) throws Exception{
 		double[] values = new double[ClusterDataSet.NUMBER_OF_FEATURES];
 	    values[0] = srlShapeExtended.getAverageSpeed();
@@ -98,6 +110,14 @@ public class ClassifyData {
 	    Instance currentInstance = new DenseInstance(values);
 		return currentInstance;
 		}
+	
+	private static MechanixShape newMechanixShape(double averageSpeed, double averagePresure) {
+		MechanixShape mechanixShape = new MechanixShape();
+		mechanixShape.setId(UUID.randomUUID());
+		mechanixShape.setAverageSpeed(1);
+		mechanixShape.setAveragePressure(10);
+		return mechanixShape;
+	}
 		
 	public static void main(String[] args) {
 		List<SrlShapeExtended> srlShapeExtendedList = new ArrayList<SrlShapeExtended>();
@@ -110,7 +130,7 @@ public class ClassifyData {
 			
 		UUID uuid2 = UUID.randomUUID();
 		SrlShapeConfig srlShapeConfig2 = new SrlShapeConfig(null, uuid2, "", 0.0, 0.0, temp, temp);
-		SrlShapeExtended srlShapeExtended2 = new SrlShapeExtended(1234, uuid1, srlShapeConfig2, "srl Shape Extended 2");
+		SrlShapeExtended srlShapeExtended2 = new SrlShapeExtended(1234, uuid2, srlShapeConfig2, "srl Shape Extended 2");
 		srlShapeExtended2.setAverageSpeed(2);
 		srlShapeExtended2.setAveragePressure(11);
 
@@ -131,29 +151,87 @@ public class ClassifyData {
 		SrlShapeExtended srlShapeExtended5 = new SrlShapeExtended(1234, uuid5, srlShapeConfig5, "srl Shape Extended 5");
 		srlShapeExtended5.setAverageSpeed(10);
 		srlShapeExtended5.setAveragePressure(26);
-			
+		
+		SrlShapeExtended srlShapeExtended11 = new SrlShapeExtended(1234, UUID.randomUUID(), srlShapeConfig2, "srl Shape Extended 11");
+		srlShapeExtended11.setAverageSpeed(1);
+		srlShapeExtended11.setAveragePressure(10);
+		
+		SrlShapeExtended srlShapeExtended22 = new SrlShapeExtended(1234, UUID.randomUUID(), srlShapeConfig2, "srl Shape Extended 11");
+		srlShapeExtended22.setAverageSpeed(2);
+		srlShapeExtended22.setAveragePressure(11);
+		
+		SrlShapeExtended srlShapeExtended33 = new SrlShapeExtended(1234, UUID.randomUUID(), srlShapeConfig2, "srl Shape Extended 11");
+		srlShapeExtended33.setAverageSpeed(3);
+		srlShapeExtended33.setAveragePressure(14);
+		
+		SrlShapeExtended srlShapeExtended44 = new SrlShapeExtended(1234, UUID.randomUUID(), srlShapeConfig2, "srl Shape Extended 11");
+		srlShapeExtended44.setAverageSpeed(9);
+		srlShapeExtended44.setAveragePressure(25);
+		
+		SrlShapeExtended srlShapeExtended55 = new SrlShapeExtended(1234, UUID.randomUUID(), srlShapeConfig2, "srl Shape Extended 11");
+		srlShapeExtended55.setAverageSpeed(10);
+		srlShapeExtended55.setAveragePressure(26);
+
 		srlShapeExtendedList. add(srlShapeExtended1);
 		srlShapeExtendedList. add(srlShapeExtended2);
 		srlShapeExtendedList. add(srlShapeExtended3);
 		srlShapeExtendedList. add(srlShapeExtended4);
 		srlShapeExtendedList. add(srlShapeExtended5);
-			
+		
 		ClassifyData classifyData = new ClassifyData(5);
 		classifyData.learnClassifier(srlShapeExtendedList);
 		
-        Double predictedClassValue = classifyData.getClusterId(srlShapeExtended1);
+        Double predictedClassValue = classifyData.getClusterId(srlShapeExtended11);
         System.out.print(predictedClassValue);
 	        
-        predictedClassValue = classifyData.getClusterId(srlShapeExtended2);
-        System.out.print(predictedClassValue);
+        Double predictedClassValue2 = classifyData.getClusterId(srlShapeExtended22);
+        System.out.print(predictedClassValue2);
         
-        predictedClassValue = classifyData.getClusterId(srlShapeExtended3);
-        System.out.print(predictedClassValue);
+        Double predictedClassValue3 = classifyData.getClusterId(srlShapeExtended33);
+        System.out.print(predictedClassValue3);
 	        
-        predictedClassValue = classifyData.getClusterId(srlShapeExtended4);
-        System.out.print(predictedClassValue);
+        Double predictedClassValue4 = classifyData.getClusterId(srlShapeExtended44);
+        System.out.print(predictedClassValue4);
 	        
-        predictedClassValue = classifyData.getClusterId(srlShapeExtended5);
-        System.out.print(predictedClassValue);
+        Double predictedClassValue5 = classifyData.getClusterId(srlShapeExtended55);
+        System.out.print(predictedClassValue5);
+        
+        MechanixShape mechanixShape1 = newMechanixShape(1, 10);
+        MechanixShape mechanixShape2 = newMechanixShape(2, 11);
+        MechanixShape mechanixShape3 = newMechanixShape(3, 14);
+        MechanixShape mechanixShape4 = newMechanixShape(9, 25);
+        MechanixShape mechanixShape5 = newMechanixShape(10, 26);
+			
+		ArrayList<MechanixShape> mechanixShapeList = new ArrayList<MechanixShape>();
+		mechanixShapeList.add(mechanixShape1);
+		mechanixShapeList.add(mechanixShape2);
+		mechanixShapeList.add(mechanixShape3);
+		mechanixShapeList.add(mechanixShape4);
+		mechanixShapeList.add(mechanixShape5);
+		
+		MechanixSketch mechanixSketch = new MechanixSketch();
+		mechanixSketch.setShapes(mechanixShapeList);
+		
+		ClassifyData classifyData2 = new ClassifyData(5);
+		classifyData2.learnClassifierMechanixShape(mechanixSketch);
+		
+		Double predictedClassValue6 = classifyData2.getClusterId(mechanixShape1);
+        System.out.print(predictedClassValue6);
+        
+        Double predictedClassValue7 = classifyData2.getClusterId(mechanixShape2);
+        System.out.print(predictedClassValue7);
+
+        Double predictedClassValue8 = classifyData2.getClusterId(mechanixShape3);
+        System.out.print(predictedClassValue8);
+
+        Double predictedClassValue9 = classifyData2.getClusterId(mechanixShape4);
+        System.out.print(predictedClassValue9);
+
+        Double predictedClassValue10 = classifyData2.getClusterId(mechanixShape5);
+        System.out.print(predictedClassValue10);
+                
+                
+                
 	}
 }
+

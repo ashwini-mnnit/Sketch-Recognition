@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.parser.mechanix.MechanixPoint;
 import com.parser.mechanix.MechanixShape;
+import com.parser.mechanix.MechanixSketch;
 import com.parser.mechanix.MechanixStroke;
 import com.sketchshape.SrlShapeExtended;
 
@@ -52,39 +53,43 @@ public class CalculateSpeed {
 		}
 	}
 
-	void populateSpeed(MechanixShape mechanixShape) 
+	void populateSpeed(MechanixSketch mechanixSketch) 
 	{
 		try {
 		List<MechanixShape> subShapes = new ArrayList<MechanixShape>();
-		subShapes = mechanixShape.getShapes();
-		List<MechanixStroke> strokeList = new ArrayList<MechanixStroke>();
-		strokeList.add(mechanixShape.getStroke());
+		subShapes = mechanixSketch.getShapes();
+		for (MechanixShape mechanixSingleShape : subShapes) {
+			if(mechanixSingleShape.getShapes() != null)
+				subShapes.addAll(mechanixSingleShape.getShapes());
+		}
 		if(subShapes != null)  {
 			for(MechanixShape singleShape : subShapes) {
+				List<MechanixStroke> strokeList = new ArrayList<MechanixStroke>();
 				strokeList.add(singleShape.getStroke());
+				double shapeSpeed = 0;
+				double totalPoints = 0;
+				for(MechanixStroke mechanixStroke : strokeList)
+				{
+					List<MechanixPoint> pointList = mechanixStroke.getPoints();
+					totalPoints+=(pointList.size() - 1);
+					for(int i = 0; i < pointList.size() -1; i++)
+					{
+						double x1 = pointList.get(i).getX();
+						double y1 = pointList.get(i).getY();
+						double x2 = pointList.get(i+1).getX();
+						double y2 = pointList.get(i+1).getY();
+						
+						double currentDistance = getDistanceBetweenTwoPoints(x1, y1, x2, y2);
+						double currentTime = Double.parseDouble(pointList.get(i+1).getTime()) - Double.parseDouble(pointList.get(i).getTime());
+						if(currentTime != 0)
+							shapeSpeed+=(currentDistance/currentTime);
+					}
+				}
+				shapeSpeed = shapeSpeed / totalPoints;
+				singleShape.setAverageSpeed(shapeSpeed);
 			}
 		}
-		double shapeSpeed = 0;
-		double totalPoints = 0;
-		for(MechanixStroke mechanixStroke : strokeList)
-		{
-			List<MechanixPoint> pointList = mechanixStroke.getPoints();
-			totalPoints+=(pointList.size() - 1);
-			for(int i = 0; i < pointList.size() -1; i++)
-			{
-				double x1 = pointList.get(i).getX();
-				double y1 = pointList.get(i).getY();
-				double x2 = pointList.get(i+1).getX();
-				double y2 = pointList.get(i+1).getY();
-				
-				double currentDistance = getDistanceBetweenTwoPoints(x1, y1, x2, y2);
-				double currentTime = Double.parseDouble(pointList.get(i+1).getTime()) - Double.parseDouble(pointList.get(i).getTime());
-				if(currentTime != 0)
-					shapeSpeed+=(currentDistance/currentTime);
-			}
-		}
-		shapeSpeed = shapeSpeed / totalPoints;
-		mechanixShape.setAverageSpeed(shapeSpeed);
+		
 		}
 		catch(ArithmeticException e) {
 			System.out.printf("There are no points in given Shape", e.getMessage());
@@ -115,6 +120,7 @@ public class CalculateSpeed {
 		calculateSpeed.populateSpeed(srlShapeExtended);
 		System.out.println(srlShapeExtended.getAverageSpeed());
 		
+		MechanixSketch mechanixSketch = new MechanixSketch();
 		MechanixShape mechanixShape = new MechanixShape();
 		ArrayList<MechanixPoint> pointList3 = new ArrayList<MechanixPoint>();
 		MechanixPoint mechanixPoint1 = new MechanixPoint(0, 0, "0");
@@ -130,7 +136,16 @@ public class CalculateSpeed {
 		MechanixStroke mechanixStroke = new MechanixStroke();
 		mechanixStroke.setPoints(pointList3);
 		mechanixShape.setStroke(mechanixStroke);
-		calculateSpeed.populateSpeed(mechanixShape);
-		System.out.println(mechanixShape.getAverageSpeed());
+		ArrayList<MechanixShape> mechanixShapes = new ArrayList<MechanixShape>();
+		mechanixShapes.add(mechanixShape);
+		mechanixSketch.setShapes(mechanixShapes);
+		calculateSpeed.populateSpeed(mechanixSketch);
+		List<MechanixShape> subShapes = new ArrayList<MechanixShape>();
+		subShapes = mechanixSketch.getShapes();
+		for (MechanixShape mechanixSingleShape : subShapes) {
+			if(mechanixSingleShape.getAverageSpeed() != 0)
+				System.out.println(mechanixSingleShape.getAverageSpeed());
+		}
+		
 	}
 }
