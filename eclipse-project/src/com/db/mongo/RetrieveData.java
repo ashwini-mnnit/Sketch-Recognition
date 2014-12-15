@@ -192,6 +192,8 @@ public class RetrieveData {
     		DBObject dbobj = cursor.next();
     		Gson gson = new Gson();
     		String json = dbobj.toString();
+    		System.out.println("Shireesh");
+    		//System.out.println(json);
     		MechanixSketch mSketch = gson.fromJson(json, MechanixSketch.class);
     		Sketch sketch = getSketchMlObject(mSketch);
     		sketchML.add(sketch);

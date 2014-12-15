@@ -7,12 +7,14 @@ import java.util.UUID;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 
 /**
  *
  * @author shirsing
  */
 @XmlRootElement
+@XmlType(propOrder={"id", "name", "time" , "x", "y"})
 public class Point {
     private float x;
     private float y;
@@ -37,7 +39,7 @@ public class Point {
     	pressure = 0;
     	name = "";
     	id = UUID.randomUUID();
-    	time = 0;
+    	time = 1000000;
     }
 
 	public float getX() {
@@ -77,6 +79,9 @@ public class Point {
 	}
 	@XmlAttribute
 	public void setId(UUID id) {
+		if (id == null) {
+			id = UUID.randomUUID();
+		}
 		this.id = id;
 	}
 

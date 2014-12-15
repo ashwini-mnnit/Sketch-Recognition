@@ -11,6 +11,7 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import javax.xml.bind.annotation.XmlType;
 
 
 /**
@@ -18,6 +19,8 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author shirsing
  */
 @XmlRootElement
+@XmlType(propOrder={"id", "name", "type", "time" , "author", "color", "area","height", "laysInk", 
+		"penTip","arg","alias" })
 public class Shape {
     private ArrayList<Arg> arg;
     private ArrayList<Alias> alias;
@@ -33,19 +36,7 @@ public class Shape {
     private float orientation;
     private String penTip;
     private String raster;
-    private UUID parentId;
-    private String p1;
-    private String p2;
-    private float x;
-    private float y;
-    private String text;
-    private float leftx;
-    private float topy;
-    private String control1;
-    private String control2;
-    private String start;
-    private String end;
-    private String source;
+   
     
     public Shape() {
     	id = UUID.randomUUID();
@@ -73,6 +64,9 @@ public class Shape {
 		this.arg = arg;
 		this.alias = alias;
 		this.id = shapeId;
+		if (shapeId == null) {
+			id = UUID.randomUUID();
+		}
 		this.name = shpeName;
 		this.type = shapeType;
 		this.time = time;
@@ -84,19 +78,6 @@ public class Shape {
 		this.orientation = orientation;
 		this.penTip = penTip;
 		this.raster = raster;
-		this.parentId = parentId;
-		this.p1 = p1;
-		this.p2 = p2;
-		this.x = x;
-		this.y = y;
-		this.text = text;
-		this.leftx = leftx;
-		this.topy = topy;
-		this.control1 = control1;
-		this.control2 = control2;
-		this.start = start;
-		this.end = end;
-		this.source = source;
 	}
 
 	public ArrayList<Arg> getArg() {
@@ -120,6 +101,9 @@ public class Shape {
 	}
 	@XmlAttribute
 	public void setId(UUID id) {
+		if (id == null) {
+			id = UUID.randomUUID();
+		}
 		this.id = id;
 	}
 
