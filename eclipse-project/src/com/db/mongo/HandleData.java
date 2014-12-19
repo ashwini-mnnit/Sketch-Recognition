@@ -27,7 +27,7 @@ public class HandleData {
 		public static void main(String[] args) throws JSONException, JsonGenerationException, JsonMappingException, IOException {
 			ProcessData dataObject = new ProcessData("localhost", 27017, "SketchRec");
 			dataObject.removeAllSouseData("Souse");
-			dataObject.insertSrlData("C:\\Users\\shirsing\\Desktop\\Referral\\1839", "Souse");
+			dataObject.insertSrlData("C:\\Users\\shirsing\\Desktop\\Referral\\1839\\17902.xml", "Souse");
 			//dataObject.removeAllMechanixData("Mechanix");
 			//dataObject.insertMechanixData("/home/shirsing/Downloads/SketchData.xml", "Mechanix");
 			
@@ -39,10 +39,10 @@ public class HandleData {
 			//ArrayList<Sketch> sketchMlList = r.getSketchMlforMechanixData("Mechanix", "b589d96f-ec00-4156-9bc8-b6f26bf28cc5");
 			//ArrayList<Sketch> sketchMlList = r.getSimilarSketchMlforMechanixData("Mechanix", 3);
 			
-			for (Sketch it : sketchMlList) {
+			/*for (Sketch it : sketchMlList) {
 				    Gson g = new Gson();
 				    System.out.println(g.toJson(it));
 					//SketchMltoXmlConverter.sketchMltoXml(it, it.getId().toString(),"XML");
-			}
+			}*/
 		}
 	}

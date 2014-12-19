@@ -17,9 +17,9 @@ import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 import com.mongodb.util.JSON;
 import com.parser.mechanix.MechanixSketch;
-import com.parser.sousa.SousaSketch;
-import com.parser.sousa.SousaStroke;
 import com.sketchshape.SrlShapeExtended;
+
+import edu.tamu.srl.sketch.core.object.SrlShape;
 
 public class ProcessData {
 	private MongoConnect mongoConnect;
@@ -28,10 +28,6 @@ public class ProcessData {
 		 mongoConnect = new MongoConnect(serverAddr, port, dbName);
     }
 	
-	public void insertSouseData(String path, String collectionName) throws JsonGenerationException, JsonMappingException, IOException {
-		System.out.println(path);
-		processSouseData(path, collectionName);
-	}
 	
 	public void insertMechanixData(String path, String collectionName) {
 		processMechanixData(path, collectionName);
@@ -62,44 +58,23 @@ public class ProcessData {
 	}
 	
 	
-	public void processSouseData(String path, String collectionName) throws JsonGenerationException, JsonMappingException, IOException {
-		System.out.println("1");
-		DBCollection collection = mongoConnect.getCollection(collectionName);
-		ObjectMapper mapper = new ObjectMapper();
-		
-		DataFetcher df = new DataFetcher(path);
-		File resultFile = new File("C:\\Users\\shirsing\\Desktop\\Referral\\abc.json");
-		List<SousaSketch> sketchList = df.GetSouseDatas();
-		mapper.defaultPrettyPrintingWriter().writeValue(resultFile, sketchList.get(0));
-    	for (SousaSketch sousaSketch : sketchList) {
-    		System.out.println("2");
-    		sousaSketch.updatePrimitiveTypes();
-    		Gson gson = new Gson();
-    		
-    		String jsonString = gson.toJson(sousaSketch);
-    		System.out.println(jsonString);
-            DBObject dbObject = (DBObject)JSON.parse(jsonString);
-            collection.insert(dbObject);
-    	}
-	}
-	
 public void processSouseDataSrl(String path, String collectionName) throws JsonGenerationException, JsonMappingException, IOException {
 		
 		DBCollection collection = mongoConnect.getCollection(collectionName);
 		ObjectMapper mapper = new ObjectMapper();
 		DataFetcher df = new DataFetcher(path);
-		List<SrlShapeExtended> sketchList = df.GetSouseData();
+		List<SrlShape> sketchList = df.GetSouseDatas();
 		
 		File resultFile = new File("C:\\Users\\shirsing\\Desktop\\Referral\\abc.json");
-		System.out.println(sketchList.get(0).getPrimitiveType());
+		
 		mapper.defaultPrettyPrintingWriter().writeValue(resultFile, sketchList.get(0));
 		
-		SrlShapeExtended srl = mapper.readValue(resultFile, SrlShapeExtended.class);
-		System.out.println(srl.getPrimitiveType());
-		
-    	for (SrlShapeExtended sousaSketch : sketchList) {
+		/*SrlShapeExtended srl = mapper.readValue(resultFile, SrlShapeExtended.class);
+		*/
+    	for (SrlShape sousaSketch : sketchList) {
     		Gson gson = new Gson();
     		String jsonString = gson.toJson(sousaSketch);
+    		System.out.println(gson);
             DBObject dbObject = (DBObject)JSON.parse(jsonString);
             collection.insert(dbObject);
     	}

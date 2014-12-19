@@ -28,8 +28,8 @@ import edu.tamu.srl.sketch.core.virtual.SrlPoint;
 
 public class SousaParser {
 
-	public static List<SrlShapeExtended> parse(String filename) throws ParserConfigurationException, IOException, SAXException {
-		List<SrlShapeExtended> rvSketchList = new ArrayList<SrlShapeExtended>();
+	public static List<SrlShape> parse(String filename) throws ParserConfigurationException, IOException, SAXException {
+		List<SrlShape> rvSketchList = new ArrayList<SrlShape>();
 		File f = new File(filename);
 		if (!f.exists()) {
 			throw new FileNotFoundException("Filename: " + filename + " does not exist. !!!");
@@ -128,9 +128,9 @@ public class SousaParser {
 		return rvPoint;
 	}
 
-	private static List<SrlShapeExtended> getSousaSketchFromDirectory(File dirName) throws ParserConfigurationException, IOException, SAXException {
+	private static List<SrlShape> getSousaSketchFromDirectory(File dirName) throws ParserConfigurationException, IOException, SAXException {
 
-		List<SrlShapeExtended> rvList = new ArrayList<SrlShapeExtended>();
+		List<SrlShape> rvList = new ArrayList<SrlShape>();
 		FilenameFilter xmlFilter = new FilenameFilter() {
 
 			@Override
@@ -154,7 +154,7 @@ public class SousaParser {
 
 	public static void main(String[] args) {
 		try {
-			List<SrlShapeExtended> sketchList = SousaParser.parse("C:\\Users\\Owner\\Dropbox\\Courses\\Skech Recognition\\Project\\sousa-108-[2014-11-04-21-22-43.956834]-decision-graphic-sub-study\\108\\1839\\17902.xml");
+			List<SrlShape> sketchList = SousaParser.parse("C:\\Users\\Owner\\Dropbox\\Courses\\Skech Recognition\\Project\\sousa-108-[2014-11-04-21-22-43.956834]-decision-graphic-sub-study\\108\\1839\\17902.xml");
 			for (SrlShape sousaSketch : sketchList) {
 				for (SrlStroke sousaStroke : sousaSketch.getRecursiveStrokeList()) {
 					((SrlStrokeExtended) sousaStroke).updatePrimitiveTypes();

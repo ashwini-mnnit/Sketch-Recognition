@@ -18,9 +18,6 @@ import com.parser.mechanix.MechanixShape;
 import com.parser.mechanix.MechanixSketch;
 import com.parser.mechanix.MechanixStroke;
 import com.parser.sousa.SousaArg;
-import com.parser.sousa.SousaPoint;
-import com.parser.sousa.SousaSketch;
-import com.parser.sousa.SousaStroke;
 import com.sketchMl.Arg;
 import com.sketchMl.NickName;
 import com.sketchMl.Point;
@@ -29,6 +26,8 @@ import com.sketchMl.Sketch;
 import com.sketchMl.Sketcher;
 import com.sketchshape.PremitiveStrokeType;
 import com.sketchshape.SrlShapeExtended;
+
+import edu.tamu.srl.sketch.core.object.SrlShape;
 
 public class RetrieveData {
 	private MongoConnect mongoConnect;
@@ -54,7 +53,7 @@ public class RetrieveData {
 		return sketchML;
 	} 
 	
-	public void addSketcher(ArrayList<Sketcher> sketcher,SousaSketch sSketch ) {
+/*	public void addSketcher(ArrayList<Sketcher> sketcher,SousaSketch sSketch ) {
 			Sketcher s = new Sketcher();
 			NickName name = new NickName();
 			name.setNickname(sSketch.getAuthor());
@@ -100,7 +99,7 @@ public class RetrieveData {
 		}
 	}
 	
-	public Sketch getSketchMlObjectFromSouse(SousaSketch sSketch) {
+	/*public Sketch getSketchMlObjectFromSouse(SousaSketch sSketch) {
 		Sketch sketch = new Sketch();
 		sketch.setId(sSketch.getId());
 		
@@ -116,8 +115,8 @@ public class RetrieveData {
 		addPoint(point, sSketch.getSousaStrokes());
 		sketch.setPoint(point);
 		return sketch;
-	}
-	
+	}*/
+
 	public ArrayList<Sketch> getSketchMlforSouseData(String collectionName, String id) throws JSONException {
 		ArrayList<Sketch> sketchML = new ArrayList<Sketch>();
 		DBCollection collection = mongoConnect.getCollection(collectionName);
@@ -128,9 +127,10 @@ public class RetrieveData {
     		DBObject dbobj = cursor.next();
     		Gson gson = new Gson();
     		String json = dbobj.toString();
-    		SousaSketch sSketch = gson.fromJson(json, SousaSketch.class);
-    		Sketch sketch = getSketchMlObjectFromSouse(sSketch);
-    		sketchML.add(sketch);
+    		System.out.println(gson);
+    		//SrlShape sSketch = gson.fromJson(json, SrlShape.class);
+    		//Sketch sketch = getSketchMlObjectFromSouse(sSketch);
+    		//sketchML.add(sketch);
     	}	    	
 		return sketchML;
 	} 
@@ -226,9 +226,9 @@ public class RetrieveData {
     		DBObject dbobj = cursor.next();
     		Gson gson = new Gson();
     		String json = dbobj.toString();
-    		SousaSketch sSketch = gson.fromJson(json, SousaSketch.class);
-    		Sketch sketch = getSketchMlObjectFromSouse(sSketch);
-    		sketchML.add(sketch);
+    		SrlShape sSketch = gson.fromJson(json, SrlShape.class);
+    		//Sketch sketch = getSketchMlObjectFromSouse(sSketch);
+    		//sketchML.add(sketch);
     	}	
     	return sketchML;
 	}

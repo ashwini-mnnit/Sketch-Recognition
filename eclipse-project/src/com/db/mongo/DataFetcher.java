@@ -13,6 +13,8 @@ import com.parser.mechanix.MechanixSketch;
 import com.parser.sousa.SousaParser;
 import com.sketchshape.SrlShapeExtended;
 
+import edu.tamu.srl.sketch.core.object.SrlShape;
+
 public class DataFetcher {
 	private String path;
 
@@ -28,29 +30,18 @@ public class DataFetcher {
 		this.path = path;
 	}
 
-	public List<SousaSketch> GetSouseDatas() {
-		List<SousaSketch> sketchList = new ArrayList<SousaSketch>();
+	public List<SrlShape> GetSouseDatas() {
+		List<SrlShape> sketchList = new ArrayList<SrlShape>();
 		try {
 			sketchList = SousaParser.parse(path);
 		}catch (ParserConfigurationException | IOException | SAXException e) {
 			System.out.println("Exception:  " + e.getMessage());
 			e.printStackTrace();
 		}
+		
 		return sketchList;
 	}
-	public List<SrlShapeExtended> GetSouseData() {
-		System.out.println(path);
-		List<SousaSketch> sketchList = new ArrayList<SousaSketch>();
-		try {
-			sketchList = SousaParser.parse(path);
-		} catch (ParserConfigurationException | IOException | SAXException e) {
-			System.out.println("Exception:  " + e.getMessage());
-			e.printStackTrace();
-		}
-		SketchExtended sketchExtended = new SketchExtended();
-		sketchExtended.parseSouseSketch(sketchList);
-		return sketchExtended.getSrlshapes();
-	}
+	
 	
 	public List<MechanixSketch> GetMechanixData() {
 		List<MechanixSketch> sketchList = new ArrayList<MechanixSketch>();
