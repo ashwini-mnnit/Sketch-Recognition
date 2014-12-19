@@ -3,6 +3,8 @@ package com.sketchshape;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.codehaus.jackson.annotate.JsonManagedReference;
+
 import com.doller.OneDollerResult;
 import com.parser.sousa.SousaPoint;
 import com.parser.sousa.SousaSketch;
@@ -11,6 +13,7 @@ import com.parser.sousa.SousaStroke;
 import edu.tamu.srl.sketch.core.virtual.SrlPoint;
 
 public class SketchExtended {
+	@JsonManagedReference
 	private List<SrlShapeExtended> srlshapes;
 
 	public SketchExtended() {

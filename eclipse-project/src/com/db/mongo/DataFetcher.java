@@ -41,6 +41,7 @@ public class DataFetcher {
 		return sketchList;
 	}
 	public List<SrlShapeExtended> GetSouseData() {
+		System.out.println(path);
 		List<SousaSketch> sketchList = new ArrayList<SousaSketch>();
 		try {
 			sketchList = SousaParser.parse(path);

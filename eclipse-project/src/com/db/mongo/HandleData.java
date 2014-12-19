@@ -1,9 +1,12 @@
 package com.db.mongo;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import org.codehaus.jackson.JsonGenerationException;
+import org.codehaus.jackson.map.JsonMappingException;
 import org.json.JSONException;
 
 import com.classify.ClassifyData;
@@ -21,12 +24,12 @@ public class HandleData {
 			dataObject = new ProcessData("localhost", 27017, "SketchRec");
 		}
 
-		public static void main(String[] args) throws JSONException {
+		public static void main(String[] args) throws JSONException, JsonGenerationException, JsonMappingException, IOException {
 			ProcessData dataObject = new ProcessData("localhost", 27017, "SketchRec");
 			dataObject.removeAllSouseData("Souse");
-			dataObject.insertSouseData("/home/shirsing/Downloads/1839", "Souse");
-			dataObject.removeAllMechanixData("Mechanix");
-			dataObject.insertMechanixData("/home/shirsing/Downloads/SketchData.xml", "Mechanix");
+			dataObject.insertSrlData("C:\\Users\\shirsing\\Desktop\\Referral\\1839", "Souse");
+			//dataObject.removeAllMechanixData("Mechanix");
+			//dataObject.insertMechanixData("/home/shirsing/Downloads/SketchData.xml", "Mechanix");
 			
 			RetrieveData r = new RetrieveData("localhost", 27017, "SketchRec");
 			
@@ -37,7 +40,9 @@ public class HandleData {
 			//ArrayList<Sketch> sketchMlList = r.getSimilarSketchMlforMechanixData("Mechanix", 3);
 			
 			for (Sketch it : sketchMlList) {
-					SketchMltoXmlConverter.sketchMltoXml(it, it.getId().toString(),"XML");
+				    Gson g = new Gson();
+				    System.out.println(g.toJson(it));
+					//SketchMltoXmlConverter.sketchMltoXml(it, it.getId().toString(),"XML");
 			}
 		}
 	}
