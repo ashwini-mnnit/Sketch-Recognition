@@ -11,7 +11,6 @@ import org.xml.sax.SAXException;
 import com.parser.mechanix.MechanixParser;
 import com.parser.mechanix.MechanixSketch;
 import com.parser.sousa.SousaParser;
-import com.sketchshape.SrlShapeExtended;
 
 import edu.tamu.srl.sketch.core.object.SrlShape;
 
@@ -34,25 +33,24 @@ public class DataFetcher {
 		List<SrlShape> sketchList = new ArrayList<SrlShape>();
 		try {
 			sketchList = SousaParser.parse(path);
-		}catch (ParserConfigurationException | IOException | SAXException e) {
+		} catch (ParserConfigurationException | IOException | SAXException e) {
 			System.out.println("Exception:  " + e.getMessage());
 			e.printStackTrace();
 		}
-		
+
 		return sketchList;
 	}
-	
-	
+
 	public List<MechanixSketch> GetMechanixData() {
 		List<MechanixSketch> sketchList = new ArrayList<MechanixSketch>();
 		try {
 			MechanixParser MechanixSketch = new MechanixParser();
 			MechanixSketch.parse(path);
-			sketchList = MechanixSketch.getMechanixSketchList(); 
+			sketchList = MechanixSketch.getMechanixSketchList();
 		} catch (ParserConfigurationException | IOException | SAXException e) {
 			System.out.println("Exception:  " + e.getMessage());
 			e.printStackTrace();
-		}	
+		}
 		return sketchList;
 	}
 }
