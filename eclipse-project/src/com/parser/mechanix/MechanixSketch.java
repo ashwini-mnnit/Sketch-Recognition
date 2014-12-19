@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import com.parser.sousa.SousaStroke;
-
 public class MechanixSketch {
 
 	private UUID id;

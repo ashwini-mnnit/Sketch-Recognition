@@ -11,8 +11,6 @@ import org.xml.sax.SAXException;
 import com.parser.mechanix.MechanixParser;
 import com.parser.mechanix.MechanixSketch;
 import com.parser.sousa.SousaParser;
-import com.parser.sousa.SousaSketch;
-import com.sketchshape.SketchExtended;
 import com.sketchshape.SrlShapeExtended;
 
 public class DataFetcher {

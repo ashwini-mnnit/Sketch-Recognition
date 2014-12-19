@@ -1,9 +1,11 @@
 package com.parser.sousa;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
@@ -17,12 +19,17 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-import com.doller.OneDollerResult;
+import com.sketchshape.SrlShapeExtended;
+import com.sketchshape.SrlStrokeExtended;
+
+import edu.tamu.srl.sketch.core.object.SrlShape;
+import edu.tamu.srl.sketch.core.object.SrlStroke;
+import edu.tamu.srl.sketch.core.virtual.SrlPoint;
 
 public class SousaParser {
 
-	public static List<SousaSketch> parse(String filename) throws ParserConfigurationException, IOException, SAXException {
-		List<SousaSketch> rvSketchList = new ArrayList<SousaSketch>();
+	public static List<SrlShapeExtended> parse(String filename) throws ParserConfigurationException, IOException, SAXException {
+		List<SrlShapeExtended> rvSketchList = new ArrayList<SrlShapeExtended>();
 		File f = new File(filename);
 		if (!f.exists()) {
 			throw new FileNotFoundException("Filename: " + filename + " does not exist. !!!");
@@ -31,25 +38,25 @@ public class SousaParser {
 		if (f.isDirectory()) {
 			rvSketchList = getSousaSketchFromDirectory(f);
 		} else {
-			SousaSketch sketchFormFile = getSousaSketchFromfile(f);
+			SrlShapeExtended sketchFormFile = getSousaSketchFromfile(f);
 			rvSketchList.add(sketchFormFile);
 		}
 		return rvSketchList;
 	}
 
-	private static SousaSketch getSousaSketchFromfile(File filename) throws ParserConfigurationException, IOException, SAXException {
+	private static SrlShapeExtended getSousaSketchFromfile(File filename) throws ParserConfigurationException, IOException, SAXException {
+		HashMap<UUID, List<SousaArg>> tempArgMap = new HashMap<UUID, List<SousaArg>>();
+
 		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
 		Document doc = dBuilder.parse(filename);
 		doc.getDocumentElement().normalize();
 
-		SousaSketch sketch = new SousaSketch();
-		sketch.setId(UUID.fromString(doc.getDocumentElement().getAttribute("id")));
-		sketch.setAuthor(doc.getDocumentElement().getAttribute("author"));
-		sketch.setType(doc.getDocumentElement().getAttribute("type"));
+		SrlShapeExtended sketch = new SrlShapeExtended(0, UUID.fromString(doc.getDocumentElement().getAttribute("id")), null, doc.getDocumentElement().getAttribute("type"));
+		sketch.setAuthorName(doc.getDocumentElement().getAttribute("author"));
 
-		List<SousaPoint> points = new ArrayList<SousaPoint>();
-		List<SousaStroke> strokes = new ArrayList<SousaStroke>();
+		List<SrlPoint> points = new ArrayList<SrlPoint>();
+		List<SrlStroke> strokes = new ArrayList<SrlStroke>();
 
 		NodeList sketchNodes = doc.getDocumentElement().getChildNodes();
 		for (int i = 0; i < sketchNodes.getLength(); i++) {
@@ -58,11 +65,11 @@ public class SousaParser {
 				Element eElement = (Element) sketchNode;
 				switch (eElement.getNodeName()) {
 				case "point":
-					SousaPoint point = getPoint(eElement);
+					SrlPoint point = getPoint(eElement);
 					points.add(point);
 					break;
 				case "stroke":
-					SousaStroke stroke = getStroke(eElement);
+					SrlStrokeExtended stroke = getStroke(eElement, tempArgMap);
 					strokes.add(stroke);
 					break;
 				}
@@ -70,59 +77,60 @@ public class SousaParser {
 			}
 
 		}
-		updateSketch(sketch, points, strokes);
+		updateSketch(sketch, points, strokes, tempArgMap);
 		return sketch;
 	}
 
-	private static void updateSketch(SousaSketch sketch, List<SousaPoint> points, List<SousaStroke> strokes) {
+	private static void updateSketch(SrlShapeExtended sketch, List<SrlPoint> points, List<SrlStroke> strokes, HashMap<UUID, List<SousaArg>> tempArgMap) {
 
-		for (SousaStroke sousaStroke : strokes) {
-			for (SousaArg arg : sousaStroke.getArgList()) {
-				SousaPoint p = getPointFromID(points, arg.getId());
+		for (SrlStroke srlStroke : strokes) {
+			for (SousaArg arg : tempArgMap.get(srlStroke.getId())) {
+
+				SrlPoint p = getPointFromID(points, arg.getId());
 				if (p != null)
-					sousaStroke.getPointList().add(p);
+					srlStroke.addPoint(p);
 			}
-			sketch.getSousaStrokes().add(sousaStroke);
+			sketch.add(srlStroke);
+			;
 		}
 	}
 
-	private static SousaPoint getPointFromID(List<SousaPoint> points, UUID id) {
-		for (SousaPoint sousaPoint : points) {
-			if (id.compareTo(sousaPoint.getId())==0)
+	private static SrlPoint getPointFromID(List<SrlPoint> points, UUID id) {
+		for (SrlPoint sousaPoint : points) {
+			if (id.compareTo(sousaPoint.getId()) == 0)
 				return sousaPoint;
 		}
 		return null;
 	}
 
-	private static SousaStroke getStroke(Element stroke) {
-		SousaStroke rvStroke = new SousaStroke(UUID.fromString(stroke.getAttribute("id")));
+	private static SrlStrokeExtended getStroke(Element stroke, HashMap<UUID, List<SousaArg>> tempArgMap) {
+		SrlStrokeExtended rvStroke = new SrlStrokeExtended(0, UUID.fromString(stroke.getAttribute("id")), false);
+
+		List<SousaArg> sousaArg = new ArrayList<SousaArg>();
 		NodeList argList = stroke.getChildNodes();
 		for (int j = 0; j < argList.getLength(); j++) {
 			Node argument = argList.item(j);
-			
+
 			if (argument.getNodeType() == Node.ELEMENT_NODE) {
 				Element eElement = (Element) argument;
 				SousaArg arg = new SousaArg();
 				arg.setId(UUID.fromString(eElement.getTextContent()));
 				arg.setType(eElement.getAttribute("type"));
-				rvStroke.getArgList().add(arg);
+				sousaArg.add(arg);
 			}
 		}
+		tempArgMap.put(rvStroke.getId(), sousaArg);
 		return rvStroke;
 	}
 
-	private static SousaPoint getPoint(Element point) {
-		SousaPoint rvPoint = new SousaPoint();
-		rvPoint.setId(UUID.fromString(point.getAttribute("id")));
-		rvPoint.setxCoordinate(Double.parseDouble(point.getAttribute("x")));
-		rvPoint.setyCoordinate(Double.parseDouble(point.getAttribute("y")));
-		rvPoint.setTime(point.getAttribute("time"));
+	private static SrlPoint getPoint(Element point) {
+		SrlPoint rvPoint = new SrlPoint(Double.parseDouble(point.getAttribute("x")), Double.parseDouble(point.getAttribute("y")), Long.parseLong(point.getAttribute("time")), UUID.fromString(point.getAttribute("id")));
 		return rvPoint;
 	}
 
-	private static List<SousaSketch> getSousaSketchFromDirectory(File dirName) throws ParserConfigurationException, IOException, SAXException {
+	private static List<SrlShapeExtended> getSousaSketchFromDirectory(File dirName) throws ParserConfigurationException, IOException, SAXException {
 
-		List<SousaSketch> rvList = new ArrayList<SousaSketch>();
+		List<SrlShapeExtended> rvList = new ArrayList<SrlShapeExtended>();
 		FilenameFilter xmlFilter = new FilenameFilter() {
 
 			@Override
@@ -146,13 +154,13 @@ public class SousaParser {
 
 	public static void main(String[] args) {
 		try {
-			List<SousaSketch> sketchList = SousaParser.parse("C:\\Users\\Owner\\Dropbox\\Courses\\Skech Recognition\\Project\\sousa-108-[2014-11-04-21-22-43.956834]-decision-graphic-sub-study\\108\\1839");
-			for (SousaSketch sousaSketch : sketchList) {
-				for (SousaStroke sousaStroke : sousaSketch.getSousaStrokes() ) {
-					OneDollerResult r= sousaStroke.getDollarRecognizerType();
-					System.out.println(r.toString());
+			List<SrlShapeExtended> sketchList = SousaParser.parse("C:\\Users\\Owner\\Dropbox\\Courses\\Skech Recognition\\Project\\sousa-108-[2014-11-04-21-22-43.956834]-decision-graphic-sub-study\\108\\1839\\17902.xml");
+			for (SrlShape sousaSketch : sketchList) {
+				for (SrlStroke sousaStroke : sousaSketch.getRecursiveStrokeList()) {
+					((SrlStrokeExtended) sousaStroke).updatePrimitiveTypes();
 				}
 			}
+			System.out.println("");
 		} catch (ParserConfigurationException | IOException | SAXException e) {
 			System.out.println("Exception:  " + e.getMessage());
 			e.printStackTrace();
