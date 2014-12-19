@@ -6,12 +6,30 @@ import edu.tamu.srl.sketch.core.object.SrlShape;
 import edu.tamu.srl.sketch.core.tobenamedlater.SrlShapeConfig;
 
 public class SrlShapeExtended extends SrlShape {
-	private String primitiveType;
 	private double averageSpeed;
 	private double averagePressure;
 	private double averageTiltX;
 	private double averageTiltY;
 	private double clusterId;
+	private String authorName;
+	private String shapeType;
+	
+
+	public String getAuthorName() {
+		return authorName;
+	}
+
+	public void setAuthorName(String authorName) {
+		this.authorName = authorName;
+	}
+
+	public String getShapeType() {
+		return shapeType;
+	}
+
+	public void setShapeType(String shapeType) {
+		this.shapeType = shapeType;
+	}
 
 	public double getAverageSpeed() {
 		return averageSpeed;
@@ -76,13 +94,5 @@ public class SrlShapeExtended extends SrlShape {
 	public SrlShapeExtended(SrlShape original) {
 		super(original);
 		// TODO Auto-generated constructor stub
-	}
-
-	public String getPrimitiveType() {
-		return primitiveType;
-	}
-
-	public void setPrimitiveType(String primitiveType) {
-		this.primitiveType = primitiveType;
 	}
 }
