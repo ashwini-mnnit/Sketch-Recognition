@@ -14,6 +14,8 @@ import com.parser.mechanix.MechanixShape;
 import com.parser.mechanix.MechanixSketch;
 import com.sketchMl.Sketch;
 
+import edu.tamu.srl.sketch.core.object.SrlShape;
+
 public class Runquery {
 	RetrieveData retrieveData;
 	ClassifyData classifyData;
@@ -39,10 +41,10 @@ public class Runquery {
 
 	public static void main(String[] args) {
 		DataFetcher df = new DataFetcher("/home/shirsing/Downloads/SketchData.xml");
-		List<MechanixSketch> sketchList = df.GetMechanixData();
+		List<SrlShape> sketchList = df.GetMechanixData();
 		List<MechanixShape> mechanixShapeList = new ArrayList<MechanixShape>();
-		for(MechanixSketch mechanixSketch : sketchList) {
-			mechanixShapeList.addAll(mechanixSketch.getAllShapes());
+		for(SrlShape mechanixSketch : sketchList) {
+			//mechanixShapeList.addAll(mechanixSketch.getAllShapes());
 		}
 		MechanixShape mechanixShape = new MechanixShape();
 		for(MechanixShape mechanixShapeTemp : mechanixShapeList) {
@@ -52,16 +54,16 @@ public class Runquery {
 			}
 		}
 		
-	Runquery runQuery = new Runquery("localhost", 27017, "SketchRec", sketchList);
+	/*//Runquery runQuery = new Runquery("localhost", 27017, "SketchRec", sketchList);
 	try {
-		ArrayList<Sketch> clusterIdToQuery = runQuery.executeQuery(mechanixShape);
+		//ArrayList<Sketch> clusterIdToQuery = runQuery.executeQuery(mechanixShape);
 		for (Sketch it :  clusterIdToQuery) {
 			SketchMltoXmlConverter.sketchMltoXml(it, it.getId().toString(),"ClusteredXML");
 	}
 	} catch (JSONException e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
-	}
+	}*/
 	
 	}
 

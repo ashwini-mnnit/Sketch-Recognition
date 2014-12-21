@@ -41,8 +41,8 @@ public class DataFetcher {
 		return sketchList;
 	}
 
-	public List<MechanixSketch> GetMechanixData() {
-		List<MechanixSketch> sketchList = new ArrayList<MechanixSketch>();
+	public List<SrlShape> GetMechanixData() {
+		List<SrlShape> sketchList = new ArrayList<SrlShape>();
 		try {
 			MechanixParser MechanixSketch = new MechanixParser();
 			MechanixSketch.parse(path);
