@@ -11,7 +11,7 @@ public class SketchMltoXmlConverter {
 	 		public static void sketchMltoXml(Sketch sketch , String file, String dir) {
 		  
 			  try {
-				  String path = "/home/shirsing/" + dir +"/";
+				  String path = "C:\\Users\\shirsing\\Desktop\\Referral\\" + dir +"\\";
 				  path += file;
 				  path += ".xml";
 				  System.out.println(path);

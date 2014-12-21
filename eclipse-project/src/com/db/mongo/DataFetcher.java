@@ -11,7 +11,6 @@ import org.xml.sax.SAXException;
 import com.parser.mechanix.MechanixParser;
 import com.parser.mechanix.MechanixSketch;
 import com.parser.sousa.SousaParser;
-import com.sketchshape.SrlShapeExtended;
 
 import edu.tamu.srl.sketch.core.object.SrlShape;
 
