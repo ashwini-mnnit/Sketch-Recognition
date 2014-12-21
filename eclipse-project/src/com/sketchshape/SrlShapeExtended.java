@@ -2,6 +2,9 @@ package com.sketchshape;
 
 import java.util.UUID;
 
+import com.parser.mechanix.MechanixAttribute;
+import com.parser.mechanix.MechanixAttributes;
+
 import edu.tamu.srl.sketch.core.object.SrlShape;
 import edu.tamu.srl.sketch.core.tobenamedlater.SrlShapeConfig;
 
@@ -13,7 +16,44 @@ public class SrlShapeExtended extends SrlShape {
 	private double clusterId;
 	private String authorName;
 	private String shapeType;
+	private String color;
+	private MechanixAttributes attribute; // Change it to use SRlbject attribute
+	private String mechanixSimRef;
+	private String mechanixSimId;
 	
+
+
+	public String getMechanixSimId() {
+		return mechanixSimId;
+	}
+
+	public void setMechanixSimId(String mechanixSimId) {
+		this.mechanixSimId = mechanixSimId;
+	}
+
+	public String getMechanixSimRef() {
+		return mechanixSimRef;
+	}
+
+	public void setMechanixSimRef(String mechanixSimRef) {
+		this.mechanixSimRef = mechanixSimRef;
+	}
+
+	public MechanixAttributes getAttribute() {
+		return attribute;
+	}
+
+	public void setAttribute(MechanixAttributes attributes) {
+		this.attribute = attributes;
+	}
+
+	public String getColor() {
+		return color;
+	}
+
+	public void setColor(String color) {
+		this.color = color;
+	}
 
 	public String getAuthorName() {
 		return authorName;

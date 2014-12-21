@@ -7,6 +7,7 @@ import java.util.UUID;
 import com.doller.OneDollerPoint;
 import com.doller.OneDollerRecognizer;
 import com.doller.OneDollerResult;
+import com.parser.mechanix.MechanixElementStroke;
 
 import edu.tamu.srl.sketch.core.object.SrlStroke;
 import edu.tamu.srl.sketch.core.tobenamedlater.SrlAuthor;
@@ -16,6 +17,24 @@ import edu.tamu.srl.sketch.core.virtual.SrlPoint;
 
 public class SrlStrokeExtended extends SrlStroke {
 	private PremitiveStrokeType premitiveType;
+	private String color;
+	private MechanixElementStroke elementStroke;
+
+	public MechanixElementStroke getElementStroke() {
+		return elementStroke;
+	}
+
+	public void setElementStroke(MechanixElementStroke elementStroke) {
+		this.elementStroke = elementStroke;
+	}
+
+	public String getColor() {
+		return color;
+	}
+
+	public void setColor(String color) {
+		this.color = color;
+	}
 
 	public PremitiveStrokeType getPremitiveType() {
 		return premitiveType;
