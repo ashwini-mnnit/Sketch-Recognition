@@ -4,6 +4,7 @@ import java.io.FileNotFoundException;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
@@ -17,53 +18,65 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+import com.sketchshape.SrlPointExtended;
+import com.sketchshape.SrlShapeExtended;
+import com.sketchshape.SrlStrokeExtended;
+
+import edu.tamu.srl.sketch.core.abstracted.SrlObject;
+import edu.tamu.srl.sketch.core.object.SrlShape;
+import edu.tamu.srl.sketch.core.virtual.SrlPoint;
+
 
 public class MechanixParser {
-    private ArrayList<MechanixSketch> mechanixSketchList = new ArrayList<MechanixSketch>();
+    private ArrayList<SrlShape> mechanixSketchList = new ArrayList<SrlShape>();
     
-	public ArrayList<MechanixSketch> getMechanixSketchList() {
+	public MechanixParser() {
+		super(); 
+		this.mechanixSketchList=new ArrayList<SrlShape>();
+	}
+
+	
+	public ArrayList<SrlShape> getMechanixSketchList() {
 		return mechanixSketchList;
 	}
 
-	public MechanixParser() {
-		super(); 
-		this.mechanixSketchList=new ArrayList<MechanixSketch>();
-	}
 
-	public void setMechanixSketchList(ArrayList<MechanixSketch> mechanixSketchList) {
+	public void setMechanixSketchList(ArrayList<SrlShape> mechanixSketchList) {
 		this.mechanixSketchList = mechanixSketchList;
 	}
 
+
 	public  void parse(String filename) throws ParserConfigurationException, IOException, SAXException {
 		//ArrayList<MechanixSketch> rvSketchList = new ArrayList<MechanixSketch>();
+		HashMap<String, SrlObject> mapforRefrenceObject = new HashMap<String, SrlObject>();
 		File f = new File(filename);
 		if (!f.exists()) {
 			throw new FileNotFoundException("Filename: " + filename + " does not exist. !!!");
 		}
 
 		if (f.isDirectory()) {
-			mechanixSketchList = getMechanixSketchFromDirectory(f);
+			mechanixSketchList = getMechanixSketchFromDirectory(f,mapforRefrenceObject);
 		} else {
-			MechanixSketch sketchFormFile = getMechanixSketchFromfile(f);
+			SrlShape sketchFormFile = getMechanixSketchFromfile(f,mapforRefrenceObject);
 			mechanixSketchList.add(sketchFormFile);
 		}
 		//MechanixParser.setMechanixSketchList(rvSketchList);
 		
 	}
 	
-	private static MechanixSketch getMechanixSketchFromfile(File filename) throws ParserConfigurationException, IOException, SAXException {
+	private static SrlShape getMechanixSketchFromfile(File filename, HashMap<String, SrlObject> mapforRefrenceObject) throws ParserConfigurationException, IOException, SAXException {
 		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
 		Document doc = dBuilder.parse(filename);
 		//doc.getDocumentElement().normalize();
 
-		MechanixSketch sketch = new MechanixSketch();
-		sketch.setId(UUID.fromString(doc.getDocumentElement().getAttribute("id")));
-		sketch.setTime(doc.getDocumentElement().getAttribute("time"));
-		sketch.setDraw_color(doc.getDocumentElement().getAttribute("draw_color"));
+		SrlShapeExtended sketch = new SrlShapeExtended(Long.parseLong(doc.getDocumentElement().getAttribute("time")), UUID.fromString(doc.getDocumentElement().getAttribute("id")), null, doc.getDocumentElement().getAttribute("type"));
+		//sketch.setId(UUID.fromString(doc.getDocumentElement().getAttribute("id")));
+		//sketch.setTime(doc.getDocumentElement().getAttribute("time"));
+		sketch.setColor(doc.getDocumentElement().getAttribute("draw_color"));
 
 		MechanixAttributes attributes = new MechanixAttributes();
-		ArrayList<MechanixShape> shapes = new ArrayList<MechanixShape>();
+		ArrayList<SrlShape> shapes = new ArrayList<SrlShape>();
 
 		NodeList sketchNodes = doc.getDocumentElement().getChildNodes();
 		for (int i = 0; i < sketchNodes.getLength(); i++) {
@@ -75,7 +88,8 @@ public class MechanixParser {
 					attributes = getSketchAttributes(eElement);
 					break;
 				case "shape":
-					MechanixShape shape = getShape(eElement);
+					SrlShapeExtended shape = getShape(eElement);
+					mapforRefrenceObject.put(shape.getMechanixSimId(),shape);
 					shapes.add(shape);
 					break;
 				}
@@ -83,8 +97,8 @@ public class MechanixParser {
 			}
 
 		}
-		sketch.setAttributes(attributes);
-		sketch.setShapes(shapes);
+		sketch.setAttribute(attributes);
+		sketch.addAll(shapes);
 		//updateSketch(sketch, points, strokes);
 		return sketch;
 	}
@@ -118,23 +132,26 @@ public class MechanixParser {
 		return attr;
 	 
 	}
-	private static MechanixShape getShape(Element shape) {
-		MechanixShape mechanixShape = new MechanixShape();
-		ArrayList<MechanixShape> subShapeList = new ArrayList<MechanixShape>();
+	private static SrlShapeExtended getShape(Element shape) {
+
+		
+		SrlShapeExtended mechanixShape = new SrlShapeExtended(0,UUID.fromString(shape.getAttribute("id")),null,"");
+		ArrayList<SrlShape> subShapeList = new ArrayList<SrlShape>();
+		/*
 		if(shape.getAttribute("id") != null && !shape.getAttribute("id").equals("")){
-			mechanixShape.setId(UUID.fromString(shape.getAttribute("id")));
+			mechanixShape.set(UUID.fromString(shape.getAttribute("id")));
 		}
 		
 		if(shape.getAttribute("time") != null && !shape.getAttribute("time").equals("")){
 			mechanixShape.setTime((String)shape.getAttribute("time"));
 		}
-		 
+		*/ 
 		if(shape.getAttribute("simpl:id") != null && !shape.getAttribute("simpl:id").equals("")){
-			mechanixShape.setSimpl_id((String)shape.getAttribute("simpl:id"));
+			mechanixShape.setMechanixSimId((String)shape.getAttribute("simpl:id"));
 		}
 		
 		if(shape.getAttribute("simpl:ref") != null && !shape.getAttribute("simpl:ref").equals("")){
-			mechanixShape.setSimpl_ref((String)shape.getAttribute("simpl:ref"));
+			mechanixShape.setMechanixSimRef((String)shape.getAttribute("simpl:ref"));
 		}
 		
 		MechanixAttributes attributes;
@@ -147,25 +164,26 @@ public class MechanixParser {
 				switch (eElement.getNodeName()) {
 				case "attributes":
 					attributes = getSketchAttributes(eElement);
-					mechanixShape.setAttributes(attributes);
+					mechanixShape.setAttribute(attributes);
 					break;
 				case "stroke":
-					MechanixStroke stroke = getStroke(eElement);
-					mechanixShape.setStroke(stroke);
+					SrlStrokeExtended stroke = getStroke(eElement);
+					mechanixShape.add(stroke);
 					break;
 				case "interpretations":
-					MechanixInterpretations interpretations = getInterpretations(eElement);
-					mechanixShape.setInterpretations(interpretations);
+					//TODO:Add  the support for this
+				//	MechanixInterpretations interpretations = getInterpretations(eElement);
+//				//	mechanixShape.setConfidence(interpretations.);
 					break;
 				case "shape":
-					MechanixShape subShape = getShape(eElement);
+					SrlShapeExtended subShape = getShape(eElement);
 					subShapeList.add(subShape);
 				}
 
 			}
 
 		}
-		mechanixShape.setShapes(subShapeList);
+		mechanixShape.addAll(subShapeList);
 		return mechanixShape;
 	}
 
@@ -202,18 +220,20 @@ public class MechanixParser {
 		return interpretation;
 	}
 
-	private static MechanixStroke getStroke(Element eElement) {
-		MechanixStroke stroke = new MechanixStroke();
-		ArrayList<MechanixPoint> points = new ArrayList<MechanixPoint>();
+	private static SrlStrokeExtended getStroke(Element eElement) {
+		SrlStrokeExtended stroke = new SrlStrokeExtended(Long.parseLong((String)eElement.getAttribute("time")),UUID.fromString(eElement.getAttribute("id")),false);
+		ArrayList<SrlPoint> points = new ArrayList<SrlPoint>();
 		
+		/*
 		if(UUID.fromString(eElement.getAttribute("id")) != null){
 			stroke.setId(UUID.fromString(eElement.getAttribute("id")));
 		}
 		if((String)eElement.getAttribute("time") != null){
 			stroke.setTime((String)eElement.getAttribute("time"));
 		}
+		*/
 		if((String)eElement.getAttribute("draw_color") != null){
-			stroke.setDraw_color((String)eElement.getAttribute("draw_color"));
+			stroke.setColor((String)eElement.getAttribute("draw_color"));
 		}
 		
 		NodeList sketchNodes = eElement.getChildNodes();
@@ -224,10 +244,10 @@ public class MechanixParser {
 				switch (element.getNodeName()) {
 				case "elem_stroke":
 					MechanixElementStroke elementStroke = getElemStroke(element);
-					stroke.setElem_stroke(elementStroke);
+					stroke.setElementStroke(elementStroke);
 					break;
 				case "point":
-					MechanixPoint point = getPoint(element);
+					SrlPoint point = getPoint(element);
 					points.add(point);
 					break;
 				}
@@ -237,13 +257,14 @@ public class MechanixParser {
 		}
 		
 		
-		stroke.setPoints(points);
+		stroke.addPoints(points);
 		return stroke;
 	}
 
-	private static MechanixPoint getPoint(Element element) {
-		MechanixPoint point = new MechanixPoint();
+	private static SrlPoint getPoint(Element element) {
+		SrlPointExtended point = new SrlPointExtended(Double.parseDouble(element.getAttribute("x")),Double.parseDouble(element.getAttribute("y")),Long.parseLong((String)element.getAttribute("time")), UUID.fromString(element.getAttribute("id")));
 		
+		/*
 		if((element.getAttribute("id")) != null && !element.getAttribute("id").equals("")){
 			point.setId(UUID.fromString(element.getAttribute("id")));
 		}
@@ -252,15 +273,16 @@ public class MechanixParser {
 		}
 		if((element.getAttribute("x")) != null && !element.getAttribute("x").equals("")){
 			point.setX(Double.parseDouble(element.getAttribute("x")));
-		}
+		}*
 		if((element.getAttribute("y")) != null && !element.getAttribute("y").equals("")){
 			point.setY(Double.parseDouble(element.getAttribute("y")));
 		}
+		*/
 		if((element.getAttribute("simpl:id")) != null && !element.getAttribute("simpl:id").equals("")){
-			point.setSimpl_id((String)element.getAttribute("simpl:id"));
+			point.setMechanixSimId((String)element.getAttribute("simpl:id"));
 		}
 		if((element.getAttribute("simpl:ref")) != null && !element.getAttribute("simpl:ref").equals("")){
-			point.setSimpl_ref((String)element.getAttribute("simpl:ref"));
+			point.setMechanixSimRef(((String)element.getAttribute("simpl:ref")));
 		}
 		
 		return point;
@@ -274,9 +296,9 @@ public class MechanixParser {
 		return elementStroke;
 	}
 	
-	private static ArrayList<MechanixSketch> getMechanixSketchFromDirectory(File dirName) throws ParserConfigurationException, IOException, SAXException {
+	private static ArrayList<SrlShape> getMechanixSketchFromDirectory(File dirName, HashMap<String, SrlObject> mapforRefrenceObject) throws ParserConfigurationException, IOException, SAXException {
 
-		ArrayList<MechanixSketch> rvList = new ArrayList<MechanixSketch>();
+		ArrayList<SrlShape> rvList = new ArrayList<SrlShape>();
 		FilenameFilter xmlFilter = new FilenameFilter() {
 
 			@Override
@@ -299,13 +321,13 @@ public class MechanixParser {
 	}
 	
 	public static void main(String[] args) {
-		List<MechanixSketch> sketchList = new ArrayList<MechanixSketch>();
+		List<SrlShape> sketchList = new ArrayList<SrlShape>();
 		try {
 			MechanixParser MechanixSketch = new MechanixParser();
 			MechanixSketch.parse("C:\\Users\\Owner\\Dropbox\\Courses\\Skech Recognition\\Project\\SketchData.xml");
 			sketchList = MechanixSketch.getMechanixSketchList(); 
-			for (MechanixSketch mechanixSketch : sketchList) {
-				mechanixSketch.updatePrimitiveTypes();
+			for (SrlShape mechanixSketch : sketchList) {
+				mechanixSketch.toString();
 			}
 			System.out.println("");
 		} catch (ParserConfigurationException | IOException | SAXException e) {
