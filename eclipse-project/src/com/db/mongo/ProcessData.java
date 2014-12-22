@@ -55,6 +55,28 @@ public void processMechanixDataSrl(String path, String collectionName) throws Js
 		}	
 }
 
+
+	/*public void processMechanixData(String path, String collectionName) {
+		DBCollection collection = mongoConnect.getCollection(collectionName);
+		CalculateSpeed calculateSpeed = new CalculateSpeed(); 
+		ClusterDataSet clusterDataSet = new ClusterDataSet();
+		
+		DataFetcher df = new DataFetcher(path);
+		List<SrlShape> sketchList = df.GetMechanixData();
+		
+		for (SrlShape mechanixSketch : sketchList)
+			calculateSpeed.populateSpeed(mechanixSketch);
+		clusterDataSet.setClusterIdMechanixShapeList(sketchList);
+    	for (SrlShape mSketch : sketchList) {
+    		mSketch.updatePrimitiveTypes();
+    		Gson gson = new Gson();
+    		String jsonString = gson.toJson(mSketch);
+            DBObject dbObject = (DBObject)JSON.parse(jsonString);
+            collection.insert(dbObject);
+    	}
+	}*/
+	
+
 	
 public ArrayList<Sketch> getSketchMlList(List<SrlShape> srlShapeList) {
 	ArrayList<Sketch> sketchList = new ArrayList<Sketch>();
