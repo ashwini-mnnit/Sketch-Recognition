@@ -19,6 +19,24 @@ public class SrlStrokeExtended extends SrlStroke {
 	private PremitiveStrokeType premitiveType;
 	private String color;
 	private MechanixElementStroke elementStroke;
+	private String mechanixSimRef;
+	private String mechanixSimId;
+
+	public String getMechanixSimRef() {
+		return mechanixSimRef;
+	}
+
+	public void setMechanixSimRef(String mechanixSimRef) {
+		this.mechanixSimRef = mechanixSimRef;
+	}
+
+	public String getMechanixSimId() {
+		return mechanixSimId;
+	}
+
+	public void setMechanixSimId(String mechanixSimId) {
+		this.mechanixSimId = mechanixSimId;
+	}
 
 	public MechanixElementStroke getElementStroke() {
 		return elementStroke;

@@ -1,5 +1,7 @@
 package com.sketchshape;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 import com.parser.mechanix.MechanixAttribute;
@@ -17,11 +19,9 @@ public class SrlShapeExtended extends SrlShape {
 	private String authorName;
 	private String shapeType;
 	private String color;
-	private MechanixAttributes attribute; // Change it to use SRlbject attribute
 	private String mechanixSimRef;
 	private String mechanixSimId;
-	
-
+	private Map<String, Double> mInterpretations; 
 
 	public String getMechanixSimId() {
 		return mechanixSimId;
@@ -37,14 +37,6 @@ public class SrlShapeExtended extends SrlShape {
 
 	public void setMechanixSimRef(String mechanixSimRef) {
 		this.mechanixSimRef = mechanixSimRef;
-	}
-
-	public MechanixAttributes getAttribute() {
-		return attribute;
-	}
-
-	public void setAttribute(MechanixAttributes attributes) {
-		this.attribute = attributes;
 	}
 
 	public String getColor() {
@@ -113,26 +105,36 @@ public class SrlShapeExtended extends SrlShape {
 
 	public SrlShapeExtended() {
 		super();
+		this.mInterpretations = new HashMap();
 		// TODO Auto-generated constructor stub
 	}
 
 	public SrlShapeExtended(long time, UUID uuid, boolean isUserCreated, SrlShapeConfig config, String description) {
 		super(time, uuid, isUserCreated, config, description);
+		this.mInterpretations = new HashMap();
 		// TODO Auto-generated constructor stub
 	}
 
 	public SrlShapeExtended(long time, UUID uuid, SrlShapeConfig config, String description) {
 		super(time, uuid, config, description);
+		this.mInterpretations = new HashMap();
 		// TODO Auto-generated constructor stub
 	}
 
 	public SrlShapeExtended(SrlShape arg0, boolean arg1) {
 		super(arg0, arg1);
+		this.mInterpretations = new HashMap();
 		// TODO Auto-generated constructor stub
 	}
 
 	public SrlShapeExtended(SrlShape original) {
 		super(original);
+		this.mInterpretations = new HashMap();
 		// TODO Auto-generated constructor stub
 	}
+	
+	public void setInterpretation(String key, Double value)
+	  {
+	    this.mInterpretations.put(key, value);
+	  }
 }
