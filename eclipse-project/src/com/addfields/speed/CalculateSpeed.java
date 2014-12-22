@@ -1,13 +1,8 @@
 package com.addfields.speed;
 
-import java.lang.ArithmeticException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.parser.mechanix.MechanixPoint;
-import com.parser.mechanix.MechanixShape;
-import com.parser.mechanix.MechanixSketch;
-import com.parser.mechanix.MechanixStroke;
 import com.sketchshape.SrlShapeExtended;
 
 import edu.tamu.srl.sketch.core.abstracted.SrlObject;

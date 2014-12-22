@@ -4,9 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-import com.parser.mechanix.MechanixAttribute;
-import com.parser.mechanix.MechanixAttributes;
-
 import edu.tamu.srl.sketch.core.object.SrlShape;
 import edu.tamu.srl.sketch.core.tobenamedlater.SrlShapeConfig;
 
