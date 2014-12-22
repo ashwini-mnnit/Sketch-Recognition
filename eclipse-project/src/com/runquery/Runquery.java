@@ -10,8 +10,6 @@ import com.classify.ClassifyData;
 import com.db.mongo.DataFetcher;
 import com.db.mongo.RetrieveData;
 import com.db.mongo.SketchMltoXmlConverter;
-import com.parser.mechanix.MechanixShape;
-import com.parser.mechanix.MechanixSketch;
 import com.sketchMl.Sketch;
 
 import edu.tamu.srl.sketch.core.object.SrlShape;
@@ -21,49 +19,46 @@ public class Runquery {
 	ClassifyData classifyData;
 	CalculateSpeed calculateSpeed;
 	
-	Runquery(String serverAddr, int port, String dbName, List<MechanixSketch> mechanixSketchList) {
+	Runquery(String serverAddr, int port, String dbName, List<SrlShape> srlShapeList) {
 		retrieveData = new RetrieveData(serverAddr, port, dbName);
 		calculateSpeed = new CalculateSpeed();
-		for(MechanixSketch mechanixSketch : mechanixSketchList)
-			calculateSpeed.populateSpeed(mechanixSketch);
+		for(SrlShape srlShape : srlShapeList)
+			calculateSpeed.populateSpeed(srlShape);
 		classifyData = new ClassifyData(5);
-		classifyData.learnClassifierMechanixSketch(mechanixSketchList);
-		
+		classifyData.learnClassifier(srlShapeList);
 	}
 
-	public ArrayList<Sketch> executeQuery(MechanixShape mechanixShape) throws JSONException {
+	public ArrayList<Sketch> executeQuery(SrlShape srlShape) throws JSONException {
 		CalculateSpeed calculateSpeed = new CalculateSpeed();
-		calculateSpeed.populateSpeed(mechanixShape);
-		Double clusterId = classifyData.getClusterId(mechanixShape);
+		calculateSpeed.populateSpeed(srlShape);
+		Double clusterId = classifyData.getClusterId(srlShape);
 		ArrayList<Sketch> sketchList = retrieveData.getSimilarSketchMlforMechanixData("Mechanix", clusterId);
+		System.out.print(clusterId);
 		return sketchList;
 	}
 
 	public static void main(String[] args) {
-		DataFetcher df = new DataFetcher("/home/shirsing/Downloads/SketchData.xml");
-		List<SrlShape> sketchList = df.GetMechanixData();
-		List<MechanixShape> mechanixShapeList = new ArrayList<MechanixShape>();
-		for(SrlShape mechanixSketch : sketchList) {
-			//mechanixShapeList.addAll(mechanixSketch.getAllShapes());
-		}
-		MechanixShape mechanixShape = new MechanixShape();
-		for(MechanixShape mechanixShapeTemp : mechanixShapeList) {
-			if(mechanixShapeTemp.getStroke() != null && mechanixShapeTemp.getStroke().getPoints() != null && mechanixShapeTemp.getStroke().getPoints().size() != 1) {
-				mechanixShape = mechanixShapeTemp;
+		DataFetcher df = new DataFetcher("C://Users//chunkygupta//Downloads//SketchData.xml");
+		List<SrlShape> srlShapeList = df.GetMechanixData();
+		
+		SrlShape srlShape = new SrlShape();
+		for(SrlShape srlShapeTemp : srlShapeList) {
+			if(srlShapeTemp.getLastStroke() != null && srlShapeTemp.getLastStroke().getPoints() != null && srlShapeTemp.getLastStroke().getPoints().size() != 1) {
+				srlShape = srlShapeTemp;
 				break;
 			}
 		}
 		
-	/*//Runquery runQuery = new Runquery("localhost", 27017, "SketchRec", sketchList);
+	Runquery runQuery = new Runquery("localhost", 27017, "SketchRec", srlShapeList);
 	try {
-		//ArrayList<Sketch> clusterIdToQuery = runQuery.executeQuery(mechanixShape);
+		ArrayList<Sketch> clusterIdToQuery = runQuery.executeQuery(srlShape);
 		for (Sketch it :  clusterIdToQuery) {
 			SketchMltoXmlConverter.sketchMltoXml(it, it.getId().toString(),"ClusteredXML");
 	}
 	} catch (JSONException e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
-	}*/
+	}
 	
 	}
 
