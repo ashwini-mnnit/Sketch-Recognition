@@ -9,7 +9,6 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.xml.sax.SAXException;
 
 import com.parser.mechanix.MechanixParser;
-import com.parser.mechanix.MechanixSketch;
 import com.parser.sousa.SousaParser;
 
 import edu.tamu.srl.sketch.core.object.SrlShape;

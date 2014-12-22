@@ -1,27 +1,21 @@
 package com.db.mongo;
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.map.JsonMappingException;
-import org.codehaus.jackson.map.ObjectMapper;
 
-import com.addfields.speed.CalculateSpeed;
-import com.cluster.ClusterDataSet;
 import com.google.gson.Gson;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 import com.mongodb.util.JSON;
-import com.parser.mechanix.MechanixSketch;
 import com.sketchMl.Dpi;
 import com.sketchMl.Point;
 import com.sketchMl.Sketch;
 import com.sketchMl.Sketcher;
-import com.sketchshape.SrlShapeExtended;
 
 import edu.tamu.srl.sketch.core.object.SrlShape;
 import edu.tamu.srl.sketch.core.object.SrlStroke;
@@ -35,34 +29,31 @@ public class ProcessData {
     }
 	
 	
-	public void insertMechanixData(String path, String collectionName) {
-		processMechanixData(path, collectionName);
+	public void insertMechanixData(String path, String collectionName) throws JsonGenerationException, JsonMappingException, IOException {
+		processMechanixDataSrl(path, collectionName);
 	}
 	
 	public void insertSrlData(String path, String collectionName) throws JsonGenerationException, JsonMappingException, IOException {
 		processSouseDataSrl(path, collectionName);
 	}
 	
-	public void processMechanixData(String path, String collectionName) {
-		DBCollection collection = mongoConnect.getCollection(collectionName);
-		CalculateSpeed calculateSpeed = new CalculateSpeed(); 
-		ClusterDataSet clusterDataSet = new ClusterDataSet();
-		
-		DataFetcher df = new DataFetcher(path);
-		List<SrlShape> sketchList = df.GetMechanixData();
-		
-		for (SrlShape mechanixSketch : sketchList)
-			//calculateSpeed.populateSpeed(mechanixSketch);
-		//clusterDataSet.setClusterIdMechanixShapeList(sketchList);
-    	for (SrlShape mSketch : sketchList) {
-    		//mSketch.updatePrimitiveTypes();
-    		Gson gson = new Gson();
-    		String jsonString = gson.toJson(mSketch);
-            DBObject dbObject = (DBObject)JSON.parse(jsonString);
-            collection.insert(dbObject);
-    	}
-	}
 	
+	
+public void processMechanixDataSrl(String path, String collectionName) throws JsonGenerationException, JsonMappingException, IOException {
+		
+		DBCollection collection = mongoConnect.getCollection(collectionName);
+		DataFetcher df = new DataFetcher(path);
+		List<SrlShape> srlList = df.GetMechanixData();
+		ArrayList<Sketch> sketchList= getSketchMlList(srlList);
+		
+		for (Sketch sketch : sketchList) {
+			Gson gson = new Gson();
+    		String jsonString = gson.toJson(sketch);
+    		System.out.println(jsonString);
+    		DBObject dbObject = (DBObject)JSON.parse(jsonString);
+            collection.insert(dbObject);
+		}	
+}
 
 	
 public ArrayList<Sketch> getSketchMlList(List<SrlShape> srlShapeList) {
@@ -132,9 +123,7 @@ public void processSouseDataSrl(String path, String collectionName) throws JsonG
 		for (Sketch sketch : sketchList) {
 			Gson gson = new Gson();
     		String jsonString = gson.toJson(sketch);
-    		System.out.println("Shireesh");
     		System.out.println(jsonString);
-    		System.out.println("Singh");
     		DBObject dbObject = (DBObject)JSON.parse(jsonString);
             collection.insert(dbObject);
 		}	

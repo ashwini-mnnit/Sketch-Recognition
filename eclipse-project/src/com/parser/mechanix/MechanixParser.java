@@ -314,7 +314,7 @@ public class MechanixParser {
 
 		File[] directoryListing = dirName.listFiles(xmlFilter);
 		for (File xmlfile : directoryListing) {
-			rvList.add(getMechanixSketchFromfile(xmlfile));
+		//	rvList.add(getMechanixSketchFromfile(xmlfile));
 		}
 
 		return rvList;
