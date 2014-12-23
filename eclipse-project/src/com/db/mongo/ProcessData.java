@@ -57,7 +57,7 @@ public void processMechanixDataSrl(String path, String collectionName) throws Js
 		ArrayList<Sketch> sketchList= getSketchMlList(srlList);
 		Gson gson = new Gson();
 		Sketch s = sketchList.get(0);
-		System.out.println(gson.toJson(s));
+		//System.out.println(gson.toJson(s));
 		
 		for (Sketch sketch : sketchList) {
     		String jsonString = gson.toJson(sketch);

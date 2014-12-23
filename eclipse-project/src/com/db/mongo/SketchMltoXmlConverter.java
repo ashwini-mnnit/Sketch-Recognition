@@ -14,7 +14,7 @@ public class SketchMltoXmlConverter {
 				  String path = "C:\\Users\\shirsing\\Desktop\\Referral\\" + dir +"\\";
 				  path += file;
 				  path += ".xml";
-				  System.out.println(path);
+				 // System.out.println(path);
 				  File fp = new File(path);
 				  JAXBContext jaxbContext = JAXBContext.newInstance(Sketch.class);
 				  Marshaller jaxbMarshaller = jaxbContext.createMarshaller();

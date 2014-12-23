@@ -29,7 +29,7 @@ public class HandleData {
 			ArrayList<Sketch> sketchMlList = r.getSketchMlDataFromMongo("Mechanix", "00000004-3b88-469e-9284-3ce61b470fc0");
 			for (Sketch it : sketchMlList) {
 				    Gson g = new Gson();
-				    System.out.println(g.toJson(it));
+				  //  System.out.println(g.toJson(it));
 					SketchMltoXmlConverter.sketchMltoXml(it, it.getId().toString(),"XML");
 			}
 		}

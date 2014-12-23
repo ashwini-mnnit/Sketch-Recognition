@@ -17,6 +17,13 @@ public class CalculateSpeed {
 	}	
 	
 	public void populateSpeed(List<SrlShape> srlShapeList) {
+		for (SrlShape srlShape : srlShapeList) {
+			List<SrlShape> shapeList = srlShape.getRecursiveLeafShapes();
+			populateSpeedList(shapeList);
+		}
+	}
+
+	public void populateSpeedList(List<SrlShape> srlShapeList) {
 		for(SrlShape srlShape : srlShapeList) {
 			populateSpeed((SrlShapeExtended)srlShape);
 		}

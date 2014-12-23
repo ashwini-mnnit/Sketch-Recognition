@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import com.sketchMl.Shape;
 import com.sketchshape.SrlShapeExtended;
 
 import edu.tamu.srl.sketch.core.object.SrlShape;
@@ -21,6 +22,15 @@ public class ClusterDataSet {
 	public final static int NUMBER_OF_FEATURES = 2;
 
 	public void setClusterId(List<SrlShape> srlShapeList) {
+	
+		for (SrlShape srlShape : srlShapeList) {
+			List<SrlShape> shapeList = srlShape.getRecursiveLeafShapes();
+			setClusterIdList(shapeList);
+		}
+	}
+	
+
+	public void setClusterIdList(List<SrlShape> srlShapeList) {
 		Dataset data = new DefaultDataset();
 		Map<Integer, UUID> idMap = new HashMap<Integer, UUID>();
 	    for (SrlShape srlShape : srlShapeList) {
@@ -50,9 +60,12 @@ public class ClusterDataSet {
 
 	private static void populateSrlShapeWithUserType(
 			List<SrlShape> srlShapeList, Map<UUID, Integer> clusterIds) {
+		int count = 0;
 		for(SrlShape srlShape : srlShapeList) {
 			int clusterId = clusterIds.get(srlShape.getId());
 			((SrlShapeExtended) srlShape).setClusterId(clusterId);
+			System.out.println(count + " " + clusterId);
+			count++;
 		}
 	}
 
