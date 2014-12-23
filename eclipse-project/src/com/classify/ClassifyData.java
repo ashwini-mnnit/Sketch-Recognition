@@ -137,6 +137,16 @@ public class ClassifyData {
 		return srlShapeExtended;
 	}	
 		
+	private static SrlShapeExtended newSrlShapeExtended(double averageSpeed, double averagePresure) {
+		boolean temp = false;
+		UUID uuid1 = UUID.randomUUID();
+		SrlShapeConfig srlShapeConfig1 = new SrlShapeConfig(null, uuid1, "", 0.0, 0.0, temp, temp);
+		SrlShapeExtended srlShapeExtended = new SrlShapeExtended(1234, uuid1, srlShapeConfig1, "srl Shape Extended 1");
+		srlShapeExtended.setAverageSpeed(averageSpeed);
+		srlShapeExtended.setAveragePressure(averagePresure);
+		return srlShapeExtended;
+	}
+
 	public static void main(String[] args) {
 		List<SrlShapeExtended> srlShapeExtendedList = new ArrayList<SrlShapeExtended>();
 		SrlShapeExtended srlShapeExtended1 = newSrlShapeExtended(1, 10);
