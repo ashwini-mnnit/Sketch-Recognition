@@ -57,7 +57,7 @@ public class ClusterDataSet {
 	}
 
 	private static Dataset[] getClusteredData(Dataset data) {
-    	Clusterer km = new KMeans(1);
+    	Clusterer km = new KMeans(4);
 	    Dataset[] clusters = km.cluster(data);
 	    return clusters;
     }

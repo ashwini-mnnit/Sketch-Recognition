@@ -30,10 +30,10 @@ public class Runquery {
 		}
 		retrieveData = new RetrieveData(serverAddr, port, dbName);
 		calculateSpeed = new CalculateSpeed();
-		for(SrlShape srlShape : srlShapeList)
+		for(SrlShape srlShape : srlShapeListTemp)
 			calculateSpeed.populateSpeed(srlShape);
 		classifyData = new ClassifyData(5);
-		classifyData.learnClassifier(srlShapeList);
+		classifyData.learnClassifier(srlShapeListTemp);
 	}
 
 	public ArrayList<Sketch> executeQuery(SrlShape srlShape) throws JSONException {
@@ -46,6 +46,7 @@ public class Runquery {
 
 	public static void main(String[] args) {
 		DataFetcher df = new DataFetcher("C:\\Users\\shirsing\\Downloads\\MechanixDataFolder\\MechanixInputFile1.xml");
+		//DataFetcher df = new DataFetcher("C:\\Users\\chunkygupta\\Downloads\\SketchData.xml");
 		List<SrlShape> srlShapeList = df.GetMechanixData();
 		List<SrlShape> srlShapeListTemp = new ArrayList<>();
 		for(SrlShape srlShape1 : srlShapeList) {
