@@ -20,7 +20,7 @@ public class RetrieveData {
     }
 	
 	
-	public ArrayList<Sketch> getSimilarSketchMlforMechanixData(String collectionName, double clusterId) throws JSONException {
+	public ArrayList<Sketch> getSimilarSketchMlforMechanixData(String collectionName, int clusterId) throws JSONException {
 		ArrayList<Sketch> sketchML = new ArrayList<Sketch>();
 		DBCollection collection = mongoConnect.getCollection(collectionName);
     	BasicDBObject searchQuery = new BasicDBObject();

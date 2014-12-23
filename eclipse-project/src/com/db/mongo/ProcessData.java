@@ -6,6 +6,8 @@ import java.util.List;
 import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.map.JsonMappingException;
 
+import com.addfields.speed.CalculateSpeed;
+import com.cluster.ClusterDataSet;
 import com.google.gson.Gson;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBCollection;
@@ -42,8 +44,13 @@ public class ProcessData {
 public void processMechanixDataSrl(String path, String collectionName) throws JsonGenerationException, JsonMappingException, IOException {
 		
 		DBCollection collection = mongoConnect.getCollection(collectionName);
+		CalculateSpeed calculateSpeed = new CalculateSpeed(); 
+		ClusterDataSet clusterDataSet = new ClusterDataSet();
+		
 		DataFetcher df = new DataFetcher(path);
 		List<SrlShape> srlList = df.GetMechanixData();
+		calculateSpeed.populateSpeed(srlList);
+		clusterDataSet.setClusterId(srlList);
 		ArrayList<Sketch> sketchList= getSketchMlList(srlList);
 		
 		for (Sketch sketch : sketchList) {
@@ -54,29 +61,6 @@ public void processMechanixDataSrl(String path, String collectionName) throws Js
             collection.insert(dbObject);
 		}	
 }
-
-
-	/*public void processMechanixData(String path, String collectionName) {
-		DBCollection collection = mongoConnect.getCollection(collectionName);
-		CalculateSpeed calculateSpeed = new CalculateSpeed(); 
-		ClusterDataSet clusterDataSet = new ClusterDataSet();
-		
-		DataFetcher df = new DataFetcher(path);
-		List<SrlShape> sketchList = df.GetMechanixData();
-		
-		for (SrlShape mechanixSketch : sketchList)
-			calculateSpeed.populateSpeed(mechanixSketch);
-		clusterDataSet.setClusterIdMechanixShapeList(sketchList);
-    	for (SrlShape mSketch : sketchList) {
-    		mSketch.updatePrimitiveTypes();
-    		Gson gson = new Gson();
-    		String jsonString = gson.toJson(mSketch);
-            DBObject dbObject = (DBObject)JSON.parse(jsonString);
-            collection.insert(dbObject);
-    	}
-	}*/
-	
-
 	
 public ArrayList<Sketch> getSketchMlList(List<SrlShape> srlShapeList) {
 	ArrayList<Sketch> sketchList = new ArrayList<Sketch>();

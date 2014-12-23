@@ -5,18 +5,18 @@
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.USER_LIBRARY/sketchc"/>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.USER_LIBRARY/classification"/>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.USER_LIBRARY/mongodb"/>
-	<classpathentry kind="lib" path="C:/Users/shirsing/Documents/GitHub/Sketch-Recognition/lib/classification/javaml-0.1.7/javaml-0.1.7.jar"/>
-	<classpathentry kind="lib" path="C:/Users/shirsing/Documents/GitHub/Sketch-Recognition/lib/mongodb/gson-2.3.1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/shirsing/Documents/GitHub/Sketch-Recognition/lib/mongodb/gson-2.3.1-javadoc.jar"/>
-	<classpathentry kind="lib" path="C:/Users/shirsing/Documents/GitHub/Sketch-Recognition/lib/mongodb/gson-2.3.1-sources.jar"/>
-	<classpathentry kind="lib" path="C:/Users/shirsing/Documents/GitHub/Sketch-Recognition/lib/mongodb/jackson-all-1.9.0.jar"/>
-	<classpathentry kind="lib" path="C:/Users/shirsing/Documents/GitHub/Sketch-Recognition/lib/mongodb/json-simple-1.1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/shirsing/Documents/GitHub/Sketch-Recognition/lib/mongodb/mongo-java-driver-2.13.0-rc0.jar"/>
-	<classpathentry kind="lib" path="C:/Users/shirsing/Documents/GitHub/Sketch-Recognition/lib/mongodb/mongo-java-driver-2.13.0-rc0-javadoc.jar"/>
-	<classpathentry kind="lib" path="C:/Users/shirsing/Documents/GitHub/Sketch-Recognition/lib/mongodb/org.json-20120521.jar"/>
-	<classpathentry kind="lib" path="C:/Users/shirsing/Documents/GitHub/Sketch-Recognition/lib/sketchML/sketchViewer.jar"/>
-	<classpathentry kind="lib" path="C:/Users/shirsing/Documents/GitHub/Sketch-Recognition/lib/SriObject/SketchShapes-1.0-SNAPSHOT-r2014-12-12_17-31-30.9e39a.jar"/>
-	<classpathentry kind="lib" path="C:/Users/shirsing/Documents/GitHub/Sketch-Recognition/lib/SriObject/SketchShapes-1.0-SNAPSHOT-r2014-12-12_17-31-30.9e39a-javadoc.jar"/>
-	<classpathentry kind="lib" path="C:/Users/shirsing/Documents/GitHub/Sketch-Recognition/lib/SriObject/SketchShapes-1.0-SNAPSHOT-r2014-12-12_17-31-30.9e39a-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Users/chunkygupta/Dropbox/Sketch Recognition/Project/git/Sketch-Recognition - New Again/Sketch-Recognition/lib/classification/javaml-0.1.7/javaml-0.1.7.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Users/chunkygupta/Dropbox/Sketch Recognition/Project/git/Sketch-Recognition - New Again/Sketch-Recognition/lib/mongodb/gson-2.3.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Users/chunkygupta/Dropbox/Sketch Recognition/Project/git/Sketch-Recognition - New Again/Sketch-Recognition/lib/mongodb/gson-2.3.1-javadoc.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Users/chunkygupta/Dropbox/Sketch Recognition/Project/git/Sketch-Recognition - New Again/Sketch-Recognition/lib/mongodb/gson-2.3.1-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Users/chunkygupta/Dropbox/Sketch Recognition/Project/git/Sketch-Recognition - New Again/Sketch-Recognition/lib/mongodb/jackson-all-1.9.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Users/chunkygupta/Dropbox/Sketch Recognition/Project/git/Sketch-Recognition - New Again/Sketch-Recognition/lib/mongodb/json-simple-1.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Users/chunkygupta/Dropbox/Sketch Recognition/Project/git/Sketch-Recognition - New Again/Sketch-Recognition/lib/mongodb/mongo-java-driver-2.13.0-rc0.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Users/chunkygupta/Dropbox/Sketch Recognition/Project/git/Sketch-Recognition - New Again/Sketch-Recognition/lib/mongodb/mongo-java-driver-2.13.0-rc0-javadoc.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Users/chunkygupta/Dropbox/Sketch Recognition/Project/git/Sketch-Recognition - New Again/Sketch-Recognition/lib/mongodb/org.json-20120521.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Users/chunkygupta/Dropbox/Sketch Recognition/Project/git/Sketch-Recognition - New Again/Sketch-Recognition/lib/sketchML/sketchViewer.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Users/chunkygupta/Dropbox/Sketch Recognition/Project/git/Sketch-Recognition - New Again/Sketch-Recognition/lib/SriObject/SketchShapes-1.0-SNAPSHOT-r2014-12-12_17-31-30.9e39a.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Users/chunkygupta/Dropbox/Sketch Recognition/Project/git/Sketch-Recognition - New Again/Sketch-Recognition/lib/SriObject/SketchShapes-1.0-SNAPSHOT-r2014-12-12_17-31-30.9e39a-javadoc.jar"/>
+	<classpathentry kind="lib" path="C:/Users/chunkygupta/Dropbox/Sketch Recognition/Project/git/Sketch-Recognition - New Again/Sketch-Recognition/lib/SriObject/SketchShapes-1.0-SNAPSHOT-r2014-12-12_17-31-30.9e39a-sources.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
