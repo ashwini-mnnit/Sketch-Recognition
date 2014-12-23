@@ -10,6 +10,7 @@ import com.classify.ClassifyData;
 import com.db.mongo.DataFetcher;
 import com.db.mongo.RetrieveData;
 import com.db.mongo.SketchMltoXmlConverter;
+import com.google.gson.Gson;
 import com.sketchMl.Sketch;
 
 import edu.tamu.srl.sketch.core.abstracted.SrlObject;
@@ -39,13 +40,12 @@ public class Runquery {
 		CalculateSpeed calculateSpeed = new CalculateSpeed();
 		calculateSpeed.populateSpeed(srlShape);
 		int clusterId = classifyData.getClusterId(srlShape);
-		ArrayList<Sketch> sketchList = retrieveData.getSimilarSketchMlforMechanixData("Mechanix", clusterId);
-		System.out.print(clusterId);
+		ArrayList<Sketch> sketchList = retrieveData.getSimilarSketchMlforMechanixData("Mechanix", 0);
 		return sketchList;
 	}
 
 	public static void main(String[] args) {
-		DataFetcher df = new DataFetcher("C://Users//chunkygupta//Downloads//SketchData.xml");
+		DataFetcher df = new DataFetcher("C:\\Users\\shirsing\\Downloads\\MechanixDataFolder\\MechanixInputFile1.xml");
 		List<SrlShape> srlShapeList = df.GetMechanixData();
 		List<SrlShape> srlShapeListTemp = new ArrayList<>();
 		for(SrlShape srlShape1 : srlShapeList) {
@@ -65,6 +65,11 @@ public class Runquery {
 	Runquery runQuery = new Runquery("localhost", 27017, "SketchRec", srlShapeList);
 	try {
 		ArrayList<Sketch> clusterIdToQuery = runQuery.executeQuery(srlShape);
+		if (!clusterIdToQuery.isEmpty()) {
+			Sketch s = clusterIdToQuery.get(0);
+			Gson g = new Gson();
+			System.out.println(g.toJson(s));
+		}
 		for (Sketch it :  clusterIdToQuery) {
 			SketchMltoXmlConverter.sketchMltoXml(it, it.getId().toString(),"ClusteredXML");
 	}

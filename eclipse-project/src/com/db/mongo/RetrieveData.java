@@ -24,7 +24,7 @@ public class RetrieveData {
 		ArrayList<Sketch> sketchML = new ArrayList<Sketch>();
 		DBCollection collection = mongoConnect.getCollection(collectionName);
     	BasicDBObject searchQuery = new BasicDBObject();
-    	searchQuery.put("shapes.Shapes.clusterId", clusterId);
+    	searchQuery.put("shape.type", Integer.toString(clusterId));
     	DBCursor cursor = collection.find(searchQuery);
     	while (cursor.hasNext()) {
     		DBObject dbobj = cursor.next();
@@ -56,7 +56,7 @@ public class RetrieveData {
 	public ArrayList<Sketch> getSketchMlDataFromMongo(String collectionName, String id) {
 		DBCollection collection = mongoConnect.getCollection(collectionName);
 		BasicDBObject searchQuery = new BasicDBObject();
-    	searchQuery.containsField(id);
+		searchQuery.put("id", id);
     	DBCursor cursor = collection.find(searchQuery);
     	ArrayList<Sketch> sketchML = new ArrayList<Sketch>();
     	while (cursor.hasNext()) {

@@ -16,8 +16,11 @@ import com.mongodb.DBObject;
 import com.mongodb.util.JSON;
 import com.sketchMl.Dpi;
 import com.sketchMl.Point;
+import com.sketchMl.Shape;
 import com.sketchMl.Sketch;
 import com.sketchMl.Sketcher;
+import com.sketchshape.SrlShapeExtended;
+import com.sketchshape.SrlStrokeExtended;
 
 import edu.tamu.srl.sketch.core.object.SrlShape;
 import edu.tamu.srl.sketch.core.object.SrlStroke;
@@ -52,11 +55,12 @@ public void processMechanixDataSrl(String path, String collectionName) throws Js
 		calculateSpeed.populateSpeed(srlList);
 		clusterDataSet.setClusterId(srlList);
 		ArrayList<Sketch> sketchList= getSketchMlList(srlList);
+		Gson gson = new Gson();
+		Sketch s = sketchList.get(0);
+		System.out.println(gson.toJson(s));
 		
 		for (Sketch sketch : sketchList) {
-			Gson gson = new Gson();
     		String jsonString = gson.toJson(sketch);
-    		System.out.println(jsonString);
     		DBObject dbObject = (DBObject)JSON.parse(jsonString);
             collection.insert(dbObject);
 		}	
@@ -67,6 +71,8 @@ public ArrayList<Sketch> getSketchMlList(List<SrlShape> srlShapeList) {
 	for (SrlShape srlShape: srlShapeList) {
 		Sketch sketch = new Sketch();
 		sketch.setId(srlShape.getId());
+		ArrayList<Shape> shapeList = getAllShapes(srlShape);
+		sketch.setShape(shapeList);
 		List<SrlStroke> srlStroke = srlShape.getRecursiveStrokeList();
 		ArrayList<Sketcher> sketcherList = getAllSketcher(srlStroke);
 		sketch.setSketcher(sketcherList);
@@ -80,6 +86,20 @@ public ArrayList<Sketch> getSketchMlList(List<SrlShape> srlShapeList) {
 	
 }
 	
+
+private ArrayList<Shape> getAllShapes(SrlShape srlShape) {
+	List<SrlShape> shapeList = srlShape.getRecursiveLeafShapes();
+	ArrayList<Shape> sketchShapeList = new ArrayList<Shape>();
+	for (SrlShape srlshape : shapeList) {
+		Shape shape = new Shape();
+		int clusterId = ((SrlShapeExtended) srlshape).getClusterId();
+		shape.setType(Integer.toString(clusterId));
+		sketchShapeList.add(shape);
+	}
+	return sketchShapeList;
+}
+
+
 private ArrayList<Point> getAllPoints(List<SrlStroke> srlStroke) {
 	ArrayList<Point> pointList = new ArrayList<Point>();
 	for (SrlStroke it : srlStroke) { 
@@ -124,12 +144,16 @@ public void processSouseDataSrl(String path, String collectionName) throws JsonG
 		DBCollection collection = mongoConnect.getCollection(collectionName);
 		DataFetcher df = new DataFetcher(path);
 		List<SrlShape> srlList = df.GetSouseDatas();
+		for (SrlShape sousaSketch : srlList) {
+			for (SrlStroke sousaStroke : sousaSketch.getRecursiveStrokeList()) {
+				((SrlStrokeExtended) sousaStroke).updatePrimitiveTypes();
+			}
+		}
 		ArrayList<Sketch> sketchList= getSketchMlList(srlList);
 		
 		for (Sketch sketch : sketchList) {
 			Gson gson = new Gson();
     		String jsonString = gson.toJson(sketch);
-    		System.out.println(jsonString);
     		DBObject dbObject = (DBObject)JSON.parse(jsonString);
             collection.insert(dbObject);
 		}	
