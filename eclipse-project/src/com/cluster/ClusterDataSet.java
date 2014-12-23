@@ -51,13 +51,13 @@ public class ClusterDataSet {
 	private static void populateSrlShapeWithUserType(
 			List<SrlShape> srlShapeList, Map<UUID, Integer> clusterIds) {
 		for(SrlShape srlShape : srlShapeList) {
-			double clusterId = clusterIds.get(srlShape.getId());
+			int clusterId = clusterIds.get(srlShape.getId());
 			((SrlShapeExtended) srlShape).setClusterId(clusterId);
 		}
 	}
 
 	private static Dataset[] getClusteredData(Dataset data) {
-    	Clusterer km = new KMeans();
+    	Clusterer km = new KMeans(1);
 	    Dataset[] clusters = km.cluster(data);
 	    return clusters;
     }

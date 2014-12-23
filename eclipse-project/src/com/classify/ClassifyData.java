@@ -33,7 +33,7 @@ public class ClassifyData {
 		Dataset data = new DefaultDataset();
 		try {
 			for (SrlShape srlShape : srlShapeList) {
-				Double clusterId = ((SrlShapeExtended) srlShape).getClusterId();
+				int clusterId = ((SrlShapeExtended) srlShape).getClusterId();
 				//((SrlShapeExtended) srlShape).setClusterId(0.0);
 				Instance currentInstance = getInstance(srlShape);
 				currentInstance.setClassValue(clusterId);
@@ -53,15 +53,15 @@ public class ClassifyData {
 		return currentInstance;
 	}
 
-	public Double getClusterId(SrlShape srlShape) {
-		Double clusterId = -1.0;
+	public int getClusterId(SrlShape srlShape) {
+		int clusterId = -1;
 		CalculateSpeed calculateSpeed = new CalculateSpeed();
 		calculateSpeed.populateSpeed(srlShape);
 		((SrlShapeExtended) srlShape).setAverageSpeed((double)(int)(((SrlShapeExtended) srlShape).getAverageSpeed()*100));
 		try {
 			Instance currentInstance;
 			currentInstance = getInstance(srlShape);
-			clusterId = (Double) myClassifier.classify(currentInstance);
+			clusterId = (int) myClassifier.classify(currentInstance);
 		} catch (Exception e) {
 			System.out.printf("Error in classifying the given Shape object", e.getMessage());
 			}
@@ -101,19 +101,19 @@ public class ClassifyData {
 		SrlShape srlShape44 = newSrlShape(9, 25);
 		SrlShape srlShape55 = newSrlShape(10, 26);
 
-        Double predictedClassValue = classifyData.getClusterId(srlShape11);
+        int predictedClassValue = classifyData.getClusterId(srlShape11);
         System.out.print(predictedClassValue);
 	        
-        Double predictedClassValue2 = classifyData.getClusterId(srlShape22);
+        int predictedClassValue2 = classifyData.getClusterId(srlShape22);
         System.out.print(predictedClassValue2);
         
-        Double predictedClassValue3 = classifyData.getClusterId(srlShape33);
+        int predictedClassValue3 = classifyData.getClusterId(srlShape33);
         System.out.print(predictedClassValue3);
 	        
-        Double predictedClassValue4 = classifyData.getClusterId(srlShape44);
+        int predictedClassValue4 = classifyData.getClusterId(srlShape44);
         System.out.print(predictedClassValue4);
 	        
-        Double predictedClassValue5 = classifyData.getClusterId(srlShape55);
+        int predictedClassValue5 = classifyData.getClusterId(srlShape55);
         System.out.printf("%.1f\n", predictedClassValue5);
 	}
 }

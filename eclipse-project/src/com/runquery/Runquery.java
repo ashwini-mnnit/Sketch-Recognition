@@ -12,6 +12,7 @@ import com.db.mongo.RetrieveData;
 import com.db.mongo.SketchMltoXmlConverter;
 import com.sketchMl.Sketch;
 
+import edu.tamu.srl.sketch.core.abstracted.SrlObject;
 import edu.tamu.srl.sketch.core.object.SrlShape;
 
 public class Runquery {
@@ -20,6 +21,12 @@ public class Runquery {
 	CalculateSpeed calculateSpeed;
 	
 	Runquery(String serverAddr, int port, String dbName, List<SrlShape> srlShapeList) {
+		List<SrlShape> srlShapeListTemp = new ArrayList<>();
+		for(SrlShape srlShape1 : srlShapeList) {
+			for(SrlObject srlShape : (((SrlShape) srlShape1).getRecursiveSubObjectList())) {
+				srlShapeListTemp.add((SrlShape) srlShape);
+			}
+		}
 		retrieveData = new RetrieveData(serverAddr, port, dbName);
 		calculateSpeed = new CalculateSpeed();
 		for(SrlShape srlShape : srlShapeList)
@@ -31,7 +38,7 @@ public class Runquery {
 	public ArrayList<Sketch> executeQuery(SrlShape srlShape) throws JSONException {
 		CalculateSpeed calculateSpeed = new CalculateSpeed();
 		calculateSpeed.populateSpeed(srlShape);
-		Double clusterId = classifyData.getClusterId(srlShape);
+		int clusterId = classifyData.getClusterId(srlShape);
 		ArrayList<Sketch> sketchList = retrieveData.getSimilarSketchMlforMechanixData("Mechanix", clusterId);
 		System.out.print(clusterId);
 		return sketchList;
@@ -40,9 +47,15 @@ public class Runquery {
 	public static void main(String[] args) {
 		DataFetcher df = new DataFetcher("C://Users//chunkygupta//Downloads//SketchData.xml");
 		List<SrlShape> srlShapeList = df.GetMechanixData();
+		List<SrlShape> srlShapeListTemp = new ArrayList<>();
+		for(SrlShape srlShape1 : srlShapeList) {
+			for(SrlObject srlShape : (((SrlShape) srlShape1).getRecursiveSubObjectList())) {
+				srlShapeListTemp.add((SrlShape) srlShape);
+			}
+		}
 		
 		SrlShape srlShape = new SrlShape();
-		for(SrlShape srlShapeTemp : srlShapeList) {
+		for(SrlShape srlShapeTemp : srlShapeListTemp) {
 			if(srlShapeTemp.getLastStroke() != null && srlShapeTemp.getLastStroke().getPoints() != null && srlShapeTemp.getLastStroke().getPoints().size() != 1) {
 				srlShape = srlShapeTemp;
 				break;

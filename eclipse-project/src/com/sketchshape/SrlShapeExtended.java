@@ -12,7 +12,7 @@ public class SrlShapeExtended extends SrlShape {
 	private double averagePressure;
 	private double averageTiltX;
 	private double averageTiltY;
-	private double clusterId;
+	private int clusterId;
 	private String authorName;
 	private String shapeType;
 	private String color;
@@ -92,11 +92,11 @@ public class SrlShapeExtended extends SrlShape {
 		this.averageTiltY = averageTiltY;
 	}
 
-	public double getClusterId() {
+	public int getClusterId() {
 		return clusterId;
 	}
 
-	public void setClusterId(double clusterId) {
+	public void setClusterId(int clusterId) {
 		this.clusterId = clusterId;
 	}
 
