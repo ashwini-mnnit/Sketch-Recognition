@@ -64,7 +64,6 @@ public class ClusterDataSet {
 		for(SrlShape srlShape : srlShapeList) {
 			int clusterId = clusterIds.get(srlShape.getId());
 			((SrlShapeExtended) srlShape).setClusterId(clusterId);
-			System.out.println(count + " " + clusterId);
 			count++;
 		}
 	}

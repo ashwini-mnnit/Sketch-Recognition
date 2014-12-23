@@ -29,7 +29,7 @@ public class ClassifyData {
 	
 	public void learnClassifier(List<SrlShape> srlShapeList) {
 		ClusterDataSet clusterDataSet = new ClusterDataSet();
-		clusterDataSet.setClusterId(srlShapeList);
+		clusterDataSet.setClusterIdList(srlShapeList);
 		Dataset data = new DefaultDataset();
 		try {
 			for (SrlShape srlShape : srlShapeList) {

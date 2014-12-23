@@ -12,6 +12,7 @@ import com.db.mongo.RetrieveData;
 import com.db.mongo.SketchMltoXmlConverter;
 import com.google.gson.Gson;
 import com.sketchMl.Sketch;
+import com.sketchshape.SrlShapeExtended;
 
 import edu.tamu.srl.sketch.core.abstracted.SrlObject;
 import edu.tamu.srl.sketch.core.object.SrlShape;
@@ -24,7 +25,7 @@ public class Runquery {
 	Runquery(String serverAddr, int port, String dbName, List<SrlShape> srlShapeList) {
 		List<SrlShape> srlShapeListTemp = new ArrayList<>();
 		for(SrlShape srlShape1 : srlShapeList) {
-			for(SrlObject srlShape : (((SrlShape) srlShape1).getRecursiveSubObjectList())) {
+			for(SrlObject srlShape : (((SrlShape) srlShape1).getRecursiveLeafShapes())) {
 				srlShapeListTemp.add((SrlShape) srlShape);
 			}
 		}
@@ -50,7 +51,7 @@ public class Runquery {
 		List<SrlShape> srlShapeList = df.GetMechanixData();
 		List<SrlShape> srlShapeListTemp = new ArrayList<>();
 		for(SrlShape srlShape1 : srlShapeList) {
-			for(SrlObject srlShape : (((SrlShape) srlShape1).getRecursiveSubObjectList())) {
+			for(SrlObject srlShape : (((SrlShape) srlShape1).getRecursiveLeafShapes())) {
 				srlShapeListTemp.add((SrlShape) srlShape);
 			}
 		}

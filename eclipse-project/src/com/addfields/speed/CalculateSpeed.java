@@ -24,6 +24,7 @@ public class CalculateSpeed {
 	}
 
 	public void populateSpeedList(List<SrlShape> srlShapeList) {
+		int count = 0;
 		for(SrlShape srlShape : srlShapeList) {
 			populateSpeed((SrlShapeExtended)srlShape);
 		}
@@ -54,7 +55,8 @@ public class CalculateSpeed {
 					shapeSpeed+=(currentDistance/currentTime);
 			}
 		}
-		shapeSpeed = shapeSpeed / totalPoints;
+		if(shapeSpeed != 0) 
+			shapeSpeed = shapeSpeed / totalPoints;
 		((SrlShapeExtended) srlShape).setAverageSpeed(shapeSpeed);
 		}
 		catch(ArithmeticException e) {
